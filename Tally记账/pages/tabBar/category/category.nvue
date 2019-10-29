@@ -12,39 +12,27 @@
 				<text @click="toMsg" class="icon tongzhi">{{ iconTongzhi }}</text>
 			</div>
 		</div>
+		<!-- 日期及日均消费 -->
 		<div class="category-list" :style="{ top: headerHeight + 'wx' }">
-			<list class="left" :show-scrollbar="false">
-				<cell v-for="(row, index) in categoryList" :key="index" :ref="'tab' + index">
-					<div class="left-row" :class="[index == showCategoryIndex ? 'left-row-on' : '']" @click="goToCategory($event, 'category' + index, index)">
-						<div class="left-text">
-							<div class="left-block" :class="[index == showCategoryIndex ? 'left-block-on' : '']"></div>
-							<text class="left-text-text" :class="[index == showCategoryIndex ? 'left-text-on' : '']">{{ row.title }}</text>
-						</div>
-					</div>
-				</cell>
-			</list>
-			
-			<list class="right">
-				<template v-for="(row, index) in categoryList">
-					<header :key="index">
-						<div class="tab">
-							<text class="category-title">{{ row.title }}</text>
-							<text class="category-title-min">全场5折起，疯抢100元优惠券</text>
-						</div>
-					</header>
-					<cell :ref="'category' + index" :key="index" @disappear="ondisappear($event, 'tab' + index, index)" @appear="onappear($event, 'tab' + index, index)">
-						<div class="right-category">
-							<div class="right-banner"><image class="right-banner-image" :src="row.banner"></image></div>
-							<div class="right-list">
-								<div class="right-box" v-for="(box, i) in row.list" :key="i" @click="toCategory(box)">
-									<image class="right-box-image" :src="imglist[i]"></image>
-									<text class="right-text">{{ box.name }}</text>
-								</div>
-							</div>
-						</div>
-					</cell>
-				</template>
-			</list>
+			<div class="amount-list">
+				<div class="place-bottom"></div>
+				<div class="left">
+					<image src="../../../static/img/time.png" style="height: 120px; width: 120px;"></image>
+				</div>
+				<div class="right">
+					<text class="amount-card-date">{{chartDate}}</text>
+					<text class="amount-card-daily">{{dailyCash}}</text>
+				</div>
+			</div>
+		</div>
+		
+		<div class="category-list" :style="{ top: headerHeight + 100 + 'wx' }">
+			<div class="payment">
+				<div class="place-bottom"></div>
+				<div class="expense"></div>
+				<div class="income"></div>
+				<div class="surplus"></div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -59,147 +47,12 @@ export default {
 			iconLocation: '\ue611',
 			iconTongzhi: '\ue729',
 			headerHeight: 44,
+			chartDate: '2019年10月1日至10月30日',
+			dailyCash: '日均消费20元',
 			statusBarHeight: 0,
 			showCategoryIndex: 0,
 			stopAppear:false,
 			//模板图片，使用模板时候应调用数据内数据
-			imglist: [
-				'https://ae01.alicdn.com/kf/HTB1Ns_ne.GF3KVjSZFmq6zqPXXaJ.jpg',
-				'https://ae01.alicdn.com/kf/HTB1MzgAcfBj_uVjSZFpq6A0SXXaC.jpg',
-				'https://ae01.alicdn.com/kf/HTB1ns_ne.GF3KVjSZFmq6zqPXXa6.jpg',
-				'https://ae01.alicdn.com/kf/HTB1nRjte8Kw3KVjSZFOq6yrDVXaZ.jpg',
-				'https://ae01.alicdn.com/kf/HTB1EBLweW5s3KVjSZFNq6AD3FXa9.jpg',
-				'https://ae01.alicdn.com/kf/HTB1xYfSbMFY.1VjSZFnq6AFHXXaK.jpg',
-				'https://ae01.alicdn.com/kf/HTB1jK2oe9SD3KVjSZFKq6z10VXap.jpg',
-				'https://ae01.alicdn.com/kf/HTB1L0DweWWs3KVjSZFxq6yWUXXal.jpg',
-				'https://ae01.alicdn.com/kf/HTB1Ak2qe8aE3KVjSZLeq6xsSFXan.jpg'
-			],
-			categoryList: [
-				{
-					id: 1,type:'A',
-					title: '家用电器',
-					banner: 'https://ae01.alicdn.com/kf/HTB10Xrqe.uF3KVjSZK9q6zVtXXaZ.jpg',
-					list: [
-						{ name: '冰箱' },
-						{ name: '电视' },
-						{ name: '空调' },
-						{ name: '洗衣机' },
-						{ name: '风扇' },
-						{ name: '燃气灶' },
-						{ name: '热水器' },
-						{ name: '电吹风' },
-						{ name: '电饭煲' }
-					]
-				},
-				{
-					id: 2,type:'A',
-					title: '办公用品',
-					banner: 'https://ae01.alicdn.com/kf/HTB1_Wjpe3mH3KVjSZKzq6z2OXXab.jpg',
-					list: [{ name: '打印机' }, { name: '路由器' }, { name: '扫描仪' }, { name: '投影仪' }, { name: '墨盒' }, { name: '纸类' }]
-				},
-				{
-					id: 3,type:'A',
-					title: '日常用品',
-					banner: 'https://ae01.alicdn.com/kf/HTB1wr_se7WE3KVjSZSyq6xocXXa4.jpg',
-					list: [{ name: '茶具' }, { name: '花瓶' }, { name: '纸巾' }, { name: '毛巾' }, { name: '牙膏' }, { name: '保鲜膜' }, { name: '保鲜袋' }]
-				},
-				{
-					id: 4,type:'A',
-					title: '蔬菜水果',
-					banner: 'https://ae01.alicdn.com/kf/HTB17d_xe8Kw3KVjSZTEq6AuRpXaT.jpg',
-					list: [{ name: '苹果' }, { name: '芒果' }, { name: '椰子' }, { name: '橙子' }, { name: '奇异果' }, { name: '玉米' }, { name: '百香果' }]
-				},
-				{
-					id: 5,type:'A',
-					title: '手机数码',
-					banner: 'https://ae01.alicdn.com/kf/HTB10KDqe9SD3KVjSZFKq6z10VXaS.jpg',
-					list: [{ name: '苹果' }, { name: '芒果' }, { name: '椰子' }, { name: '橙子' }, { name: '奇异果' }, { name: '玉米' }, { name: '百香果' }]
-				},
-				{
-					id: 6,type:'A',
-					title: '酒水饮料',
-					banner: 'https://ae01.alicdn.com/kf/HTB1ypjpe4iH3KVjSZPfq6xBiVXaw.jpg',
-					list: [{ name: '苹果' }, { name: '芒果' }, { name: '椰子' }, { name: '橙子' }, { name: '奇异果' }, { name: '玉米' }, { name: '百香果' }]
-				},
-				{
-					id: 7,type:'A',
-					title: '母婴童装',
-					banner: 'https://ae01.alicdn.com/kf/HTB1zdPue9WD3KVjSZSgq6ACxVXaE.jpg',
-					list: [{ name: '苹果' }, { name: '芒果' }, { name: '椰子' }, { name: '橙子' }, { name: '奇异果' }, { name: '玉米' }, { name: '百香果' }]
-				},
-				{
-					id: 8,type:'A',
-					title: '玩具乐器',
-					banner: 'https://ae01.alicdn.com/kf/HTB1Hn_se8GE3KVjSZFhq6AkaFXaj.jpg',
-					list: [{ name: '苹果' }, { name: '芒果' }, { name: '椰子' }, { name: '橙子' }, { name: '奇异果' }, { name: '玉米' }, { name: '百香果' }]
-				},
-				{
-					id: 9,type:'A',
-					title: '医药保健',
-					banner: 'https://ae01.alicdn.com/kf/HTB1CiHpe3aH3KVjSZFjq6AFWpXaS.jpg',
-					list: [{ name: '苹果' }, { name: '芒果' }, { name: '椰子' }, { name: '橙子' }, { name: '奇异果' }, { name: '玉米' }, { name: '百香果' }]
-				},
-				{
-					id: 10,type:'A',
-					title: '运动户外',
-					banner: 'https://ae01.alicdn.com/kf/HTB1f_2UbMFY.1VjSZFnq6AFHXXaK.jpg',
-					list: [{ name: '苹果' }, { name: '芒果' }, { name: '椰子' }, { name: '橙子' }, { name: '奇异果' }, { name: '玉米' }, { name: '百香果' }]
-				},
-				{
-					id: 11,type:'A',
-					title: '汽车生活',
-					banner: 'https://ae01.alicdn.com/kf/HTB1kbHre9SD3KVjSZFKq6z10VXa9.jpg',
-					list: [{ name: '苹果' }, { name: '芒果' }, { name: '椰子' }, { name: '橙子' }, { name: '奇异果' }, { name: '玉米' }, { name: '百香果' }]
-				},
-				{
-					id: 12,type:'A',
-					title: '家具厨具',
-					banner: 'https://ae01.alicdn.com/kf/HTB1hlPzeW5s3KVjSZFNq6AD3FXaK.jpg',
-					list: [{ name: '苹果' }, { name: '芒果' }, { name: '椰子' }, { name: '橙子' }, { name: '奇异果' }, { name: '玉米' }, { name: '百香果' }]
-				},
-				{
-					id: 13,type:'A',
-					title: '生活旅行',
-					banner: 'https://ae01.alicdn.com/kf/HTB1CcPye8Kw3KVjSZTEq6AuRpXaQ.jpg',
-					list: [{ name: '苹果' }, { name: '芒果' }, { name: '椰子' }, { name: '橙子' }, { name: '奇异果' }, { name: '玉米' }, { name: '百香果' }]
-				},
-				{
-					id: 14,type:'A',
-					title: '图书文娱',
-					banner: 'https://ae01.alicdn.com/kf/HTB1Eabte8GE3KVjSZFhq6AkaFXa3.jpg',
-					list: [{ name: '苹果' }, { name: '芒果' }, { name: '椰子' }, { name: '橙子' }, { name: '奇异果' }, { name: '玉米' }, { name: '百香果' }]
-				},
-				{
-					id: 14,type:'A',
-					title: '礼品鲜花',
-					banner: 'https://ae01.alicdn.com/kf/HTB1Eabte8GE3KVjSZFhq6AkaFXa3.jpg',
-					list: [{ name: '苹果' }, { name: '芒果' }, { name: '椰子' }, { name: '橙子' }, { name: '奇异果' }, { name: '玉米' }, { name: '百香果' }]
-				},
-				{
-					id: 14,type:'A',
-					title: '宠物盛会',
-					banner: 'https://ae01.alicdn.com/kf/HTB1Eabte8GE3KVjSZFhq6AkaFXa3.jpg',
-					list: [{ name: '苹果' }, { name: '芒果' }, { name: '椰子' }, { name: '橙子' }, { name: '奇异果' }, { name: '玉米' }, { name: '百香果' }]
-				},
-				{
-					id: 14,type:'A',
-					title: '艺术邮币',
-					banner: 'https://ae01.alicdn.com/kf/HTB1Eabte8GE3KVjSZFhq6AkaFXa3.jpg',
-					list: [{ name: '苹果' }, { name: '芒果' }, { name: '椰子' }, { name: '橙子' }, { name: '奇异果' }, { name: '玉米' }, { name: '百香果' }]
-				},
-				{
-					id: 14,type:'A',
-					title: '家居家装',
-					banner: 'https://ae01.alicdn.com/kf/HTB1Eabte8GE3KVjSZFhq6AkaFXa3.jpg',
-					list: [{ name: '苹果' }, { name: '芒果' }, { name: '椰子' }, { name: '橙子' }, { name: '奇异果' }, { name: '玉米' }, { name: '百香果' }]
-				},
-				{
-					id: 14,type:'A',
-					title: '食品生鲜',
-					banner: 'https://ae01.alicdn.com/kf/HTB1Eabte8GE3KVjSZFhq6AkaFXa3.jpg',
-					list: [{ name: '苹果' }, { name: '芒果' }, { name: '椰子' }, { name: '橙子' }, { name: '奇异果' }, { name: '玉米' }, { name: '百香果' }]
-				}
-			],
 			timer:null
 		};
 	},
@@ -387,79 +240,81 @@ export default {
 .place {
 	background-color: #ffffff;
 }
+.place-bottom {
+	height: 20upx;
+}
 .category-list {
 	position: absolute;
 	width: 750px;
 	bottom: 0;
 }
-.left {
+
+.amount-list {
+	width: 720px;
+	margin: 5px, 0, 15px 15px;
+	height: 180px;
+	flex-direction: row;
+	justify-content: flex-start;
 	position: absolute;
-	width: 180px;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	background-color: #f2f2f2;
-	z-index: 10;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	display: flex;
+	font-size: 26px;
+	color: #000;
 }
-
-.left-row {
-	width: 180px;
-	height: 90px;
-	align-items: center;
-	flex-direction: row;
-	background-color: #f2f2f2;
-}
-.left-row-on {
-	width: 180px;
-	height: 90px;
-	align-items: center;
-	flex-direction: row;
-	background-color: #fff;
-	/* height: 100px; */
-}
-.left-text {
-	width: 180px;
-
+.left {
+	width: 150px;
+	height: 150px;
 	position: relative;
-	flex-direction: row;
+	margin: 18px 50px 20px 50px;
 	align-items: center;
 	justify-content: center;
 }
-
-.left-text-text {
-	text-align: center;
-	font-size: 28upx;
-	color: #3c3c3c;
-}
-.left-text-on {
-	/* font-size: 30px; */
-	font-weight: 600;
-	color: #2d2d2d;
-}
-.left-block {
-	position: absolute;
-	width: 0;
-	width: 10px;
-	top: 5px;
-	bottom: 5px;
-	left: 0;
-	background-color: #f2f2f2;
-}
-.left-block-on {
-	
-	
-	background-color: #f06c7a;
-}
-
-
-
 .right {
+	width: 400px;
+	height: 100px;
+	margin-top: 50px;
+	flex-direction: column;
+}
+.amount-card-date {
+	color: #595BBC;
+	margin-bottom: 20px;
+	font-size: 30px;
+	font-weight: bold;
+}
+.amount-card-daily {
+	color: #F5B940;
+	font-size: 30px;
+}
+.payment {
+	width: 720px;
+	margin: 5px, 0,20px 15px;
+	height: 180px;
+	flex-direction: row;
+	justify-content: flex-start;
 	position: absolute;
-	width: 570px;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	z-index: 10;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	font-size: 26px;
+	color: #000;
+}
+.expense {
+	width: 200px;
+	margin: 5px, 0, 20px 15px;
+	height: 180px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+.income {
+	width: 200px;
+	margin: 5px, 0, 20px 15px;
+	height: 180px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+.surplus {
+	width: 200px;
+	margin: 5px, 0, 20px 15px;
+	height: 180px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 .tab {
 	width: 570px;
@@ -478,47 +333,6 @@ export default {
 	font-size: 20px;
 	color: #999;
 }
-.right-category {
-	width: 570px;
-	padding: 0 17px 20px 17px;
-	margin-top: 20px;
-}
-.right-banner {
-	width: 536px;
-	height: 182px;
-	border-radius: 10px;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-.right-banner-image {
-	width: 536px;
-	height: 182px;
-	border-radius: 10px;
-	
-}
-.right-list {
-	margin-top: 40px;
-	width: 536px;
-	flex-direction: row;
-	flex-wrap: wrap;
-}
-.right-box {
-	width: 178px;
-	margin-bottom: 30px;
-	justify-content: center;
-	align-items: center;
-	flex-wrap: wrap;
-	flex-direction: row;
-}
-.right-box-image {
-	width: 106px;
-	height: 106px;
-	margin: 0 36px;
-}
-.right-text {
-	margin-top: 5px;
-	width: 178px;
-	text-align: center;
-	font-size: 26px;
-}
+
 
 </style>

@@ -40,6 +40,8 @@
 			</view>
 		</view>
 		<view class="place-bottom"></view>
+		
+		
 		<view class="order-list">
 			<view class="title">记账记录</view>
 			<view class="list">
@@ -75,9 +77,9 @@ export default {
 			currentSwiper: 0,
 			// 账目记录
 			myrecordList: [
-				{ id: 1, content: '考研用品', price: '100', time: '2019年10月1日', sort: '办公' },
-				{ id: 2, content: '运动鞋', price: '300', time: '2019年9月1日', sort: '运动' },
-				{ id: 3, content: '冰淇淋', price: '20', time: '2019年10月1日', sort: '零食' }
+				{ id: 1, content: '考研用品', price: '$100', time: '2019年10月1日', sort: '办公' },
+				{ id: 2, content: '运动鞋', price: '$300', time: '2019年9月1日', sort: '运动' },
+				{ id: 3, content: '冰淇淋', price: '$20', time: '2019年10月1日', sort: '零食' }
 			],
 			// 分类菜单
 			categoryList: [
@@ -156,15 +158,7 @@ export default {
 			//高德地图KEY，随时失效，请务必替换为自己的KEY，参考：http://ask.dcloud.net.cn/article/35070
 			key: '7c235a9ac4e25e482614c6b8eac6fd8e'
 		});
-		//定位地址
-		this.amapPlugin.getRegeo({
-			success: data => {
-				this.city = data[0].regeocodeData.addressComponent.city.replace(/市/g, ''); //把"市"去掉
-				// #ifdef APP-PLUS
-				this.nVueTitle.postMessage({type: 'location',city:this.city});
-				// #endif
-			}
-		});
+		
 	},
 	methods: {
 		//消息列表
@@ -191,7 +185,90 @@ export default {
 			uni.navigateTo({
 				url: '../../goods/goods'
 			});
-		},	
+		},
+		//
+		switchType(type){
+			if(this.typeClass==type){
+				return ;
+			}
+			uni.pageScrollTo({
+				scrollTop:0,
+				duration:0
+			})
+			this.typeClass = type;
+			this.subState = this.typeClass==''?'':'show'+type;
+			setTimeout(()=>{
+				this.oldIndex = null;
+				this.theIndex = null;
+				this.subState = this.typeClass=='valid'?'':this.subState;
+			},200)
+		},
+		//控制左滑删除效果-begin
+		touchStart(index,event){
+			//多点触控不触发
+			if(event.touches.length>1){
+				this.isStop = true;
+				return ;
+			}
+			this.oldIndex = this.theIndex;
+			this.theIndex = null;
+			//初始坐标
+			this.initXY = [event.touches[0].pageX,event.touches[0].pageY];
+		},
+		touchMove(index,event){
+			//多点触控不触发
+			if(event.touches.length>1){
+				this.isStop = true;
+				return ;
+			}
+			let moveX = event.touches[0].pageX - this.initXY[0];
+			let moveY = event.touches[0].pageY - this.initXY[1];
+			
+			if(this.isStop||Math.abs(moveX)<5){
+				return ;
+			}
+			if (Math.abs(moveY) > Math.abs(moveX)){
+				// 竖向滑动-不触发左滑效果
+				this.isStop = true;
+				return;
+			}
+			
+			if(moveX<0){
+				this.theIndex = index;
+				this.isStop = true;
+			}else if(moveX>0){
+				if(this.theIndex!=null&&this.oldIndex==this.theIndex){
+					this.oldIndex = index;
+					this.theIndex = null;
+					this.isStop = true;
+					setTimeout(()=>{
+						this.oldIndex = null;
+					},150)
+				}
+			}
+		},
+		
+		touchEnd(index,$event){
+			//解除禁止触发状态
+			this.isStop = false;
+		},
+		
+		//删除商品
+		deleteCoupon(id,List){
+			let len = List.length;
+			for(let i=0;i<len;i++){
+				if(id==List[i].id){
+					List.splice(i, 1);
+					break;
+				}
+			}
+			this.oldIndex = null;
+			this.theIndex = null;
+		},
+		
+		discard() {
+			//丢弃
+		}
 	}
 };
 </script>
@@ -224,7 +301,7 @@ page{position: relative;background-color: #fff;}
 	height: 0;
 	position: fixed;
 	z-index: 10;
-	background-color: #fff;
+	background-color: #595BBC;
 	top: 0;
 	/*  #ifdef  APP-PLUS  */
 	height: var(--status-bar-height); //覆盖样式
@@ -242,7 +319,7 @@ page{position: relative;background-color: #fff;}
 	position: fixed;
 	top: 0;
 	z-index: 10;
-	background-color: #fff;
+	background-color: #595BBC;
 
 	/*  #ifdef  APP-PLUS  */
 	top: var(--status-bar-height);
@@ -365,8 +442,8 @@ page{position: relative;background-color: #fff;}
 			display: flex;
 			flex-wrap: wrap;
 			.record-item{
-				width: 80%;
-				margin: 20upx 0 20upx 3%;
+				width: 92%;
+				margin: 20upx 0 20upx 5%;
 				display: flex;
 				flex-wrap: wrap;
 				.content{
@@ -396,4 +473,5 @@ page{position: relative;background-color: #fff;}
 			}
 		}
 }
+
 </style>

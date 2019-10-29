@@ -2,25 +2,26 @@
 	<div class="content" :style="{height:statusBarHeight+44+'wx'}">
 		<div class="status-bar" :style="{height:statusBarHeight+'wx'}"></div>
 		<div class="nav">
-			<text class="icon location">{{ iconLocation }}</text>
-			<text class="location-city-text">{{ city }}</text>
+			<text class="icon location" @click="" >{{ iconLocation }}</text>
+			<text class="location-calandar-text">{{ calandar }}</text>
 			<div class="input-box">
-				<input class="input-box-input" placeholder="默认关键字sss" @focus="inputfocus" />
+				<input class="input-box-input" placeholder="搜索账单" @focus="inputfocus" />
 				<text class="icon search">{{ iconSearch }}</text>
 			</div>
-			<text class="icon yuyin">{{ iconYuyin }}</text>
-			<text @click="toMsg" class="icon tongzhi">{{ iconTongzhi }}</text>
+			<!-- <text class="icon yuyin">{{ iconYuyin }}</text>
+			<text @click="toMsg" class="icon tongzhi">{{ iconTongzhi }}</text> -->
 		</div>
 	</div>
+	
 </template>
 <script>
 export default {
 	data() {
 		return {
-			city: '北京',
+			calandar: '日历',
 			subNVue: uni.getCurrentSubNVue(),
 			iconSearch: '\ue628',
-			iconLocation: '\ue611',
+			iconLocation: '\ue729',
 			iconYuyin: '\ue64e',
 			iconTongzhi: '\ue729',
 			statusBarHeight:20
@@ -49,19 +50,7 @@ export default {
 				}
 			});
 			this.nVueTitle = uni.getCurrentSubNVue();
-			this.nVueTitle.onMessage(res => {
-				let type = res.data.type;
-				switch (type) {
-					case 'location':
-						this.setCity(res.data.city);
-						break;
-					default:
-						break;
-				}
-			});
-		},
-		setCity(city) {
-			this.city = city;
+			
 		},
 		inputfocus() {
 			this.subNVue.postMessage({
@@ -104,7 +93,7 @@ export default {
 .location {
 	color: #ffc50a;
 }
-.location-city-text {
+.location-calandar-text {
 	width: 60px;
 	height: 88px;
 	line-height: 88px;

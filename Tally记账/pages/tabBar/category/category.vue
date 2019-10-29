@@ -15,30 +15,7 @@
 		<!-- 占位 -->
 		<view class="place"></view>
 		<view class="category-list">
-			<!-- 左侧分类导航 -->
-			<scroll-view  scroll-y="true" class="left" >
-                <view class="row" v-for="(category,index) in categoryList" :key="category.id" :class="[index==showCategoryIndex?'on':'']" @tap="showCategory(index)">
-					<view class="text">
-						<view class="block"></view>
-						{{category.title}}
-					</view>
-				</view>
-				
-            </scroll-view>
-			<!-- 右侧子导航 -->
-			<scroll-view  scroll-y="true" class="right" >
-			    <view class="category" v-for="(category,index) in categoryList" :key="category.id" v-show="index==showCategoryIndex" >
-					<view class="banner">
-						<image :src="category.banner"></image>
-					</view>
-					<view class="list">
-						<view class="box" v-for="(box,i) in category.list" :key="i" @tap="toCategory(box)">
-							<image :src="'/static/img/category/list/'+box.img"></image>
-							<view class="text">{{box.name}}</view>
-						</view>
-					</view>
-				</view>
-			</scroll-view>
+			<view>heill</view>
 		</view>
 	</view>
 </template>
