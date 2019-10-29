@@ -266,32 +266,32 @@
 	},
 	"tabBar": {
 		"color": "#333333",
-		"selectedColor": "#f06c7a",
+		"selectedColor": "#595BBC",
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
 		"list": [{
 				"pagePath": "pages/tabBar/home/home",
-				"iconPath": "static/img/tabBar/home.png",
-				"selectedIconPath": "static/img/tabBar/home-on.png",
-				"text": "首页"
+				"iconPath": "static/img/tabBar/Record.png",
+				"selectedIconPath": "static/img/tabBar/Record-on.png",
+				"text": "Record"
 			},
 			{
 				"pagePath": "pages/tabBar/category/category",
-				"iconPath": "static/img/tabBar/category.png",
-				"selectedIconPath": "static/img/tabBar/category-on.png",
-				"text": "分类"
+				"iconPath": "static/img/tabBar/Chart.png",
+				"selectedIconPath": "static/img/tabBar/Chart-on.png",
+				"text": "Chart"
 			},
 			{
 				"pagePath": "pages/tabBar/cart/cart",
-				"iconPath": "static/img/tabBar/cart.png",
-				"selectedIconPath": "static/img/tabBar/cart-on.png",
-				"text": "购物车"
+				"iconPath": "static/img/tabBar/Community.png",
+				"selectedIconPath": "static/img/tabBar/Community-on.png",
+				"text": "Community"
 			},
 			{
 				"pagePath": "pages/tabBar/user/user",
-				"iconPath": "static/img/tabBar/user.png",
-				"selectedIconPath": "static/img/tabBar/user-on.png",
-				"text": "我的"
+				"iconPath": "static/img/tabBar/Setting.png",
+				"selectedIconPath": "static/img/tabBar/Setting-on.png",
+				"text": "Setting"
 			}
 		]
 	}

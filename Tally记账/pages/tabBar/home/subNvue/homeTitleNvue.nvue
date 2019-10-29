@@ -5,7 +5,7 @@
 			<text class="icon location">{{ iconLocation }}</text>
 			<text class="location-city-text">{{ city }}</text>
 			<div class="input-box">
-				<input class="input-box-input" placeholder="默认关键字" @focus="inputfocus" />
+				<input class="input-box-input" placeholder="默认关键字sss" @focus="inputfocus" />
 				<text class="icon search">{{ iconSearch }}</text>
 			</div>
 			<text class="icon yuyin">{{ iconYuyin }}</text>
