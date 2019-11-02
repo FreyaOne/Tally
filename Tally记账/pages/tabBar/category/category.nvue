@@ -1,0 +1,338 @@
+<template>
+	<div class="content">
+		<div class="header" :style="{ height: headerHeight + 'wx' }">
+			<div class="status-bar" :style="{ height: statusBarHeight + 'wx' }"></div>
+			<div class="nav">
+				<text class="icon location">{{ iconLocation }}</text>
+				<text class="location-city-text">{{ city }}</text>
+				<div class="input-box">
+					<input class="input-box-input" placeholder="默认关键字" @focus="inputfocus" />
+					<text class="icon search">{{ iconSearch }}</text>
+				</div>
+				<text @click="toMsg" class="icon tongzhi">{{ iconTongzhi }}</text>
+			</div>
+		</div>
+		<!-- 日期及日均消费 -->
+		<div class="category-list" :style="{ top: headerHeight + 'wx' }">
+			<div class="amount-list">
+				<div class="place-bottom"></div>
+				<div class="left">
+					<image src="../../../static/img/time.png" style="height: 120px; width: 120px;"></image>
+				</div>
+				<div class="right">
+					<text class="amount-card-date">{{chartDate}}</text>
+					<text class="amount-card-daily">{{dailyCash}}</text>
+				</div>
+			</div>
+		</div>
+		
+		<div class="category-list" :style="{ top: headerHeight + 100 + 'wx' }">
+			<div class="payment">
+				<div class="place-bottom"></div>
+				<div class="expense"></div>
+				<div class="income"></div>
+				<div class="surplus"></div>
+			</div>
+		</div>
+	</div>
+</template>
+<script>
+const dom = weex.requireModule('dom') || {};
+export default {
+	data() {
+		return {
+			city: '北京',
+			subNVue: uni.getCurrentSubNVue(),
+			iconSearch: '\ue628',
+			iconLocation: '\ue611',
+			iconTongzhi: '\ue729',
+			headerHeight: 44,
+			chartDate: '2019年10月1日至10月30日',
+			dailyCash: '日均消费20元',
+			statusBarHeight: 0,
+			showCategoryIndex: 0,
+			stopAppear:false,
+			//模板图片，使用模板时候应调用数据内数据
+			timer:null
+		};
+	},
+	beforeCreate() {
+		const domModule = weex.requireModule('dom');
+		domModule.addRule('fontFace', {
+			fontFamily: 'iconfont',
+			src: "url('https://at.alicdn.com/t/font_1087442_fe5vigfwr5m.ttf')"
+		});
+	},
+	created() {
+		this.init();
+	},
+	methods: {
+		toMsg() {
+			uni.navigateTo({
+				url: '../../msg/msg'
+			});
+		},
+		init() {
+			uni.getSystemInfo({
+				success: res => {
+					this.statusBarHeight = res.statusBarHeight;
+					this.headerHeight += this.statusBarHeight;
+				}
+			});
+			this.nVueTitle = uni.getCurrentSubNVue();
+			this.nVueTitle.onMessage(res => {
+				let type = res.data.type;
+				switch (type) {
+					case 'location':
+						this.setCity(res.data.city);
+						break;
+					default:
+						break;
+				}
+			});
+		},
+		setCity(city) {
+			this.city = city;
+		},
+		inputfocus() {
+			this.subNVue.postMessage({
+				type: 'focus'
+			});
+		},
+		toCategory(e){
+			uni.navigateTo({
+				url: '../../goods/goods-list/goods-list?cid='+e.id+'&name='+e.name
+			});
+		},
+		goToCategory(event, refId, index) {
+			if(this.showCategoryIndex==index){return ;}
+			clearTimeout(this.timer);
+			this.stopAppear = true;
+			this.showCategoryIndex = index;
+			
+			const target = event.target;
+			const ref = this.$refs[refId];
+			this.leftScrollToElement(index,target);
+			ref && dom.scrollToElement(ref[0], { offset: -69 });
+			if(plus.os.name=='Android'){
+				this.timer = setTimeout(()=>{
+					this.stopAppear = false;
+				},1000)
+			}else{
+				this.timer = setTimeout(()=>{
+					this.stopAppear = false;
+				},300)
+			}
+		},
+		ondisappear($event,refId,index){
+			if($event.direction=='up'){
+				this.checkScroll($event.direction,refId,index);
+			}
+		}, 
+		onappear($event,refId,index){
+			if($event.direction=='down'){
+				this.checkScroll($event.direction,refId,index);
+			}
+		},
+		checkScroll(direction,refId,index){
+			if(this.stopAppear){
+				return false;
+			}
+			if(Math.abs(index - this.showCategoryIndex)>1&&plus.os.name=='iOS'){
+				return ;
+			}
+			const ref = this.$refs[refId];
+			this.leftScrollToElement(index,ref[0]);
+			if(direction=='down'){
+				this.showCategoryIndex = index;
+			}
+			if(direction=='up'){
+				this.showCategoryIndex = parseInt(index)+1;
+			}
+		},
+		leftScrollToElement(index,target){
+			if(plus.os.name=='Android'){
+				//安卓滚动的动画有回弹，左侧滚动体验不好，关闭动画
+				index > 0 && dom.scrollToElement(target, { offset: -90 ,animated:false});
+			}else{
+				index > 0 && dom.scrollToElement(target, { offset: -90 });
+			}
+		}
+	}
+};
+</script>
+<style>
+.icon {
+	font-family: iconfont;
+	font-size: 42px;
+}
+.content {
+	background-color: #ffffff;
+	flex-direction: column;
+}
+.header {
+	width: 750px;
+	flex-direction: column;
+	background-color: #ffffff;
+	position: fixed;
+	top: 0;
+	z-index: 99;
+}
+.status-bar {
+	width: 750px;
+}
+.nav {
+	width: 750px;
+	padding: 0 20px;
+	/* margin-left: 20px; */
+	position: relative;
+	height: 88px;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+}
+.location,
+.tongzhi {
+	width: 60px;
+	height: 88px;
+	text-align: center;
+	line-height: 88px;
+}
+.location {
+	left: 0px;
+	color: #ffc50a;
+}
+.location-city-text {
+	width: 60px;
+	height: 88px;
+	line-height: 88px;
+	font-size: 26px;
+	color: #000;
+}
+.tongzhi {
+	right: 0px;
+	color: #000;
+}
+.input-box {
+	width: 525px;
+	margin-left: 5px;
+	height: 60upx;
+	border-radius: 60px;
+	background-color: #f5f5f5;
+	position: relative;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+.input-box-input {
+	width: 330px;
+	height: 60px;
+	font-size: 28px;
+	margin-left: 30px;
+	placeholder-color: #c0c0c0;
+}
+.search {
+	width: 60px;
+	font-size: 34px;
+	padding-right: 30px;
+	color: #c0c0c0;
+}
+.place {
+	background-color: #ffffff;
+}
+.place-bottom {
+	height: 20upx;
+}
+.category-list {
+	position: absolute;
+	width: 750px;
+	bottom: 0;
+}
+
+.amount-list {
+	width: 720px;
+	margin: 5px, 0, 15px 15px;
+	height: 180px;
+	flex-direction: row;
+	justify-content: flex-start;
+	position: absolute;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	display: flex;
+	font-size: 26px;
+	color: #000;
+}
+.left {
+	width: 150px;
+	height: 150px;
+	position: relative;
+	margin: 18px 50px 20px 50px;
+	align-items: center;
+	justify-content: center;
+}
+.right {
+	width: 400px;
+	height: 100px;
+	margin-top: 50px;
+	flex-direction: column;
+}
+.amount-card-date {
+	color: #595BBC;
+	margin-bottom: 20px;
+	font-size: 30px;
+	font-weight: bold;
+}
+.amount-card-daily {
+	color: #F5B940;
+	font-size: 30px;
+}
+.payment {
+	width: 720px;
+	margin: 5px, 0,20px 15px;
+	height: 180px;
+	flex-direction: row;
+	justify-content: flex-start;
+	position: absolute;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	font-size: 26px;
+	color: #000;
+}
+.expense {
+	width: 200px;
+	margin: 5px, 0, 20px 15px;
+	height: 180px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+.income {
+	width: 200px;
+	margin: 5px, 0, 20px 15px;
+	height: 180px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+.surplus {
+	width: 200px;
+	margin: 5px, 0, 20px 15px;
+	height: 180px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+.tab {
+	width: 570px;
+	height: 70px;
+	padding: 0 17px 10px 17px;
+	flex-direction: row;
+	align-items: flex-end;
+	background-color: #fff;
+}
+.category-title {
+	font-size: 28px;
+	color: #666;
+}
+.category-title-min {
+	margin-left: 15px;
+	font-size: 20px;
+	color: #999;
+}
+
+
+</style>
