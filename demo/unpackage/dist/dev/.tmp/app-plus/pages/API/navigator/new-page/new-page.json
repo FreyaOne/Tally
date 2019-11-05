@@ -1,6 +1,4 @@
 {
   "navigationBarTitleText": "新页面",
-  "usingComponents": {
-    "page-head": "/components/page-head"
-  }
+  "usingComponents": {}
 }

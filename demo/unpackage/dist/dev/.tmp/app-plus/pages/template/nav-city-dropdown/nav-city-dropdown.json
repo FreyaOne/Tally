@@ -11,7 +11,6 @@
     ]
   },
   "usingComponents": {
-    "page-head": "/components/page-head",
     "mpvue-picker": "/components/mpvue-picker/mpvuePicker"
   }
 }

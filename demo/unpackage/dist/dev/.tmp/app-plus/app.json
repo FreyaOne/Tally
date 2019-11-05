@@ -146,34 +146,34 @@
     "animationType": "pop-in"
   },
   "tabBar": {
-    "color": "#7A7E83",
-    "selectedColor": "#007AFF",
+    "color": "#BFBEBE",
+    "selectedColor": "#595BBC",
     "borderStyle": "black",
     "backgroundColor": "#F8F8F8",
     "list": [
       {
         "pagePath": "pages/tabBar/component/component",
-        "iconPath": "static/component.png",
-        "selectedIconPath": "static/componentHL.png",
-        "text": "内置组件"
+        "iconPath": "static/tabBar/Record.png",
+        "selectedIconPath": "static/tabBar/Record-on.png",
+        "text": "明细"
       },
       {
         "pagePath": "pages/tabBar/API/API",
-        "iconPath": "static/api.png",
-        "selectedIconPath": "static/apiHL.png",
-        "text": "接口"
+        "iconPath": "static/tabBar/Chart.png",
+        "selectedIconPath": "static/tabBar/Chart-on.png",
+        "text": "图表"
       },
       {
         "pagePath": "pages/tabBar/extUI/extUI",
-        "iconPath": "static/extui.png",
-        "selectedIconPath": "static/extuiHL.png",
-        "text": "扩展组件"
+        "iconPath": "static/tabBar/Community.png",
+        "selectedIconPath": "static/tabBar/Community-on.png",
+        "text": "社区"
       },
       {
         "pagePath": "pages/tabBar/template/template",
-        "iconPath": "static/template.png",
-        "selectedIconPath": "static/templateHL.png",
-        "text": "模板"
+        "iconPath": "static/tabBar/Setting.png",
+        "selectedIconPath": "static/tabBar/Setting-on.png",
+        "text": "设置"
       }
     ]
   },
@@ -211,7 +211,7 @@
       "pages/tabBar/component/component.html": {
         "window": {
           "usingComponents": {},
-          "navigationBarTitleText": "内置组件",
+          "navigationBarTitleText": "明细",
           "bounce": "vertical",
           "titleNView": {
             "buttons": [
@@ -229,7 +229,7 @@
       "pages/tabBar/API/API.html": {
         "window": {
           "usingComponents": {},
-          "navigationBarTitleText": "接口",
+          "navigationBarTitleText": "图表",
           "titleNView": {
             "buttons": [
               {
@@ -246,7 +246,7 @@
       "pages/tabBar/template/template.html": {
         "window": {
           "usingComponents": {},
-          "navigationBarTitleText": "模版",
+          "navigationBarTitleText": "设置",
           "titleNView": {
             "buttons": [
               {
@@ -263,7 +263,7 @@
       "pages/tabBar/extUI/extUI.html": {
         "window": {
           "usingComponents": {},
-          "navigationBarTitleText": "扩展组件",
+          "navigationBarTitleText": "社区",
           "titleNView": {
             "buttons": [
               {

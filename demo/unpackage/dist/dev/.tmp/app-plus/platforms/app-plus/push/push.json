@@ -1,6 +1,4 @@
 {
   "navigationBarTitleText": "推送",
-  "usingComponents": {
-    "page-head": "/components/page-head"
-  }
+  "usingComponents": {}
 }

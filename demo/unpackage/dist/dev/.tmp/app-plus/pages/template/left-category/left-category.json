@@ -1,6 +1,4 @@
 {
   "navigationBarTitleText": "侧边分类导航",
-  "usingComponents": {
-    "page-foot": "/components/page-foot"
-  }
+  "usingComponents": {}
 }
