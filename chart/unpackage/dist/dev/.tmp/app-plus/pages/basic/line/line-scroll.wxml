@@ -1,0 +1,2 @@
+<import src="./line-scroll.vue.wxml" />
+    <template is="5f5cf75e" data="{{ ...$root['0'], $root }}"/>

@@ -49,7 +49,7 @@ page {
   height: 0;
   position: fixed;
   z-index: 10;
-  background-color: #fff;
+  background-color: #595BBC;
   top: 0;
   height: var(--status-bar-height);
 }
@@ -71,7 +71,7 @@ page {
   position: fixed;
   top: 0;
   z-index: 10;
-  background-color: #fff;
+  background-color: #595BBC;
   top: var(--status-bar-height);
 }
 .header .addr {
@@ -267,8 +267,8 @@ page {
             flex-wrap: wrap;
 }
 .order-list .list .record-item {
-      width: 80%;
-      margin: 20rpx 0 20rpx 3%;
+      width: 92%;
+      margin: 20rpx 0 20rpx 5%;
       display: -webkit-box;
       display: -webkit-flex;
       display: -ms-flexbox;

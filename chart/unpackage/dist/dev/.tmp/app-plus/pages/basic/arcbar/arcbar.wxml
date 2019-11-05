@@ -1,0 +1,2 @@
+<import src="./arcbar.vue.wxml" />
+    <template is="b4c99f08" data="{{ ...$root['0'], $root }}"/>

@@ -1,0 +1,2 @@
+<import src="./mark-line.vue.wxml" />
+    <template is="5ca399ae" data="{{ ...$root['0'], $root }}"/>

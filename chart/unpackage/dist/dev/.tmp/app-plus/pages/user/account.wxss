@@ -1,0 +1,11 @@
+
+.listcell{
+	padding: 20rpx 0;
+	border-bottom: 1px solid #ccc;
+}
+.login-button {
+		background: #E3162E;
+		color: #FFFFFF;
+		border-radius: 44rpx;
+}
+

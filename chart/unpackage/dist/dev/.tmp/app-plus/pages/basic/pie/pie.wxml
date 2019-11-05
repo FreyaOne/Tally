@@ -1,0 +1,2 @@
+<import src="./pie.vue.wxml" />
+    <template is="add0da14" data="{{ ...$root['0'], $root }}"/>
