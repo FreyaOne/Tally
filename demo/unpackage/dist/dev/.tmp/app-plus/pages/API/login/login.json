@@ -1,6 +1,4 @@
 {
   "navigationBarTitleText": "授权登录",
-  "usingComponents": {
-    "page-head": "/components/page-head"
-  }
+  "usingComponents": {}
 }

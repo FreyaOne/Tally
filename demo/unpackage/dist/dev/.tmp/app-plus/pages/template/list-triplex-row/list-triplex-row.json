@@ -1,6 +1,4 @@
 {
   "navigationBarTitleText": "三行列表",
-  "usingComponents": {
-    "page-head": "/components/page-head"
-  }
+  "usingComponents": {}
 }

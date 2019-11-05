@@ -1,7 +1,6 @@
 {
   "navigationBarTitleText": "多列选择picker",
   "usingComponents": {
-    "page-head": "/components/page-head",
     "mpvue-picker": "/components/mpvue-picker/mpvuePicker",
     "mpvue-city-picker": "/components/mpvue-citypicker/mpvueCityPicker"
   }

@@ -1,6 +1,4 @@
 {
   "navigationBarTitleText": "滚动公告",
-  "usingComponents": {
-    "page-head": "/components/page-head"
-  }
+  "usingComponents": {}
 }
