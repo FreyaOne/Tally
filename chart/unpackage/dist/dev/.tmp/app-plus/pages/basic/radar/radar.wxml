@@ -1,0 +1,2 @@
+<import src="./radar.vue.wxml" />
+    <template is="bd14eeac" data="{{ ...$root['0'], $root }}"/>

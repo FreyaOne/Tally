@@ -1,0 +1,6 @@
+
+.qiun-title{font-size: 36rpx;font-weight: bold;text-align: center;padding: 20rpx 0rpx;}
+.qiun-text-view{background-color: #FFFFFF;margin: 10rpx;padding: 10rpx;}
+.qiun-text-title{font-size: 32rpx;font-weight: bold;line-height: 64rpx;text-align: left;}
+.qiun-text{font-size: 30rpx;line-height: 50rpx;width: 100%;text-align: left;text-indent: 60rpx;}
+

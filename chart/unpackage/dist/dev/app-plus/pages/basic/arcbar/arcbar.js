@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"qiun-charts3 { width: ",[0,750],"; height: ",[0,250],"; background-color: #FFFFFF; position: relative; }\n.",[1],"charts3 { position: absolute; width: ",[0,250],"; height: ",[0,250],"; background-color: #FFFFFF; }\n",],undefined,{path:"./pages/basic/arcbar/arcbar.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/basic/arcbar/arcbar.wxml') } }));

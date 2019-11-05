@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"qiun-charts { width: ",[0,750],"; height: ",[0,500],"; background-color: #FFFFFF; }\n.",[1],"charts { width: ",[0,750],"; height: ",[0,500],"; background-color: #FFFFFF; }\n.",[1],"qiun-charts2 { width: ",[0,750],"; height: ",[0,200],"; background-color: #FFFFFF; }\n.",[1],"charts2 { width: ",[0,750],"; height: ",[0,200],"; background-color: #FFFFFF; }\n",],undefined,{path:"./pages/app/demo/candle.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/app/demo/candle.wxml') } }));

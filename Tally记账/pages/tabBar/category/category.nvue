@@ -250,7 +250,7 @@ export default {
 }
 
 .amount-list {
-	width: 720px;
+	width: 700px;
 	margin: 5px, 0, 15px 15px;
 	height: 180px;
 	flex-direction: row;
@@ -302,18 +302,21 @@ export default {
 	width: 200px;
 	margin: 5px, 0, 20px 15px;
 	height: 180px;
+	flex-direction: column;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 .income {
 	width: 200px;
 	margin: 5px, 0, 20px 15px;
 	height: 180px;
+	flex-direction: column;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 .surplus {
 	width: 200px;
 	margin: 5px, 0, 20px 15px;
 	height: 180px;
+	flex-direction: column;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 .tab {

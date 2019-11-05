@@ -1,0 +1,40 @@
+
+@charset "UTF-8";
+.uni-fav {
+	display: -webkit-inline-box;
+	display: -webkit-inline-flex;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	width: 120rpx;
+	height: 50rpx;
+	line-height: 50rpx;
+	text-align: center;
+	font-size: 28rpx;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+	border-radius: 6rpx;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	    -ms-flex-pack: center;
+	        justify-content: center
+}
+.uni-fav--circle {
+	border-radius: 60rpx
+}
+.uni-fav-star {
+	height: 50rpx;
+	line-height: 50rpx;
+	margin-right: 5rpx;
+	vertical-align: middle
+}
+.uni-fav-text {
+	display: inline-block;
+	height: 50rpx;
+	line-height: 50rpx;
+	vertical-align: middle
+}
+
