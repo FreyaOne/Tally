@@ -1,123 +1,61 @@
 <template>
-    <view class="uni-container">
-        <view class="uni-header-logo">
-            <image class="uni-header-image" src="/static/componentIndex.png"></image>
-        </view>
-        <view class="uni-hello-text">
-            <text class="hello-text">uni-app内置组件，展示样式仅供参考，文档详见：</text>
-            <u-link class="hello-link" :href="'https://uniapp.dcloud.io/component/'" :text="'https://uniapp.dcloud.io/component/'"
-                :inWhiteList="true"></u-link>
-        </view>
-        <view class="uni-panel" v-for="(item, index) in list" :key="item.id">
-            <view class="uni-panel-h" :class="item.open ? 'uni-panel-h-on' : ''" @click="triggerCollapse(index)">
-                <text class="uni-panel-text">{{item.name}}</text>
-                <text class="uni-panel-icon uni-icon" :class="item.open ? 'uni-panel-icon-on' : ''">&#xe581;</text>
-            </view>
-            <view class="uni-panel-c" v-if="item.open">
-                <view class="uni-navigate-item" v-for="(item2,key) in item.pages" :key="key" @click="goDetailPage(item2)">
-                    <text class="uni-navigate-text">{{item2.name ? item2.name : item2}}</text>
-                    <text class="uni-navigate-icon uni-icon">&#xe470;</text>
-                </view>
-            </view>
-        </view>
+    <view>
+    	<view class="uni-padding-wrap uni-common-mt">
+    		<uni-segmented-control :current="current" :values="items" :style-type="styleType" :active-color="activeColor" @clickItem="onClickItem" />
+    	</view>
+    	<view class="content">
+    		<view v-show="current === 0">
+				<view class="order-list">
+					<view class="uni-list">
+					    <view v-for="(row,index) in myrecordList" :key="index">
+					        <view class="uni-list-cell" hover-class="uni-list-cell-hover">
+								<view class="uni-flex uni-row" style="padding-left: 30upx; margin-bottom: 10px;margin-top: 10px;">
+									<view class="flex-item flex-item-V">{{row.content}}</view>
+									<view class="flex-item flex-item-V">{{row.time}}</view>
+									<view class="flex-item flex-item-V">{{row.sort}}</view>
+								</view>
+					            <!-- <view class="uni-triplex-row">
+					                <view class="uni-triplex-left">
+					                    <text class="uni-title uni-ellipsis">列表主标题</text>
+					                    <text class="uni-text">列表副标题</text>
+					                    <text class="uni-text-small uni-ellipsis">列表内容文字,列表内容文字,列表内容文字,列表内容文字,列表内容文字,列表内容文字</text>
+					                </view>
+					                <view class="uni-triplex-right">
+					                    <text class="uni-h5">12:15</text>
+					                </view>
+					            </view> -->
+					        </view>
+					    </view>
+					</view>
+				</view>
+			</view>
+    		<view v-show="current === 1">
+				<view>我是列表2</view>
+			</view>
+    	</view>
     </view>
 </template>
 <script>
-    import uLink from '@/components/uLink.vue'
+    import uLink from '@/components/uLink.vue';
+	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
     export default {
         components: {
-            uLink
+            uLink,
+			uniSegmentedControl
         },
         data() {
             return {
-                list: [{
-                        id: 'view',
-                        name: '视图容器',
-                        open: false,
-                        pages: [
-                            'view',
-                            'scroll-view',
-                            'swiper'
-                            // #ifndef MP-TOUTIAO
-                            ,
-                            'movable-view',
-                            'cover-view'
-                            // #endif
-                        ]
-                    }, {
-                        id: 'content',
-                        name: '基础内容',
-                        open: false,
-                        pages: ['text', 'rich-text', 'progress']
-                    }, {
-                        id: 'form',
-                        name: '表单组件',
-                        open: false,
-                        pages: ['button', 'checkbox', 'form', 'input', 'label', 'picker', 'picker-view', 'radio',
-                            'slider',
-                            'switch', 'textarea',
-                            // #ifdef APP-PLUS || MP-WEIXIN
-                            'editor',
-                            // #endif
-                        ]
-                    }, {
-                        id: 'nav',
-                        name: '导航',
-                        open: false,
-                        pages: ['navigator']
-                    }, {
-                        id: 'media',
-                        name: '媒体组件',
-                        open: false,
-                        pages: [
-                            'image',
-                            // #ifndef MP-ALIPAY
-                            'video',
-                            // #endif
-                            // #ifndef MP-ALIPAY || MP-TOUTIAO
-                            'audio',
-                            // #endif
-                        ],
-                    },
-                    // #ifndef MP-TOUTIAO
-                    {
-                        id: 'map',
-                        name: '地图',
-                        open: false,
-                        pages: ['map']
-
-                    },
-                    // #endif
-                    // #ifdef APP-PLUS
-                    {
-                        id: 'web-view',
-                        name: '网页',
-                        open: false,
-                        pages: [{
-                            name: '网络网页',
-                            url: '/pages/component/web-view/web-view'
-                        }, {
-                            name: '本地网页',
-                            url: '/pages/component/web-view-local/web-view-local'
-                        }]
-                    },
-                    // #endif
-                    // #ifndef APP-PLUS
-                    {
-                        id: 'web-view',
-                        name: '网页',
-                        open: false,
-                        pages: ['web-view']
-                    },
-                    // #endif
-                ],
-                navigateFlag: false
-            }
-        },
-        onShareAppMessage() {
-            return {
-                title: '欢迎体验uni-app',
-                path: '/pages/tabBar/component/component'
+				lists: [],
+				myrecordList: [
+					{ id: 1, content: '考研用品', price: '$100', time: '2019年10月1日', sort: '办公' },
+					{ id: 2, content: '运动鞋', price: '$300', time: '2019年9月1日', sort: '运动' },
+					{ id: 3, content: '冰淇淋', price: '$20', time: '2019年10月1日', sort: '零食' }
+				],
+                navigateFlag: false,
+				items: ['支出明细', '收入明细'],
+				current: 0,
+				activeColor: '#595BBC',
+				styleType: 'button'
             }
         },
         onNavigationBarButtonTap(e) {
@@ -126,6 +64,18 @@
             });
         },
         methods: {
+			onClickItem(index) {
+				if (this.current !== index) {
+					this.current = index
+				}
+			},
+			onLoad() {
+			    let list = [];
+			    for (let i = 0; i < 5; i++) {
+			        list.push(i)
+			    }
+			    this.lists = list;
+			},
             triggerCollapse(e) {
                 if (!this.list[e].pages) {
                     this.goDetailPage(this.list[e].url);
@@ -163,4 +113,125 @@
 
 <style>
     @import '../../../common/uni-nvue.css';
+	page {
+		display: flex;
+		flex-direction: column;
+		box-sizing: border-box;
+		background-color: #efeff4;
+	}
+	
+	view {
+		font-size: 28upx;
+		line-height: inherit
+	}
+	.example {
+		padding: 0 30upx 30upx
+	}
+	
+	.example-title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 32upx;
+		color: #464e52;
+		padding: 30upx 30upx 30upx 50upx;
+		margin-top: 20upx;
+		position: relative;
+		background-color: #fdfdfd;
+		border-bottom: 1px #f5f5f5 solid
+	}
+	
+	.example-title__after {
+		position: relative;
+		color: #031e3c
+	}
+	
+	.example-title:after {
+		content: '';
+		position: absolute;
+		left: 30upx;
+		margin: auto;
+		top: 0;
+		bottom: 0;
+		width: 6upx;
+		height: 32upx;
+		background-color: #ccc
+	}
+	
+	.example .example-title {
+		margin: 40upx 0
+	}
+	
+	.example-body {
+		padding: 30upx;
+		background: #fff
+	}
+	.budget-info {
+		
+	}
+	.example-info {
+		padding: 30upx;
+		color: #3b4144;
+		background: #fff
+	}
+	
+	.uni-common-mt {
+		margin-top: 20upx;
+	}
+	
+	.content {
+		/* display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 300upx;
+		text-align: center; */
+		margin-left: 30upx;
+	}
+	
+	.color-tag {
+		width: 50upx;
+		height: 50upx;
+	}
+	
+	uni-radio-group uni-label {
+		padding: 0;
+	}
+	
+	.uni-list-item__container {
+		padding: 24upx 30upx;
+		width: 100%;
+		box-sizing: border-box;
+		flex: 1;
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+	
+	.uni-list-item__container:after {
+		position: absolute;
+		z-index: 3;
+		right: 0;
+		bottom: 0;
+		left: 30upx;
+		height: 1px;
+		content: '';
+		-webkit-transform: scaleY(0.5);
+		transform: scaleY(0.5);
+		background-color: #c8c7cc;
+	}
+	
+	.example-body {
+		padding: 0;
+	}
+	
+	.uni-list .uni-list-item:last-child {}
+	.order-list {
+		width: 95%;
+		margin-top: 30px;
+		background-color: #fff;
+		box-shadow: 0upx 0px 25px rgba(0,0,0,0.1);
+		border-radius: 15px;
+	}
 </style>

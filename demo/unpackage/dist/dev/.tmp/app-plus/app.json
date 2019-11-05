@@ -212,11 +212,12 @@
         "window": {
           "usingComponents": {},
           "navigationBarTitleText": "明细",
+          "navigationBarBackgroundColor": "#595BBC",
           "bounce": "vertical",
           "titleNView": {
             "buttons": [
               {
-                "text": "",
+                "text": "",
                 "fontSrc": "/static/uni.ttf",
                 "fontSize": "22px",
                 "color": "#FFFFFF"
@@ -230,6 +231,7 @@
         "window": {
           "usingComponents": {},
           "navigationBarTitleText": "图表",
+          "navigationBarBackgroundColor": "#595BBC",
           "titleNView": {
             "buttons": [
               {
@@ -247,6 +249,7 @@
         "window": {
           "usingComponents": {},
           "navigationBarTitleText": "设置",
+          "navigationBarBackgroundColor": "#595BBC",
           "titleNView": {
             "buttons": [
               {
@@ -264,6 +267,7 @@
         "window": {
           "usingComponents": {},
           "navigationBarTitleText": "社区",
+          "navigationBarBackgroundColor": "#595BBC",
           "titleNView": {
             "buttons": [
               {

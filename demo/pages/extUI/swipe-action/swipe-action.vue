@@ -19,10 +19,10 @@
 		<!-- #ifndef MP-BAIDU || MP-ALIPAY || MP-TOUTIAO -->
 		<uni-list>
 			<uni-swipe-action :options="options1">
-				<uni-list-item :show-arrow="false" title="item1" />
+				<uni-list-item :show-arrow="true" title="item1" />
 			</uni-swipe-action>
 			<uni-swipe-action :options="options2">
-				<uni-list-item :show-arrow="false" title="item2" />
+				<uni-list-item :show-arrow="true" title="item2" />
 			</uni-swipe-action>
 			<uni-swipe-action :options="options3">
 				<uni-list-item :show-arrow="false" title="item3" />

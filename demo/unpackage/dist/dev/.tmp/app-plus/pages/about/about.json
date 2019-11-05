@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "关于",
+  "navigationBarTitleText": "添加明细",
   "usingComponents": {
     "u-link": "/components/uLink"
   }
