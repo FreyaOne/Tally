@@ -27,7 +27,7 @@
                 "app-plus": {
                     "titleNView": {
                         "buttons": [{
-                            "text": "\ue534",
+                            "text": "\ue468",
                             "fontSrc": "/static/uni.ttf",
                             "fontSize": "22px",
                             "color": "#FFFFFF"
