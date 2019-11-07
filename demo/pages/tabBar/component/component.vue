@@ -60,7 +60,7 @@
 					<view class="choseDate">
 						<view class="calendar-tags" @click="open">
 							<view class="calendar-tags-item calendar-button">
-								日历
+								<image src="/static/img/category/9.png" class="image"/>
 							</view>
 						</view>
 					</view>
@@ -372,5 +372,8 @@
 		display: flex;
 		align-items: center;
 	}
-	
+	.image {
+		width: 50upx;
+		height: 50upx;
+	}
 </style>
