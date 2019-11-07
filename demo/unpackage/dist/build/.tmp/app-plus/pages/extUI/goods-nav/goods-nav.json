@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "GoodsNav 商品导航",
+  "usingComponents": {
+    "uni-goods-nav": "/components/uni-goods-nav/uni-goods-nav"
+  }
+}

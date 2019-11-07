@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"video { width: 100%; }\n.",[1],"camera-tips { padding: ",[0,10]," ",[0,30],"; }\n",],undefined,{path:"./pages/API/video/video.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/API/video/video.wxml') } }));
