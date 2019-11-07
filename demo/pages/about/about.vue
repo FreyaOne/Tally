@@ -6,11 +6,15 @@
 					<!-- 消费金额 手动输入 -->
 					<view class="uni-form-item uni-column">
 						<view class="monetary">金额</view>
-						<input class="uni-input" name="input" v-model="content" placeholder-style="color: #BFBEBE" placeholder="请输入金额"/>
+						<input class="uni-input" name="input" v-model="money" placeholder-style="color: #BFBEBE" placeholder="请输入金额"/>
+					</view>
+					<view class="uni-form-item uni-column">
+						<view class="monetary">备注</view>
+						<input class="uni-input" name="input" v-model="content" placeholder-style="color: #BFBEBE" placeholder="备注..."/>
 					</view>
 					<!-- 花销类型 -->
 					<view class="uni-form-item uni-column">
-						<view class="catagory">类型选择</view>
+						<view class="catagory">类型选择：<text style="margin-left: 30upx; color: #F5B940;">{{category_type}}</text></view>
 						<view class="example-body">
 							<uni-grid :column="3" :highlight="true" @change="change">
 								<uni-grid-item v-for="(item, index) in list" :key="index" :value="item.category">
@@ -36,14 +40,19 @@
 							</view>
 						</view>
 					</view>
-					<view class="save" @tap="save">
-						<view class="btn">
-							保存地址
+					
+					<!-- 修改记录按钮 -->
+					<view class="button-area" v-show="this.editType == 'edit'" style="flex-direction: column; justify-content: space-between;">
+						<view class="uni-btn-v" style="width: 50%; align-items: center; display: flex;">
+							<button @tap="save" style="height: 70upx; font-size: 27upx; margin-right: 20upx;">修改</button>
+							<button @tap="del" style="height: 70upx; font-size: 27upx; background-color: #DD524D;">删除</button>
 						</view>
 					</view>
-					<view class="button-area">
+					
+					<!-- 新建记录传递 -->
+					<view class="button-area" v-show="this.editType == 'add'">
 						<view class="uni-btn-v" style="width: 50%; align-items: center; display: flex; flex-direction: column;">
-							<button form-type="submit" style="height: 70upx; font-size: 30upx;">确定</button>
+							<button @tap="save" style="height: 70upx; font-size: 30upx;">新建</button>
 						</view>
 					</view>
 				</form>
@@ -103,12 +112,17 @@
 						category: '食物'
 					}
 				],
+				id:'',
+				editType: '',
 				date: getDate({
 					format: true
 				}),
 				// 作为表单内容回传
 				content: '',
+				// 金额需要转成整数
+				money: '',
 				category: 0,
+				category_type: '学习',
 				startDate:getDate('start'),
 				endDate:getDate('end')
 			}
@@ -121,7 +135,10 @@
 				uni.getStorage({
 					key:'id',
 					success: (e) => {
-						console.log(e.data)
+						this.id = e.data.id;
+						this.content = e.data.content;
+						this.money = e.data.money;
+						this.category_type = e.data.category;
 					}
 				})
 			}
@@ -129,9 +146,54 @@
 		methods: {
 			// 获取表单数据 存入data
 			save(){
-				let data={"content":this.content, "category":this.category}
-				console.log(data.content)
-				console.log(data.category)
+				let data={"money": this.money, "content":this.content, "category":this.category, "date": this.date};
+				if(this.editType=='edit'){
+					data.id = this.id
+				}
+				if(!data.money){
+					uni.showToast({title:'请输入金额',icon:'none'});
+					return ;
+				}
+				if(!data.content){
+					uni.showToast({title:'请输入备注',icon:'none'});
+					return ;
+				}
+				uni.showLoading({
+					title:'正在提交'
+				})
+				//实际应用中请提交ajax,模板定时器模拟提交效果
+				setTimeout(()=>{
+					uni.setStorage({
+						// key是什么
+						key:'saveCategory',
+						data:data,
+						success() {
+							// 成功后回到原界面
+							uni.hideLoading();
+							uni.navigateBack();
+						}
+					})
+				},300)
+			},
+			del(){
+				uni.showModal({
+					title: '删除提示',
+					content: '你将删除这个收货地址',
+					success: (res)=>{
+						if (res.confirm) {
+							uni.setStorage({
+								key:'delAddress',
+								data:{id:this.id},
+								success() {
+									uni.navigateBack();
+								}
+							})
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
+				
 			},
 			formSubmit: function(e) {
 				// console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
@@ -151,7 +213,16 @@
 					index
 				} = e.detail
 				this.category = index
-				console.log(index)
+				// 显示用户选择
+				switch(this.category) {
+					case 0: this.category_type = '学习'; break;
+					case 1: this.category_type = '运动'; break;
+					case 2: this.category_type = '交通'; break;
+					case 3: this.category_type = '衣服'; break;
+					case 4: this.category_type = '工具'; break;
+					case 5: this.category_type = '食物'; break;
+					default: this.category_type = '无';
+				}
 			},
 			// 日期选择器
 			bindDateChange: function(e) {
@@ -209,7 +280,7 @@
 	}
 	
 	button {
-		width: 100%;
+		width: 50%;
 		background-color: #595BBC;
 		color: #FFFFFF;
 		font-size: 40upx;
@@ -223,7 +294,7 @@
 		height: 140upx;
 		padding-top: 15upx;
 		margin-top: 25upx;
-		height: 1000upx;
+		height: 1150upx;
 	}
 	
 	/* 九宫格 */

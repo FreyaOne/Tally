@@ -117,46 +117,7 @@
 					categories: [],
 					series: []
 				};
-				let LineB = {
-					categories: [],
-					series: []
-				};
-				let Area = {
-					categories: [],
-					series: []
-				};
 				let Pie = {
-					series: []
-				};
-				let Ring = {
-					series: []
-				};
-        let Funnel = {
-        	series: []
-        };
-				let Radar = {
-					categories: [],
-					series: []
-				};
-				let Arcbar1 = {
-					series: []
-				};
-				let Arcbar2 = {
-					series: []
-				};
-				let Arcbar3 = {
-					series: []
-				};
-				let Gauge = {
-					categories: [],
-					series: []
-				};
-				let Candle = {
-					categories: [],
-					series: []
-				};
-				let Mix = {
-					categories: [],
 					series: []
 				};
 				//这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
@@ -168,45 +129,11 @@
 				ColumnMeter.series = data.ColumnMeter.series;
 				LineA.categories = data.LineA.categories;
 				LineA.series = data.LineA.series;
-				LineB.categories = data.LineB.categories;
-				LineB.series = data.LineB.series;
-				Area.categories = data.Area.categories;
-				Area.series = data.Area.series;
 				Pie.series = data.Pie.series;
-				Ring.series = data.Ring.series;
-        Funnel.series = data.Pie.series;
-				//自定义文案示例，需设置format字段
-				for (let i = 0; i < Ring.series.length; i++) {
-					Ring.series[i].format = () => {
-						return Ring.series[i].name + Ring.series[i].data
-					};
-				}
-				Radar.categories = data.Radar.categories;
-				Radar.series = data.Radar.series;
-				Arcbar1.series = data.Arcbar1.series;
-				Arcbar2.series = data.Arcbar2.series;
-				Arcbar3.series = data.Arcbar3.series;
-				Gauge.categories = data.Gauge.categories;
-				Gauge.series = data.Gauge.series;
-				Candle.categories = data.Candle.categories;
-				Candle.series = data.Candle.series;
-				Mix.categories = data.Mix.categories;
-				Mix.series = data.Mix.series;
 				this.showColumn("canvasColumn", Column);
 				this.showColumnMeter("canvasColumnMeter", ColumnMeter);
 				this.showLineA("canvasLineA", LineA);
-				this.showLineB("canvasLineB", LineB);
-				this.showArea("canvasArea", Area);
 				this.showPie("canvasPie", Pie);
-				this.showRing("canvasRing", Ring);
-        this.showFunnel("canvasFunnel", Funnel);
-				this.showRadar("canvasRadar", Radar);
-				this.showArcbar("canvasArcbar1", Arcbar1);
-				this.showArcbar2("canvasArcbar2", Arcbar2);
-				this.showArcbar3("canvasArcbar3", Arcbar3);
-				this.showGauge("canvasGauge", Gauge);
-				this.showCandle("canvasCandle", Candle);
-				this.showMix("canvasMix", Mix);
 			},
 			showColumn(canvasId, chartData) {
 				canvasObj[canvasId] = new uCharts({
