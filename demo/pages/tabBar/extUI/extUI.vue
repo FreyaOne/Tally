@@ -2,7 +2,7 @@
 	<view>
 		<view class="example-body">
 			<view v-for="item in list" :key="item.id" class="example-box">
-				<uni-card :title="item.title" :is-shadow="item.shadow" :note="item.note" :extra="item.extra" :thumbnail="item.thumbnail" @click="clickCard">{{ item.content }}</uni-card>
+				<uni-card :title="item.title" :is-shadow="item.shadow" :note="item.note" :extra="item.extra" :thumbnail="item.thumbnail" @click="clickCard"> {{ item.content }}</uni-card>
 			</view>
 		</view>
 	</view>
@@ -51,18 +51,25 @@
 			url: '/pages/tabBar/extUI/publish'
 			});
 			},
-			// clickCard() {
-			// 	uni.showToast({
-			// 		title: '点击卡片',
-			// 		icon: 'none'
-			// 	})
-			// },
+			topage(page) {
+				uni.hideKeyboard()
+				uni.navigateTo({
+					url: page
+				})
+			},	
+			clickCard() {
+				uni.showToast({
+					title: '点击卡片',
+					icon: 'none'
+				})
+			},
 			footerClick(types) {
 				uni.showToast({
 					title: types,
 					icon: 'none'
 				})
-			}
+			},
+			
 		}
 	}
 </script>

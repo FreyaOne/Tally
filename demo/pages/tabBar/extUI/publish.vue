@@ -8,14 +8,7 @@
 							<!-- <view class="uni-uploader-title">点击可预览选好的图片</view> -->
 							<view class="uni-textarea" style="height: 300px; margin-top:30px;" auto-height>
 								<textarea @blur="bindTextAreaBlur" auto-height placeholder="这一刻的想法..." />
-								<!-- <view class="demo">
-									<block v-if="imageSrc">
-										<image :src="imageSrc" class="image" mode="widthFix"></image>
-									</block>
-									<block v-else>
-										<view class="uni-hello-addfile" @click="chooseImage" style="font-family:'华为细黑';">+</view>
-									</block>
-								</view> -->
+								<button type="default" placeholder="发表"></button>
 							</view>
 							
 						</view>

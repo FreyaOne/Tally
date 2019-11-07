@@ -1,5 +1,5 @@
 <template>
-	<view :class="{ 'uni-card--full': isFull === true || isFull === 'true', 'uni-card--shadow': isShadow === true || isShadow === 'true' }" class="uni-card" @click="onClick">
+	<view :class="{ 'uni-card--full': isFull === true || isFull === 'true', 'uni-card--shadow': isShadow === true || isShadow === 'true' }" class="uni-card">
 		<view v-if="mode === 'style'" class="uni-card__thumbnailimage">
 			<image :src="thumbnail" mode="aspectFill" />
 			<view v-if="title" class="uni-card__thumbnailimage-title">{{ title }}</view>
@@ -19,7 +19,8 @@
 				<image :src="thumbnail" class="uni-card__header-extra-img" />
 			</view> -->
 			<view class="uni-card__header-title-text">{{ title }}</view>
-			<view v-if="extra" class="uni-card__header-extra-text">{{ extra }}</view>
+			<!-- <view v-if="extra" class="uni-card__header-extra-text">{{ extra }}</view> -->
+			
 		</view>
 		<!-- 内容 -->
 		<view class="uni-card__content uni-card__content--pd">
@@ -37,6 +38,7 @@
 				<!-- <text>{{ note }}</text> -->
 				<!-- <uni-fav :checked="checkList[4]" :content-text="contentText" class="favBtn" @click="favClick(4)" /> -->
 				<uni-fav class="favBtn-nav" :checked="checkList[0]" :content-text="contentText" circle="true" @click="favClick(0)" />
+				<!-- <uni-fav class="favBtn-nav1" :content-text="contentText1" circle="true"/>	 -->
 				
 		</view>
 	</view>
@@ -99,7 +101,7 @@
 				contentText: {
 					contentDefault: '点赞',
 					contentFav: '已点赞'
-				}
+				},
 			}
 		}
 	}
@@ -297,7 +299,7 @@
 		display: flex;
 		align-items: center;
 	}
-	.favBtn-nav {
+	.favBtn-nav{
 		vertical-align: middle;
 		float:right;
 	}
