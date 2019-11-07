@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/tabBar/component/component",
+    "pages/tabBar/API/ucharts",
     "pages/component/view/view",
     "pages/component/scroll-view/scroll-view",
     "pages/component/swiper/swiper",
@@ -158,7 +160,7 @@
         "text": "明细"
       },
       {
-        "pagePath": "pages/tabBar/API/API",
+        "pagePath": "pages/tabBar/API/ucharts",
         "iconPath": "static/tabBar/Chart.png",
         "selectedIconPath": "static/tabBar/Chart-on.png",
         "text": "图表"
@@ -208,45 +210,11 @@
         },
         "nvue": true
       },
-      "pages/tabBar/component/component.html": {
-        "window": {
-          "usingComponents": {},
-          "navigationBarTitleText": "明细",
-          "bounce": "vertical",
-          "titleNView": {
-            "buttons": [
-              {
-                "text": "",
-                "fontSrc": "/static/uni.ttf",
-                "fontSize": "22px",
-                "color": "#FFFFFF"
-              }
-            ]
-          }
-        },
-        "nvue": true
-      },
-      "pages/tabBar/API/API.html": {
-        "window": {
-          "usingComponents": {},
-          "navigationBarTitleText": "图表",
-          "titleNView": {
-            "buttons": [
-              {
-                "text": "",
-                "fontSrc": "/static/uni.ttf",
-                "fontSize": "22px",
-                "color": "#FFFFFF"
-              }
-            ]
-          }
-        },
-        "nvue": true
-      },
       "pages/tabBar/template/template.html": {
         "window": {
           "usingComponents": {},
           "navigationBarTitleText": "设置",
+          "navigationBarBackgroundColor": "#595BBC",
           "titleNView": {
             "buttons": [
               {
@@ -264,6 +232,7 @@
         "window": {
           "usingComponents": {},
           "navigationBarTitleText": "社区",
+          "navigationBarBackgroundColor": "#595BBC",
           "titleNView": {
             "buttons": [
               {
@@ -298,8 +267,7 @@
         },
         "nvue": true
       }
-    },
-    "entryPagePath": "pages/tabBar/component/component"
+    }
   },
   "nvueCompiler": "uni-app",
   "renderer": "auto",

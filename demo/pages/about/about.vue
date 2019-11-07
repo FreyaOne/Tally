@@ -1,222 +1,290 @@
 <template>
 	<view class="about">
-		<view class="content">
-			<view class="qrcode">
-				<image src="https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/app_download.png" @longtap="save"></image>
-				<text class="tip">扫码体验uni-app</text>
-			</view>
-			<view class="desc">
-				<text class="code">uni-app</text>
-				是一个使用 <text class="code">Vue.js</text> 开发跨平台应用的前端框架。
-			</view>
-			<view class="source">
-				<view class="title">本示例源码获取方式：</view>
-				<view class="source-list">
-					<view class="source-cell">
-						<text space="nbsp">1. </text>
-						<text>下载 HBuilderX，新建 uni-app 项目时选择 <text class="code">Hello uni-app</text> 模板。</text>
+		<view class="uni-padding-wrap uni-common-mt" style="align-items: center; display: flex; justify-content: center;">
+			<view class="record-card">
+				<form @submit="formSubmit" @reset="formReset">
+					<!-- 消费金额 手动输入 -->
+					<view class="uni-form-item uni-column">
+						<view class="monetary">金额</view>
+						<input class="uni-input" name="input" v-model="content" placeholder-style="color: #BFBEBE" placeholder="请输入金额"/>
 					</view>
-					<view class="source-cell">
-						<text space="nbsp">2. </text>
-						<u-link class="link" :href="'https://github.com/dcloudio/hello-uniapp'" :text="'https://github.com/dcloudio/hello-uniapp'"></u-link>
+					<!-- 花销类型 -->
+					<view class="uni-form-item uni-column">
+						<view class="catagory">类型选择</view>
+						<view class="example-body">
+							<uni-grid :column="3" :highlight="true" @change="change">
+								<uni-grid-item v-for="(item, index) in list" :key="index" :value="item.category">
+									<image :src="item.url" class="image" mode="aspectFill" />
+									<text class="text" value="">{{ item.category }}</text>
+								</uni-grid-item>
+							</uni-grid>
+						</view>
 					</view>
-				</view>
+					<view class="uni-form-item uni-column">
+					<!-- 日期选择 -->
+						<view class="uni-list" style="height: 80upx;">
+							<view class="uni-list-cell">
+								<view class="uni-list-cell-left" style="margin-top: 15upx;">
+									选择时间
+								</view>
+								<view class="uni-list-cell-db" style="height: 50upx;">
+									<!-- 时间选择器高度50upx -->
+									<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
+										<view class="uni-input" style="font-size: 30upx;">{{date}}</view>
+									</picker>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="save" @tap="save">
+						<view class="btn">
+							保存地址
+						</view>
+					</view>
+					<view class="button-area">
+						<view class="uni-btn-v" style="width: 50%; align-items: center; display: flex; flex-direction: column;">
+							<button form-type="submit" style="height: 70upx; font-size: 30upx;">确定</button>
+						</view>
+					</view>
+				</form>
 			</view>
-			<!-- #ifdef APP-PLUS -->
-			<button type="primary" @click="share">分享</button>
-			<!-- #endif -->
 		</view>
-		<!-- #ifdef APP-PLUS -->
-		<view class="version">
-			当前版本：{{version}}
-		</view>
-		<!-- #endif -->
 	</view>
 </template>
-
 <script>
-	import uLink from "@/components/uLink.vue"
-
+	import uniGrid from '@/components/uni-grid/uni-grid.vue'
+	import uniGridItem from '@/components/uni-grid-item/uni-grid-item.vue'
+	function getDate(type) {
+		const date = new Date();
+	
+		let year = date.getFullYear();
+		let month = date.getMonth() + 1;
+		let day = date.getDate();
+	
+		if (type === 'start') {
+			year = year - 60;
+		} else if (type === 'end') {
+			year = year + 2;
+		}
+		month = month > 9 ? month : '0' + month;;
+		day = day > 9 ? day : '0' + day;
+	
+		return `${year}-${month}-${day}`;
+	}
 	export default {
 		components: {
-			uLink
+			uniGrid,
+			uniGridItem
 		},
 		data() {
 			return {
-				providerList: [],
-				version: ''
+				list: [{
+						url: '/static/img/category/7.png',
+						category: '学习'
+					},
+					{
+						url: '/static/img/category/6.png',
+						category: '运动'
+					},
+					{
+						url: '/static/img/category/2.png',
+						category: '交通'
+					},
+					{
+						url: '/static/img/category/1.png',
+						category: '衣服'
+					},
+					{
+						url: '/static/img/category/4.png',
+						category: '工具'
+					},
+					{
+						url: '/static/img/category/5.png',
+						category: '食物'
+					}
+				],
+				date: getDate({
+					format: true
+				}),
+				// 作为表单内容回传
+				content: '',
+				category: 0,
+				startDate:getDate('start'),
+				endDate:getDate('end')
 			}
 		},
-		onLoad() {
-			// #ifdef APP-PLUS
-			this.version = plus.runtime.version;
-			uni.getProvider({
-				service: 'share',
-				success: (result) => {
-					const data = [];
-					for (let i = 0; i < result.provider.length; i++) {
-						switch (result.provider[i]) {
-							case 'weixin':
-								data.push({
-									name: '分享到微信好友',
-									id: 'weixin'
-								});
-								data.push({
-									name: '分享到微信朋友圈',
-									id: 'weixin',
-									type: 'WXSenceTimeline'
-								});
-								break;
-							case 'qq':
-								data.push({
-									name: '分享到QQ',
-									id: 'qq'
-								});
-								break;
-							default:
-								break;
-						}
+		
+		// 接收由component传的数据
+		onLoad(e) {
+			this.editType = e.type;
+			if(e.type == 'edit') {
+				uni.getStorage({
+					key:'id',
+					success: (e) => {
+						console.log(e.data)
 					}
-					this.providerList = data;
-				},
-				fail: (error) => {
-					console.log('获取分享通道失败' + JSON.stringify(error));
-				}
-			});
-			// #endif
+				})
+			}
 		},
 		methods: {
-			// #ifdef APP-PLUS
-			save() {
-				uni.showActionSheet({
-					itemList: ['保存图片到相册'],
-					success: () => {
-						plus.gallery.save('https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/app_download.png', function() {
-							uni.showToast({
-								title: '保存成功',
-								icon: 'none'
-							});
-						}, function() {
-							uni.showToast({
-								title: '保存失败，请重试！',
-								icon: 'none'
-							});
-						});
-					}
+			// 获取表单数据 存入data
+			save(){
+				let data={"content":this.content, "category":this.category}
+				console.log(data.content)
+				console.log(data.category)
+			},
+			formSubmit: function(e) {
+				// console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
+				var formdata = e.detail.value
+				uni.showModal({
+					content: '表单数据内容：' + JSON.stringify(formdata),
+					showCancel: false
 				});
 			},
-			share(e) {
-				if (this.providerList.length === 0) {
-					uni.showModal({
-						title: '当前环境无分享渠道!',
-						showCancel: false
-					});
-					return;
-				}
-				let itemList = this.providerList.map(function(value) {
-					return value.name;
-				})
-				uni.showActionSheet({
-					itemList: itemList,
-					success: (res) => {
-						let provider = this.providerList[res.tapIndex].id;
-						uni.share({
-							provider: provider,
-							scene: this.providerList[res.tapIndex].type && this.providerList[res.tapIndex].type === 'WXSenceTimeline' ?
-								'WXSenceTimeline' : "WXSceneSession",
-							type: (provider === "qq") ? 1 : 0,
-							title: '欢迎体验uni-app',
-							summary: 'uni-app 是一个使用 Vue.js 开发跨平台应用的前端框架',
-							imageUrl: 'https://img-cdn-qiniu.dcloud.net.cn/uploads/nav_menu/8.jpg',
-							href: "https://m3w.cn/uniapp",
-							success: (res) => {
-								console.log("success:" + JSON.stringify(res));
-							},
-							fail: (e) => {
-								uni.showModal({
-									content: e.errMsg,
-									showCancel: false
-								})
-							}
-						});
-					}
-				})
+			
+			formReset: function(e) {
+				console.log('清空数据')
+			},
+			// 种类选择
+			change(e) {
+				let {
+					index
+				} = e.detail
+				this.category = index
+				console.log(index)
+			},
+			// 日期选择器
+			bindDateChange: function(e) {
+				this.date = e.target.value
+			},
+			bindTimeChange: function(e) {
+				this.time = e.target.value
 			}
-			// #endif
 		}
 	}
 </script>
 
 <style>
-	page,
-	view {
-		display: flex;
+	
+	.uni-form-item .monetary {
+		padding: 20rpx 0;
+		margin-left: 35upx;
+		color: #595BBC;
+		
 	}
-
-	page {
-		min-height: 100%;
-		background-color: #FFFFFF;
+	.picktime {
+		margin-left: 35upx;
+		margin-bottom: 10upx;
+		color: #595BBC;
 	}
-
-	image {
-		width: 360upx;
-		height: 360upx;
+	.uni-form-item .catagory {
+		margin-left: 35upx;
+		margin-top: 15upx;
+		color: #595BBC;
 	}
-
+	.uni-input {
+		height: 40upx;
+		width: 80%;
+		margin-left: 20upx;
+		background-color:#F9F9F9;
+		color: #F5B940;
+	}
+	.uni-list-cell-left {
+		color: #595BBC;
+	}
 	.about {
+		width: 100%;
 		flex-direction: column;
-		flex: 1;
+		/* flex: 1; */
+		display: flex;
+		/*!*flex-direction: column;*!可写可不写*/
+		align-items: center;
 	}
-
-	.content {
-		flex: 1;
-		padding: 30upx;
-		flex-direction: column;
-		justify-content: center;
-	}
-
-	.qrcode {
+	.button-area {
+		width: 100%;
 		display: flex;
 		align-items: center;
 		flex-direction: column;
-	}
-
-	.qrcode .tip {
 		margin-top: 20upx;
 	}
-
-	.desc {
-		margin-top: 30upx;
-		display: block;
-	}
-
-	.code {
-		color: #e96900;
-		background-color: #f8f8f8;
-	}
-
+	
 	button {
 		width: 100%;
-		margin-top: 40upx;
+		background-color: #595BBC;
+		color: #FFFFFF;
+		font-size: 40upx;
 	}
-
-	.version {
-		height: 80upx;
-		line-height: 80upx;
-		justify-content: center;
-		color: #ccc;
+	
+	.record-card {
+		width: 92%;
+		background-color: #fff;
+		box-shadow: 0upx 0upx 25upx rgba(0,0,0,0.1);
+		border-radius: 15upx;
+		height: 140upx;
+		padding-top: 15upx;
+		margin-top: 25upx;
+		height: 1000upx;
 	}
-
-	.source {
-		margin-top: 30upx;
-		flex-direction: column;
+	
+	/* 九宫格 */
+	.example {
+		padding: 0 30upx 30upx
 	}
-
-	.source-list {
-		flex-direction: column;
+	
+	.example-title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 32upx;
+		color: #464e52;
+		padding: 30upx 30upx 30upx 50upx;
+		margin-top: 20upx;
+		position: relative;
+		background-color: #fdfdfd;
+		border-bottom: 1px #f5f5f5 solid
 	}
-
-	.link {
-		color: #007AFF;
+	
+	.example-title__after {
+		position: relative;
+		color: #031e3c
+	}
+	
+	.example-title:after {
+		content: '';
+		position: absolute;
+		left: 30upx;
+		margin: auto;
+		top: 0;
+		bottom: 0;
+		width: 6upx;
+		height: 32upx;
+		background-color: #ccc
+	}
+	
+	.example .example-title {
+		margin: 40upx 0
+	}
+	
+	.example-body  {
+		padding: 30upx;
+		background: #fff
+	}
+	
+	
+	.example-info {
+		padding: 30upx;
+		color: #3b4144;
+		background: #fff
+	}
+	
+	.image {
+		width: 50upx;
+		height: 50upx;
+	}
+	
+	.text {
+		font-size: 26upx;
+		margin-top: 10upx;
+		color: #F5B940;
 	}
 </style>

@@ -5,11 +5,12 @@
             "path": "pages/tabBar/component/component",
             "style": {
                 "navigationBarTitleText": "明细",
+				"navigationBarBackgroundColor": "#595BBC",
                 "app-plus": {
                     "bounce": "vertical",
                     "titleNView": {
                         "buttons": [{
-                            "text": "\ue534",
+                            "text": "\ue468",
                             "fontSrc": "/static/uni.ttf",
                             "fontSize": "22px",
                             "color": "#FFFFFF"
@@ -19,13 +20,14 @@
             }
         },
         {
-            "path": "pages/tabBar/API/API",
+            "path": "pages/tabBar/API/ucharts",
             "style": {
                 "navigationBarTitleText": "图表",
+				"navigationBarBackgroundColor": "#595BBC",
                 "app-plus": {
                     "titleNView": {
                         "buttons": [{
-                            "text": "\ue534",
+                            "text": "\ue468",
                             "fontSrc": "/static/uni.ttf",
                             "fontSize": "22px",
                             "color": "#FFFFFF"
@@ -38,6 +40,7 @@
             "path": "pages/tabBar/template/template",
             "style": {
                 "navigationBarTitleText": "设置",
+				"navigationBarBackgroundColor": "#595BBC",
                 "app-plus": {
                     "titleNView": {
                         "buttons": [{
@@ -54,6 +57,7 @@
             "path": "pages/tabBar/extUI/extUI",
             "style": {
                 "navigationBarTitleText": "社区",
+				"navigationBarBackgroundColor": "#595BBC",
                 "app-plus": {
                     "titleNView": {
                         "buttons": [{
@@ -293,7 +297,8 @@
         {
             "path": "pages/about/about",
             "style": {
-                "navigationBarTitleText": "关于"
+				"navigationBarBackgroundColor": "#595BBC",
+                "navigationBarTitleText": "添加明细"
             }
         },
         // #endif
@@ -1191,7 +1196,7 @@
                 "text": "明细"
             },
             {
-                "pagePath": "pages/tabBar/API/API",
+                "pagePath": "pages/tabBar/API/ucharts",
                 "iconPath": "static/tabBar/Chart.png",
                 "selectedIconPath": "static/tabBar/Chart-on.png",
                 "text": "图表"
