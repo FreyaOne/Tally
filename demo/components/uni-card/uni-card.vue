@@ -5,38 +5,51 @@
 			<view v-if="title" class="uni-card__thumbnailimage-title">{{ title }}</view>
 		</view>
 		<view v-if="mode === 'title'" class="uni-card__title">
-			<view class="uni-card__title-header">
+			<!-- <view class="uni-card__title-header">
 				<image :src="thumbnail" mode="aspectFill" />
-			</view>
+			</view> -->
 			<view class="uni-card__title-content">
 				<view class="uni-card__title-content-title">{{ title }}</view>
-				<view class="uni-card__title-content-extra">{{ extra }}</view>
+				<!-- <view class="uni-card__title-content-extra">{{ extra }}</view> -->
 			</view>
 		</view>
 		<!-- 标题 -->
 		<view v-if="mode === 'basic' && title" class="uni-card__header">
-			<view v-if="thumbnail" class="uni-card__header-extra-img-view">
+			<!-- <view v-if="thumbnail" class="uni-card__header-extra-img-view">
 				<image :src="thumbnail" class="uni-card__header-extra-img" />
-			</view>
+			</view> -->
 			<view class="uni-card__header-title-text">{{ title }}</view>
 			<view v-if="extra" class="uni-card__header-extra-text">{{ extra }}</view>
 		</view>
 		<!-- 内容 -->
 		<view class="uni-card__content uni-card__content--pd">
 			<view v-if="mode === 'style' && extra" class="uni-card__content-extra">{{ extra }}</view>
-			<slot />
+			<slot/>
+		</view>
+		<!-- <view v-if="thumbnail" class="uni-card__header-extra-img-view">
+			<image :src="thumbnail" class="uni-card__header-extra-img" />
+		</view> -->
+		<view v-if="thumbnail" class="image-box">
+			<image class="image" mode="aspectFill" :src="thumbnail"/>
 		</view>
 		<!-- 底部 -->
 		<view v-if="note" class="uni-card__footer">
-			<slot name="footer">
-				<text>{{ note }}</text>
-			</slot>
+				<!-- <text>{{ note }}</text> -->
+				<!-- <uni-fav :checked="checkList[4]" :content-text="contentText" class="favBtn" @click="favClick(4)" /> -->
+				<uni-fav class="favBtn-nav" :checked="checkList[0]" :content-text="contentText" circle="true" @click="favClick(0)" />
+				
 		</view>
 	</view>
 </template>
 
 <script>
+	import uniFav from '@/components/uni-fav/uni-fav.vue'
+	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue'
 	export default {
+		components: {
+			uniFav,
+			uniNavBar
+		},
 		name: 'UniCard',
 		props: {
 			title: {
@@ -74,6 +87,19 @@
 		methods: {
 			onClick() {
 				this.$emit('click')
+			},
+			favClick(index) {
+				this.checkList[index] = !this.checkList[index]
+				this.$forceUpdate()
+			}
+		},
+		data(){
+			return{
+				checkList: [false],
+				contentText: {
+					contentDefault: '点赞',
+					contentFav: '已点赞'
+				}
 			}
 		}
 	}
@@ -138,7 +164,7 @@
 		flex-direction: column;
 		justify-content: space-between;
 		padding-left: 20upx;
-		height: 80upx;
+		height: 50upx;
 		overflow: hidden
 	}
 
@@ -250,5 +276,29 @@
 		border-left: none;
 		border-right: none;
 		border-radius: 0
+	}
+	
+	.image-box {
+		width: 100%;
+		height: 350upx;
+		overflow: hidden;
+	}    /*图片*/
+	
+	.image-box .image {
+		width: 100%;
+		height: 100%;
+	}   /*内容图片的样式*/
+	
+	.favBtn {
+		margin: 0 20rpx 20rpx 0;
+	}
+	.footer-box__item{
+		width: 100%;
+		display: flex;
+		align-items: center;
+	}
+	.favBtn-nav {
+		vertical-align: middle;
+		float:right;
 	}
 </style>
