@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"uni-padding-wrap { margin-top: ",[0,50]," 0; }\n.",[1],"uni-button { margin: ",[0,30]," 0; }\n.",[1],"uni-tips { color: #666; font-size: ",[0,30],"; }\n.",[1],"uni-tips-text { margin-top: ",[0,15],"; line-height: 1.2; font-size: ",[0,24],"; }\n",],undefined,{path:"./pages/API/vibrate/vibrate.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/API/vibrate/vibrate.wxml') } }));

@@ -1,0 +1,51 @@
+
+.history-title {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	    -ms-flex-pack: justify;
+	        justify-content: space-between;
+	padding: 20rpx 30rpx;
+	padding-bottom: 0;
+	font-size: 34rpx;
+	color: #333;
+}
+.history-title .uni-icon {
+	font-size: 40rpx;
+}
+.history-content {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	    -ms-flex-wrap: wrap;
+	        flex-wrap: wrap;
+	padding: 15rpx;
+}
+.history-item {
+	padding: 4rpx 35rpx;
+	border: 1px #f1f1f1 solid;
+	background: #fff;
+	border-radius: 50rpx;
+	margin: 12rpx 10rpx;
+	color: #999;
+}
+.history-list-box {
+	/* margin: 10upx 0; */
+}
+.history-list-item {
+	padding: 30rpx 0;
+	margin-left: 30rpx;
+	border-bottom: 1px #EEEEEE solid;
+	font-size: 28rpx;
+}
+.no-data {
+	text-align: center;
+	color: #999;
+	margin: 100rpx;
+}
+

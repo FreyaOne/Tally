@@ -1,0 +1,44 @@
+{
+  "navigationBarTitleText": "SubNvue",
+  "titleNView": false,
+  "subNVues": [
+    {
+      "id": "drawer",
+      "path": "pages/API/subnvue/subnvue/drawer",
+      "type": "popup",
+      "style": {
+        "width": "50%"
+      }
+    },
+    {
+      "id": "popup",
+      "path": "pages/API/subnvue/subnvue/popup",
+      "type": "popup",
+      "style": {
+        "margin": "auto",
+        "width": "80%",
+        "height": "600upx"
+      }
+    },
+    {
+      "id": "video_mask",
+      "path": "pages/API/subnvue/subnvue/video-mask",
+      "style": {
+        "position": "absolute",
+        "bottom": "30px",
+        "left": "0",
+        "width": "230px",
+        "height": "110px",
+        "background": "transparent"
+      }
+    },
+    {
+      "id": "nav",
+      "path": "pages/API/subnvue/subnvue/nav",
+      "type": "navigationBar"
+    }
+  ],
+  "usingComponents": {
+    "page-head": "/components/page-head"
+  }
+}

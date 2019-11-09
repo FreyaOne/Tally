@@ -1,0 +1,1 @@
+<template name="59aefb60"><view class="_view M59aefb60 qiun-columns"><view class="_view M59aefb60 qiun-bg-white qiun-title-bar qiun-common-mt"><view class="_view M59aefb60 qiun-title-dot-light">仪表盘</view></view><view class="_view M59aefb60 qiun-charts"><canvas canvas-id="canvasGauge" id="canvasGauge" class="_canvas M59aefb60 charts"></canvas></view></view></template>

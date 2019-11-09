@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "获取手机系统信息",
+  "usingComponents": {
+    "page-head": "/components/page-head"
+  }
+}

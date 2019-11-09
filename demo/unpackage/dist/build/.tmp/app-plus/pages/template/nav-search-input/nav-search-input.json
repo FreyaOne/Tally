@@ -1,0 +1,25 @@
+{
+  "navigationBarTitleText": "导航栏带搜索框",
+  "titleNView": {
+    "type": "transparent",
+    "titleColor": "#fff",
+    "backgroundColor": "#007AFF",
+    "buttons": [
+      {
+        "fontSrc": "/static/uni.ttf",
+        "text": "",
+        "width": "40px",
+        "fontSize": "28px",
+        "color": "#fff",
+        "background": "rgba(0,0,0,0)"
+      }
+    ],
+    "searchInput": {
+      "backgroundColor": "#fff",
+      "borderRadius": "6px",
+      "placeholder": "请输入地址 如：大钟寺",
+      "disabled": true
+    }
+  },
+  "usingComponents": {}
+}

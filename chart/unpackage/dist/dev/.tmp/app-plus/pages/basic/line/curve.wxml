@@ -1,0 +1,2 @@
+<import src="./curve.vue.wxml" />
+    <template is="051478f2" data="{{ ...$root['0'], $root }}"/>

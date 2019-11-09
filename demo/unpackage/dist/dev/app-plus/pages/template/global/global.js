@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"button { margin: ",[0,30],"; color: #007AFF; }\n.",[1],"text{ margin-left: ",[0,30],"; }\n",],undefined,{path:"./pages/template/global/global.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/template/global/global.wxml') } }));

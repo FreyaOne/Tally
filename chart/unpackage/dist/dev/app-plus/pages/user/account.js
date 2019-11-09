@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"listcell{ padding: ",[0,20]," 0; border-bottom: 1px solid #ccc; }\n.",[1],"login-button { background: #E3162E; color: #FFFFFF; border-radius: ",[0,44],"; }\n",],undefined,{path:"./pages/user/account.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/user/account.wxml') } }));
