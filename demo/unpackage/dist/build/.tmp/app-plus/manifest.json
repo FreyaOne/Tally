@@ -41,15 +41,14 @@
     },
     "popGesture": "close",
     "launchwebview": {
-      "id": "2",
+      "id": "1",
       "kernel": "WKWebview",
-      "uni-app": "auto",
-      "render": "always"
+      "uni-app": "auto"
     },
     "statusbar": {
       "immersed": "supportedDevice",
       "style": "light",
-      "background": "#3f51b5"
+      "background": "#595BBC"
     },
     "usingComponents": true,
     "nvueCompiler": "uni-app",
@@ -143,7 +142,7 @@
           "text": "明细"
         },
         {
-          "pagePath": "pages/tabBar/API/API",
+          "pagePath": "pages/tabBar/API/ucharts",
           "iconPath": "static/tabBar/Chart.png",
           "selectedIconPath": "static/tabBar/Chart-on.png",
           "text": "图表"
@@ -161,7 +160,11 @@
           "text": "设置"
         }
       ],
-      "height": "50px"
+      "height": "50px",
+      "child": [
+        "lauchwebview"
+      ],
+      "selected": 0
     }
   }
 }

@@ -1,6 +1,8 @@
 {
-  "navigationBarTitleText": "关于",
+  "navigationBarBackgroundColor": "#595BBC",
+  "navigationBarTitleText": "添加明细",
   "usingComponents": {
-    "u-link": "/components/uLink"
+    "uni-grid": "/components/uni-grid/uni-grid",
+    "uni-grid-item": "/components/uni-grid-item/uni-grid-item"
   }
 }

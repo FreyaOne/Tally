@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/tabBar/template/login",
     "pages/tabBar/component/component",
     "pages/tabBar/API/ucharts",
     "pages/tabBar/template/template",
@@ -38,7 +39,6 @@
     "platforms/app-plus/shake/shake",
     "pages/about/about",
     "platforms/app-plus/feedback/feedback",
-    "pages/tabBar/template/login",
     "pages/tabBar/template/register",
     "pages/tabBar/template/resetpasswd",
     "pages/tabBar/extUI/publish",

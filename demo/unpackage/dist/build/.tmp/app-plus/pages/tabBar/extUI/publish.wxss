@@ -1,0 +1,11 @@
+
+.image {
+	width: 100%;
+}
+.demo {
+	background: #ffffff;
+	    padding: 27px;
+	    width: 11px;
+	    height: 11px;
+}
+

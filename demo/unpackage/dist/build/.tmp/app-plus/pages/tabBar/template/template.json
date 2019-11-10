@@ -1,9 +1,10 @@
 {
-  "navigationBarTitleText": "设置",
+  "navigationBarTitleText": "设 置",
+  "navigationBarBackgroundColor": "#595BBC",
   "titleNView": {
     "buttons": [
       {
-        "text": "",
+        "text": "",
         "fontSrc": "/static/uni.ttf",
         "fontSize": "22px",
         "color": "#FFFFFF"

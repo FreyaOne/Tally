@@ -80,7 +80,6 @@ form {
 	-webkit-flex-direction: row;
 	    -ms-flex-direction: row;
 	        flex-direction: row;
-	height: 100rpx;
 }
 .uni-flex-item {
 	-webkit-box-flex: 1;
@@ -156,8 +155,8 @@ form {
 	overflow-x: hidden;
 }
 .uni-padding-wrap{
-	width:750rpx;
-	padding:0 50rpx;
+	width:690rpx;
+	padding:0 30rpx;
 }
 .uni-word {
 	text-align: center;
@@ -192,7 +191,7 @@ form {
 	padding-left:30rpx;
 }
 .uni-common-mt{
-	margin-top:80rpx;
+	margin-top:30rpx;
 }
 /* 背景色 */
 .uni-bg-red{
@@ -696,7 +695,7 @@ radio-group label, checkbox-group label{
 	-webkit-flex-direction: row;
 	    -ms-flex-direction: row;
 	        flex-direction: row;
-	padding: 15rpx 30rpx;
+	padding: 22rpx 30rpx;
 }
 .uni-triplex-right,
 .uni-triplex-left {

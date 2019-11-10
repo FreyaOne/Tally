@@ -7,12 +7,22 @@
 		</view> -->
 		<view class="logo">
 			<view class="img">
-				<image mode="widthFix" src="../../../static/tabBar/user.png" @tap="navigateTo"><text style="text-align: center;margin-left: 20px;"
-					 v-model="username">{{username}}</text></image>
+				<image mode="widthFix" src="../../../static/tabBar/user.png" @tap="navigateTo"></image>
+			</view>
+			<view> 
+				<!-- <text style="text-align: center;margin-left: 20px;">{{username}}</text> -->
+				<view style="">{{username}}</view>
 			</view>
 		</view>
 		<view class="uni-list">
 			<!-- <block v-for="(item,index) in lists" :key="index"> -->
+			<view class="uni-list-cell" hover-class="uni-list-cell-hover">
+				<view class="uni-triplex-row">
+					<view class="uni-triplex-left">
+						<text class="uni-title uni-ellipsis">用户ID</text>
+					</view>
+				</view>
+			</view>
 			<view class="uni-list-cell" hover-class="uni-list-cell-hover">
 				<view class="uni-triplex-row">
 					<view class="uni-triplex-left">
@@ -43,9 +53,31 @@
 		data() {
 			return {
 				// title: 'list-triplex-row',
-				lists: [],
-				username: '点击登录',
+				// lists: [],
+				username: "点击登录"
 			}
+		},
+		// onLoad(e){
+		// 	console.log("hahahahahhahahaha");
+		// 	if(e.username){
+		// 		this.username = e.username;
+		// 	}
+		// },
+		onLoad() {
+			// var  username;
+			uni.getStorage({
+				key: 'username',
+				success: (res) => {
+					console.log("获取成功");
+					console.log(res.data);
+					this.username = res.data;
+					console.log("用户名为" + this.username);
+				},
+				fail: (e) => {
+					//this.toLogin(); 
+				}
+			});
+			// this.username = username;
 		},
 		methods: {
 			navigateTo() {
@@ -53,6 +85,13 @@
 					url: 'login'
 				})
 			},
+
+			// afterLogin(){
+			// 	var self = this;
+			// 	var username = this.username;
+			// 	username=this.username;
+
+			// },
 			// doRequire() {
 			// 	onLoad(options){
 			// 		var data = this.username
@@ -60,13 +99,13 @@
 			// 	}
 			// }
 		},
-		onLoad() {
-			let list = [];
-			for (let i = 0; i < 9; i++) {
-				list.push(i)
-			}
-			this.lists = list;
-		}
+		// onLoad() {
+		// 	let list = [];
+		// 	for (let i = 0; i < 9; i++) {
+		// 		list.push(i)
+		// 	}
+		// 	this.lists = list;
+		// }
 	}
 </script>
 
@@ -78,11 +117,10 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-
+		flex-direction: column;
 		.img {
 			width: 25%;
-			height: 30vw;
-
+			height: 26vw;
 			image {
 				width: 100%;
 				border-radius: 50%;

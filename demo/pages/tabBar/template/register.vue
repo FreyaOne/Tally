@@ -42,13 +42,21 @@
 				var passwd = this.passwd;
 				uni.hideKeyboard();
 				// 验证用户名
-				if(username.toString().length<=2){ 
-					uni.showToast({title: '用户名请输入大于两位字符',icon:"none"});
+				if(username.toString() == ''){ 
+					uni.showToast({title: '用户名不能为空',icon:"none"});
 					return false; 
 				}
-				uni.showLoading({
-					title: '注册中...'
-				})
+				if(passwd.toString() == ''){
+					uni.showToast({title:'密码不能为空',icon:"none"});
+					return false;
+				}
+				if(passwd.toString().length<=8){
+					uni.showToast({title:'密码长度应大于8位',icon:"none"});
+					return false;
+				}
+				// uni.showLoading({
+				// 	title: '注册中...'
+				// })
 				var uri = 'http://39.107.125.67:8080/register/' + username + '&' + passwd;
 				// console.log(uri);
 				// setTimeout(()=>{
@@ -81,28 +89,23 @@
 					success: (res) => {
 						// console.log("111111111" + res.data.code);
 						this.text = 'request success';
-						setTimeout(function () {
-						    uni.hideLoading();
-						}, 2);
+						// setTimeout(function () {
+						//     uni.hideLoading();
+						// }, 5);
 						if(res.data.code == 0){
-							uni.showToast({
-								title:'注册成功,请登录',
-								icon:"none",
-							});
+							// console.log(res.data);
+							// console.log(res.data.code);
 							uni.redirectTo({
 								 url: './login'
 							});
-							setTimeout(function () {
-							    uni.hideToast();
-							}, 3);
 							console.log("注册成功");
 						}else{
 							uni.showToast({
-								title:'注册失败,请重新注册',
+								title:res.data.mesg,
 								icon:"none",
 							});
-							console.log(res.data);
-							console.log(uri);
+							// console.log(res.data);
+							// console.log(uri);
 						}
 					},
 			

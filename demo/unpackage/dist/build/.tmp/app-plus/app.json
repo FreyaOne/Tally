@@ -1,6 +1,9 @@
 {
   "pages": [
+    "pages/tabBar/component/component",
+    "pages/tabBar/API/ucharts",
     "pages/tabBar/template/template",
+    "pages/tabBar/extUI/extUI",
     "pages/component/view/view",
     "pages/component/scroll-view/scroll-view",
     "pages/component/swiper/swiper",
@@ -36,6 +39,9 @@
     "pages/about/about",
     "platforms/app-plus/feedback/feedback",
     "pages/tabBar/template/login",
+    "pages/tabBar/template/register",
+    "pages/tabBar/template/resetpasswd",
+    "pages/tabBar/extUI/publish",
     "pages/API/login/login",
     "pages/API/subnvue/subnvue",
     "pages/API/get-user-info/get-user-info",
@@ -140,7 +146,8 @@
   ],
   "window": {
     "navigationBarTextStyle": "white",
-    "navigationBarBackgroundColor": "#3f51b5",
+    "navigationBarTitleText": "Tally",
+    "navigationBarBackgroundColor": "#595BBC",
     "backgroundColor": "#F8F8F8",
     "backgroundColorTop": "#F4F5F6",
     "backgroundColorBottom": "#F4F5F6",
@@ -159,7 +166,7 @@
         "text": "明细"
       },
       {
-        "pagePath": "pages/tabBar/API/API",
+        "pagePath": "pages/tabBar/API/ucharts",
         "iconPath": "static/tabBar/Chart.png",
         "selectedIconPath": "static/tabBar/Chart-on.png",
         "text": "图表"
@@ -209,58 +216,6 @@
         },
         "nvue": true
       },
-      "pages/tabBar/component/component.html": {
-        "window": {
-          "usingComponents": {},
-          "navigationBarTitleText": "明细",
-          "bounce": "vertical",
-          "titleNView": {
-            "buttons": [
-              {
-                "text": "",
-                "fontSrc": "/static/uni.ttf",
-                "fontSize": "22px",
-                "color": "#FFFFFF"
-              }
-            ]
-          }
-        },
-        "nvue": true
-      },
-      "pages/tabBar/API/API.html": {
-        "window": {
-          "usingComponents": {},
-          "navigationBarTitleText": "图表",
-          "titleNView": {
-            "buttons": [
-              {
-                "text": "",
-                "fontSrc": "/static/uni.ttf",
-                "fontSize": "22px",
-                "color": "#FFFFFF"
-              }
-            ]
-          }
-        },
-        "nvue": true
-      },
-      "pages/tabBar/extUI/extUI.html": {
-        "window": {
-          "usingComponents": {},
-          "navigationBarTitleText": "社区",
-          "titleNView": {
-            "buttons": [
-              {
-                "text": "",
-                "fontSrc": "/static/uni.ttf",
-                "fontSize": "22px",
-                "color": "#FFFFFF"
-              }
-            ]
-          }
-        },
-        "nvue": true
-      },
       "pages/component/cover-view/cover-view.html": {
         "window": {
           "usingComponents": {},
@@ -282,8 +237,7 @@
         },
         "nvue": true
       }
-    },
-    "entryPagePath": "pages/tabBar/component/component"
+    }
   },
   "nvueCompiler": "uni-app",
   "renderer": "auto",

@@ -4,7 +4,7 @@
     "iPhone",
     "iPad"
   ],
-  "id": "",
+  "id": "__UNI__D366444",
   "name": "demo",
   "version": {
     "name": "1.0.0",
@@ -160,11 +160,7 @@
           "text": "设置"
         }
       ],
-      "height": "50px",
-      "child": [
-        "lauchwebview"
-      ],
-      "selected": 0
+      "height": "50px"
     }
   }
 }

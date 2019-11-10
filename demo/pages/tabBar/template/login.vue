@@ -84,10 +84,17 @@
 						// console.log("111111111" + res.data.code);
 						this.text = 'request success';
 						if(res.data.code == 0){
-							uni.switchTab({
-							    url: './template'    //从非tabBar主页面跳转到tabBar页面，不可使用navigateTo方法
+							uni.reLaunch({
+							    url: './template'     //从非tabBar主页面跳转到tabBar页面，不可使用navigateTo方法
 								// url:'../component/component'
 							});
+							uni.setStorage({
+								key:"username",
+								data:username,
+								 success: function () {
+								        console.log('success');
+								    }
+							})
 						}else{
 							uni.showToast({
 								title:'用户名或密码输入错误',
@@ -98,6 +105,8 @@
 
 				})
 			},
+			
+			
 
 		},
 	}
