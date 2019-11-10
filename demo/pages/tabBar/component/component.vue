@@ -9,7 +9,7 @@
 					<!-- expenditure 外部卡片样式 内嵌记录列表 -->
 					<!-- 循环收支记录列表 -->
 					<!-- v-show="row.spend >= 0 && current === 0" -->
-					<view class="expenditure" @tap="select(row)" style="margin-top: 20upx;" v-show="row.money >=0  && current=== 0">
+					<view class="expenditure" v-for="(row,index) in expenditure" :key="" @tap="select(row)" style="margin-top: 20upx;" v-show="row.money >=0  && current=== 0">
 						<view class="uni-padding-wrap uni-common-mt">
 							<view class="uni-flex uni-row">
 								<!-- 记录左部分（内容 时间）占位70%，右侧（价格类别）为30% -->
