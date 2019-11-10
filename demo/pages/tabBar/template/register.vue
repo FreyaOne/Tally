@@ -77,6 +77,7 @@
 				// },1000)
 				uni.request({
 					url: uri,
+					method:'POST',
 					success: (res) => {
 						// console.log("111111111" + res.data.code);
 						this.text = 'request success';
