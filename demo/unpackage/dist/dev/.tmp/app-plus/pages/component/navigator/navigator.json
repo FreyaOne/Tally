@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "navigator",
-  "usingComponents": {}
+  "usingComponents": {
+    "page-head": "/components/page-head"
+  }
 }

@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "使用地图选择位置",
-  "usingComponents": {}
+  "usingComponents": {
+    "page-head": "/components/page-head"
+  }
 }

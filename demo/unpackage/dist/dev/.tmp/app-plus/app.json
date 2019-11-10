@@ -2,6 +2,8 @@
   "pages": [
     "pages/tabBar/component/component",
     "pages/tabBar/API/ucharts",
+    "pages/tabBar/template/template",
+    "pages/tabBar/extUI/extUI",
     "pages/component/view/view",
     "pages/component/scroll-view/scroll-view",
     "pages/component/swiper/swiper",
@@ -36,6 +38,10 @@
     "platforms/app-plus/shake/shake",
     "pages/about/about",
     "platforms/app-plus/feedback/feedback",
+    "pages/tabBar/template/login",
+    "pages/tabBar/template/register",
+    "pages/tabBar/template/resetpasswd",
+    "pages/tabBar/extUI/publish",
     "pages/API/login/login",
     "pages/API/subnvue/subnvue",
     "pages/API/get-user-info/get-user-info",
@@ -140,8 +146,8 @@
   ],
   "window": {
     "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "Hello uniapp",
-    "navigationBarBackgroundColor": "#007AFF",
+    "navigationBarTitleText": "Tally",
+    "navigationBarBackgroundColor": "#595BBC",
     "backgroundColor": "#F8F8F8",
     "backgroundColorTop": "#F4F5F6",
     "backgroundColorBottom": "#F4F5F6",
@@ -210,42 +216,6 @@
         },
         "nvue": true
       },
-      "pages/tabBar/template/template.html": {
-        "window": {
-          "usingComponents": {},
-          "navigationBarTitleText": "设置",
-          "navigationBarBackgroundColor": "#595BBC",
-          "titleNView": {
-            "buttons": [
-              {
-                "text": "",
-                "fontSrc": "/static/uni.ttf",
-                "fontSize": "22px",
-                "color": "#FFFFFF"
-              }
-            ]
-          }
-        },
-        "nvue": true
-      },
-      "pages/tabBar/extUI/extUI.html": {
-        "window": {
-          "usingComponents": {},
-          "navigationBarTitleText": "社区",
-          "navigationBarBackgroundColor": "#595BBC",
-          "titleNView": {
-            "buttons": [
-              {
-                "text": "",
-                "fontSrc": "/static/uni.ttf",
-                "fontSize": "22px",
-                "color": "#FFFFFF"
-              }
-            ]
-          }
-        },
-        "nvue": true
-      },
       "pages/component/cover-view/cover-view.html": {
         "window": {
           "usingComponents": {},
@@ -276,7 +246,7 @@
     "autoclose": false
   },
   "appname": "demo",
-  "compilerVersion": "2.3.3",
+  "compilerVersion": "2.3.7",
   "usingComponents": {
     "page-head": "/components/page-head",
     "page-foot": "/components/page-foot",

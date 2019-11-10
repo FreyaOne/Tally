@@ -7,8 +7,8 @@
 			</view>
 			<view class="form re">
 				<view class="username">
-					<view class="get-code" :style="{'color':getCodeBtnColor}" @click.stop="getCode()">{{getCodeText}}</view>
-					<input placeholder="请输入用户名" v-model="phoneNumber" placeholder-style="color: rgba(255,255,255,0.8);"/>
+					<!-- <view class="get-code" :style="{'color':getCodeBtnColor}" @click.stop="getCode()">{{getCodeText}}</view> -->
+					<input placeholder="请输入用户名" v-model="username" placeholder-style="color: rgba(255,255,255,0.8);"/>
 				</view>
 				<!-- <view class="code">
 					<input placeholder="请输入验证码" v-model="code" placeholder-style="color: rgba(255,255,255,0.8);"/>
@@ -27,6 +27,88 @@
 </template>
 
 <script>
+	export default{
+		data() {
+			return {
+				username: '',
+				passwd: '',
+				// isShowOauth:false,
+			}
+		},
+		methods:{
+			doReg() {
+				var self = this;
+				var username = this.username;
+				var passwd = this.passwd;
+				uni.hideKeyboard();
+				// 验证用户名
+				if(username.toString().length<=2){ 
+					uni.showToast({title: '用户名请输入大于两位字符',icon:"none"});
+					return false; 
+				}
+				uni.showLoading({
+					title: '注册中...'
+				})
+				var uri = 'http://39.107.125.67:8080/register/' + username + '&' + passwd;
+				// console.log(uri);
+				// setTimeout(()=>{
+				// 	let md5PW = md5(this.passwd)
+				// 	uni.getStorage({
+				// 		key: 'UserList',
+				// 		success: (res)=>{
+				// 			for(let i in res.data){
+				// 				let row = res.data[i];
+				// 				if(row.username==this.phoneNumber){
+				// 					uni.hideLoading()
+				// 					//比对密码
+				// 					if(md5PW == res.data[i].passwd){
+				// 						uni.showToast({title: '登录成功',icon:"success"});
+				// 					}else{
+				// 						uni.showToast({title: '账号或密码不正确',icon:"none"});
+				// 					}
+				// 				}
+				// 			}
+				// 		},
+				// 		fail:function(e){
+				// 			uni.hideLoading()
+				// 			uni.showToast({title: '手机号码未注册',icon:"none"});
+				// 		}
+				// 	});
+				// },1000)
+				uni.request({
+					url: uri,
+					success: (res) => {
+						// console.log("111111111" + res.data.code);
+						this.text = 'request success';
+						setTimeout(function () {
+						    uni.hideLoading();
+						}, 2);
+						if(res.data.code == 0){
+							uni.showToast({
+								title:'注册成功,请登录',
+								icon:"none",
+							});
+							uni.redirectTo({
+								 url: './login'
+							});
+							setTimeout(function () {
+							    uni.hideToast();
+							}, 3);
+							console.log("注册成功");
+						}else{
+							uni.showToast({
+								title:'注册失败,请重新注册',
+								icon:"none",
+							});
+							console.log(res.data);
+							console.log(uri);
+						}
+					},
+			
+				})
+			},
+		}
+	}
 </script>
 
 <style lang="scss">

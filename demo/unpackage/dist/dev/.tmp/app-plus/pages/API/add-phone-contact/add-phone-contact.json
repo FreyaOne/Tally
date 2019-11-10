@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "添加手机联系人",
-  "usingComponents": {}
+  "usingComponents": {
+    "page-head": "/components/page-head"
+  }
 }

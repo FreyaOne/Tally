@@ -11,7 +11,7 @@
     "code": "100"
   },
   "description": "应用描述",
-  "launch_path": "__uniapptabbar.html",
+  "launch_path": "__uniappview.html",
   "developer": {
     "name": "",
     "email": "",
@@ -30,7 +30,7 @@
   },
   "plus": {
     "useragent": {
-      "value": "uni-app appservice",
+      "value": "uni-app",
       "concatenate": true
     },
     "splashscreen": {
@@ -40,11 +40,15 @@
       "delay": 0
     },
     "popGesture": "close",
-    "launchwebview": {},
+    "launchwebview": {
+      "id": "1",
+      "kernel": "WKWebview",
+      "uni-app": "auto"
+    },
     "statusbar": {
       "immersed": "supportedDevice",
       "style": "light",
-      "background": "#007AFF"
+      "background": "#595BBC"
     },
     "usingComponents": true,
     "nvueCompiler": "uni-app",
@@ -117,7 +121,7 @@
       }
     },
     "uni-app": {
-      "compilerVersion": "2.3.3",
+      "compilerVersion": "2.3.7",
       "control": "v8",
       "nvueCompiler": "uni-app",
       "renderer": "auto",
@@ -125,13 +129,42 @@
         "flex-direction": "column"
       }
     },
-    "secondwebview": {
-      "id": "1",
-      "launch_path": "__uniappview.html",
-      "kernel": "WKWebview",
-      "mode": "child",
-      "top": 0,
-      "bottom": 56
+    "tabBar": {
+      "color": "#BFBEBE",
+      "selectedColor": "#595BBC",
+      "borderStyle": "rgba(0,0,0,0.4)",
+      "backgroundColor": "#F8F8F8",
+      "list": [
+        {
+          "pagePath": "pages/tabBar/component/component",
+          "iconPath": "static/tabBar/Record.png",
+          "selectedIconPath": "static/tabBar/Record-on.png",
+          "text": "明细"
+        },
+        {
+          "pagePath": "pages/tabBar/API/ucharts",
+          "iconPath": "static/tabBar/Chart.png",
+          "selectedIconPath": "static/tabBar/Chart-on.png",
+          "text": "图表"
+        },
+        {
+          "pagePath": "pages/tabBar/extUI/extUI",
+          "iconPath": "static/tabBar/Community.png",
+          "selectedIconPath": "static/tabBar/Community-on.png",
+          "text": "社区"
+        },
+        {
+          "pagePath": "pages/tabBar/template/template",
+          "iconPath": "static/tabBar/Setting.png",
+          "selectedIconPath": "static/tabBar/Setting-on.png",
+          "text": "设置"
+        }
+      ],
+      "height": "50px",
+      "child": [
+        "lauchwebview"
+      ],
+      "selected": 0
     }
   }
 }

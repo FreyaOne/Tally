@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "获取手机网络状态",
-  "usingComponents": {}
+  "usingComponents": {
+    "page-head": "/components/page-head"
+  }
 }

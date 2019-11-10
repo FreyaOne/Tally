@@ -72,7 +72,7 @@
 	    -ms-flex-pack: justify;
 	        justify-content: space-between;
 	padding-left: 20rpx;
-	height: 80rpx;
+	height: 50rpx;
 	overflow: hidden
 }
 .uni-card__title-content-title {
@@ -209,5 +209,36 @@
 	border-left: none;
 	border-right: none;
 	border-radius: 0
+}
+.image-box {
+	width: 100%;
+	height: 350rpx;
+	overflow: hidden;
+}
+
+/*图片*/
+.image-box .image {
+	width: 100%;
+	height: 100%;
+}
+
+/*内容图片的样式*/
+.favBtn {
+	margin: 0 20rpx 20rpx 0;
+}
+.footer-box__item{
+	width: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+}
+.favBtn-nav{
+	vertical-align: middle;
+	float:right;
 }
 

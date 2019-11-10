@@ -3,6 +3,7 @@
   "softinputMode": "adjustResize",
   "softinputNavBar": "none",
   "usingComponents": {
+    "page-foot": "/components/page-foot",
     "chat-input": "/components/im-chat/chatinput",
     "message-show": "/components/im-chat/messageshow"
   }

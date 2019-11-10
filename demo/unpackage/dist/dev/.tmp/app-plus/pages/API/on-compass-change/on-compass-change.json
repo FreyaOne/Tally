@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "监听罗盘数据",
-  "usingComponents": {}
+  "usingComponents": {
+    "page-head": "/components/page-head"
+  }
 }

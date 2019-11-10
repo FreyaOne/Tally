@@ -38,5 +38,7 @@
       "type": "navigationBar"
     }
   ],
-  "usingComponents": {}
+  "usingComponents": {
+    "page-head": "/components/page-head"
+  }
 }

@@ -7,12 +7,12 @@
 		</view>
 		<view class="form">
 			<view class="username">
-				<input placeholder="请输入账号" v-model="phoneNumber" placeholder-style="color: rgba(255,255,255,0.8);"/>
+				<input placeholder="请输入账号" v-model="username" placeholder-style="color: rgba(255,255,255,0.8);" />
 			</view>
 			<view class="password">
-				<input placeholder="请输入密码" v-model="passwd" password=true placeholder-style="color: rgba(255,255,255,0.8);"/>
+				<input placeholder="请输入密码" v-model="passwd" password=true placeholder-style="color: rgba(255,255,255,0.8);" />
 			</view>
-			<view class="btn">登 录</view>
+			<view class="btn" @tap="doLogin">登 录</view>
 			<view class="res">
 				<!-- <view @tap="toPage('register')">用户注册</view> -->
 				<view @tap="topage('register')">用户注册</view>
@@ -24,20 +24,88 @@
 
 <script>
 	export default {
-	// import validate from '@/common/ys-validate.js'
-	methods:{
-		topage(page) {
-			uni.hideKeyboard()
-			uni.navigateTo({
-				url: page
-			})
-		},	
-	},
-}
+		// import validate from '@/common/ys-validate.js'
+		data() {
+			return {
+				username: '',
+				passwd: '',
+				// isShowOauth:false,
+			}
+		},
+		methods: {
+			topage(page) {
+				uni.hideKeyboard()
+				uni.navigateTo({
+					url: page
+				})
+			},
+			doLogin() {
+				var self = this;
+				var username = this.username;
+				var passwd = this.passwd;
+				uni.hideKeyboard();
+				//验证用户名
+				// if(username.toString().length<=2){ 
+				// 	uni.showToast({title: '用户名请输入大于两位字符',icon:"none"});
+				// 	return false; 
+				// }
+				// uni.showLoading({
+				// 	title: '提交中...'
+				// })
+				var uri = 'http://39.107.125.67:8080/login/' + username + '&' + passwd;
+				// console.log(uri);
+				// setTimeout(()=>{
+				// 	let md5PW = md5(this.passwd)
+				// 	uni.getStorage({
+				// 		key: 'UserList',
+				// 		success: (res)=>{
+				// 			for(let i in res.data){
+				// 				let row = res.data[i];
+				// 				if(row.username==this.phoneNumber){
+				// 					uni.hideLoading()
+				// 					//比对密码
+				// 					if(md5PW == res.data[i].passwd){
+				// 						uni.showToast({title: '登录成功',icon:"success"});
+				// 					}else{
+				// 						uni.showToast({title: '账号或密码不正确',icon:"none"});
+				// 					}
+				// 				}
+				// 			}
+				// 		},
+				// 		fail:function(e){
+				// 			uni.hideLoading()
+				// 			uni.showToast({title: '手机号码未注册',icon:"none"});
+				// 		}
+				// 	});
+				// },1000)
+				uni.request({
+					url: uri,
+					success: (res) => {
+						// console.log("111111111" + res.data.code);
+						this.text = 'request success';
+						if(res.data.code == 0){
+							uni.switchTab({
+							    url: './template'    //从非tabBar主页面跳转到tabBar页面，不可使用navigateTo方法
+								// url:'../component/component'
+							});
+						}else{
+							uni.showToast({
+								title:'用户名或密码输入错误',
+								icon:"none",
+							})
+						}
+					},
+
+				})
+			},
+
+		},
+	}
 </script>
 <style lang="scss">
 	@import "../../../static/css/login.scss";
-	.form{
+
+	.form {
 		.res {
 			display: flex;
 			justify-content: space-between;

@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "slider",
-  "usingComponents": {}
+  "usingComponents": {
+    "page-head": "/components/page-head"
+  }
 }

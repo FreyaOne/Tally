@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "iBeacon",
-  "usingComponents": {}
+  "usingComponents": {
+    "page-head": "/components/page-head"
+  }
 }

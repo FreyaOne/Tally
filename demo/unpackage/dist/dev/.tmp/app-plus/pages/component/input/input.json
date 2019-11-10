@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "input",
   "softinputNavBar": "none",
-  "usingComponents": {}
+  "usingComponents": {
+    "page-head": "/components/page-head"
+  }
 }

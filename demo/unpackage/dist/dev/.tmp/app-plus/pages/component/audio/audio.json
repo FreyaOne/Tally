@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "audio",
-  "usingComponents": {}
+  "usingComponents": {
+    "page-head": "/components/page-head"
+  }
 }
