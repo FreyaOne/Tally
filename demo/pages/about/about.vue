@@ -12,34 +12,47 @@
 						<view class="monetary">备注</view>
 						<input class="uni-input" name="input" v-model="content" placeholder-style="color: #BFBEBE" placeholder="备注..."/>
 					</view>
-					<!-- 花销类型 -->
+					
 					<view class="uni-form-item uni-column">
-						<view class="catagory">类型选择：<text style="margin-left: 30upx; color: #F5B940;">{{category_type}}</text></view>
+						<view class="catagory">收入 or 支出：<text style="margin-left: 30upx; color: #F5B940;">{{category_type}}</text></view>
 						<view class="example-body">
-							<uni-grid :column="3" :highlight="true" @change="change">
-								<uni-grid-item v-for="(item, index) in list" :key="index" :value="item.category">
+							<uni-grid :column="3" :highlight="true" @change="changeCl">
+								<uni-grid-item v-for="(item, index) in list1" :key="index" :value="item.key">
 									<image :src="item.url" class="image" mode="aspectFill" />
 									<text class="text" value="">{{ item.category }}</text>
 								</uni-grid-item>
 							</uni-grid>
 						</view>
 					</view>
+					<!-- 收入/支出类型 -->
 					<view class="uni-form-item uni-column">
+						<view class="catagory">类型选择：<text style="margin-left: 30upx; color: #F5B940;">{{classify_type}}</text></view>
+						<view class="example-body">
+							<uni-grid :column="3" :highlight="true" @change="changeCate">
+								<uni-grid-item v-for="(item, index) in list2" :key="index" :value="item.classify">
+									<image :src="item.url" class="image" mode="aspectFill" />
+									<text class="text" value="">{{ item.classify }}</text>
+								</uni-grid-item>
+							</uni-grid>
+						</view>
+					</view>
+					
 					<!-- 日期选择 -->
+					<!-- <view class="uni-form-item uni-column">
 						<view class="uni-list" style="height: 80upx;">
 							<view class="uni-list-cell">
 								<view class="uni-list-cell-left" style="margin-top: 15upx;">
 									选择时间
 								</view>
-								<view class="uni-list-cell-db" style="height: 50upx;">
+								<view class="uni-list-cell-db" style="height: 50upx;"> -->
 									<!-- 时间选择器高度50upx -->
-									<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
+									<!-- <picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
 										<view class="uni-input" style="font-size: 30upx;">{{date}}</view>
 									</picker>
 								</view>
 							</view>
 						</view>
-					</view>
+					</view> -->
 					
 					<!-- 修改记录按钮 -->
 					<view class="button-area" v-show="this.editType == 'edit'" style="flex-direction: column; justify-content: space-between;">
@@ -52,7 +65,7 @@
 					<!-- 新建记录传递 -->
 					<view class="button-area" v-show="this.editType == 'add'">
 						<view class="uni-btn-v" style="width: 50%; align-items: center; display: flex; flex-direction: column;">
-							<button @tap="save" style="height: 70upx; font-size: 30upx;">新建</button>
+							<button @tap="test" style="height: 70upx; font-size: 30upx;">新建</button>
 						</view>
 					</view>
 				</form>
@@ -80,6 +93,12 @@
 	
 		return `${year}-${month}-${day}`;
 	}
+	// const data = {
+	// 	"money": null,
+	// 	"content": null,
+	// 	"category": null,
+	// 	"classify": null
+	// }
 	export default {
 		components: {
 			uniGrid,
@@ -87,29 +106,46 @@
 		},
 		data() {
 			return {
-				list: [{
+				list1: [{
 						url: '/static/img/category/7.png',
-						category: '学习'
+						category: '支出',
+						key: 1
 					},
 					{
 						url: '/static/img/category/6.png',
-						category: '运动'
+						category: '收入',
+						key: 2
+					}
+				],
+				list2: [{
+						url: '/static/img/category/7.png',
+						classify: '学习',
+						key: 1
+					},
+					{
+						url: '/static/img/category/6.png',
+						classify: '运动',
+						key: 2
 					},
 					{
 						url: '/static/img/category/2.png',
-						category: '交通'
+						classify: '交通',
+						key: 3
 					},
 					{
 						url: '/static/img/category/1.png',
-						category: '衣服'
+						classify: '衣服',
+						key: 4
 					},
 					{
 						url: '/static/img/category/4.png',
-						category: '工具'
+						classify: '工具',
+						key: 5
 					},
 					{
 						url: '/static/img/category/5.png',
-						category: '食物'
+						classify: '食物',
+						key: 6
 					}
 				],
 				id:'',
@@ -121,8 +157,11 @@
 				content: '',
 				// 金额需要转成整数
 				money: '',
-				category: 0,
-				category_type: '学习',
+				category_key: 1,
+				classify_key: 1,
+				
+				category_type: '支出',
+				classify_type: '学习',
 				startDate:getDate('start'),
 				endDate:getDate('end')
 			}
@@ -138,15 +177,35 @@
 						this.id = e.data.id;
 						this.content = e.data.content;
 						this.money = e.data.money;
-						this.category_type = e.data.category;
+						this.category_key = e.data.category;
+						this.classify_type = e.data.classify;
 					}
 				})
 			}
 		},
 		methods: {
+			test() {
+				let data={ 
+					// string转number,content可以省略,category对应后端的classify
+					// classify对应的是category,传的是key值
+					// 支出为1 收入为2
+					"money": this.money - '0',
+					"content":this.content, 
+					"category":this.category_key, // 具体类型
+					"classify": this.classify_type // 1 or 2
+				};
+				console.log(data);
+			},
 			// 获取表单数据 存入data
 			save(){
-				let data={"money": this.money, "content":this.content, "category":this.category, "date": this.date};
+				let data={
+					// string转number,content可以省略,
+					// 支出为1 收入为2
+					"money": this.money - '0',
+					"content":this.content, 
+					"category":this.category_key, // 具体类型
+					"classify": this.classify_type // 1 or 2
+				};
 				if(this.editType=='edit'){
 					data.id = this.id
 				}
@@ -155,8 +214,9 @@
 					return ;
 				}
 				if(!data.content){
-					uni.showToast({title:'请输入备注',icon:'none'});
-					return ;
+					// uni.showToast({title:'请输入备注',icon:'none'});
+					this.content = '无'
+					// return ;
 				}
 				uni.showLoading({
 					title:'正在提交'
@@ -207,20 +267,35 @@
 			formReset: function(e) {
 				console.log('清空数据')
 			},
-			// 种类选择
-			change(e) {
+			// 类型选择
+			changeCate(e) {
 				let {
 					index
 				} = e.detail
-				this.category = index
+				this.classify_key = index - '0' + 1
 				// 显示用户选择
-				switch(this.category) {
-					case 0: this.category_type = '学习'; break;
-					case 1: this.category_type = '运动'; break;
-					case 2: this.category_type = '交通'; break;
-					case 3: this.category_type = '衣服'; break;
-					case 4: this.category_type = '工具'; break;
-					case 5: this.category_type = '食物'; break;
+				switch(this.classify_key) {
+					// category_type是为了给用户看的 且回传给数据库
+					case 1: this.classify_type = '学习'; break;
+					case 2: this.classify_type = '运动'; break;
+					case 3: this.classify_type = '交通'; break;
+					case 4: this.classify_type = '衣服'; break;
+					case 5: this.classify_type = '工具'; break;
+					case 6: this.classify_type = '食物'; break;
+					default: this.classify_type = '无';
+				}
+			},
+			// 收入支出选择
+			changeCl(e) {
+				let {
+					index
+				} = e.detail
+				console.log(this.category_key)
+				this.category_key = index - '0' + 1
+				switch(this.category_key) {
+					// 给用户选择 回传数据库使用string
+					case 1: this.category_type = '支出'; break;
+					case 2: this.category_type = '收入'; break;
 					default: this.category_type = '无';
 				}
 			},
@@ -294,7 +369,7 @@
 		height: 140upx;
 		padding-top: 15upx;
 		margin-top: 25upx;
-		height: 1150upx;
+		height: 1350upx;
 	}
 	
 	/* 九宫格 */

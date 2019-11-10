@@ -29,6 +29,7 @@
 			return {
 				username: '',
 				passwd: '',
+				userid: '',
 				// isShowOauth:false,
 			}
 		},
