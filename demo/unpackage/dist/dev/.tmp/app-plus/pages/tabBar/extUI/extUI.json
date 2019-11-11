@@ -12,6 +12,6 @@
     ]
   },
   "usingComponents": {
-    "uni-card": "/components/uni-card/uni-card"
+    "chat-input": "/components/im-chat/chatinput"
   }
 }
