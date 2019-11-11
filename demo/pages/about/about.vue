@@ -6,11 +6,11 @@
 					<!-- 消费金额 手动输入 -->
 					<view class="uni-form-item uni-column">
 						<view class="monetary">金额</view>
-						<input class="uni-input" name="input" v-model="money" placeholder-style="color: #BFBEBE" placeholder="请输入金额"/>
+						<input class="uni-input" name="input" v-model="amount" placeholder-style="color: #BFBEBE" placeholder="请输入金额"/>
 					</view>
 					<view class="uni-form-item uni-column">
 						<view class="monetary">备注</view>
-						<input class="uni-input" name="input" v-model="content" placeholder-style="color: #BFBEBE" placeholder="备注..."/>
+						<input class="uni-input" name="input" v-model="remarks" placeholder-style="color: #BFBEBE" placeholder="备注..."/>
 					</view>
 					
 					<view class="uni-form-item uni-column">
@@ -65,7 +65,7 @@
 					<!-- 新建记录传递 -->
 					<view class="button-area" v-show="this.editType == 'add'">
 						<view class="uni-btn-v" style="width: 50%; align-items: center; display: flex; flex-direction: column;">
-							<button @tap="test" style="height: 70upx; font-size: 30upx;">新建</button>
+							<button @tap="save" style="height: 70upx; font-size: 30upx;">新建</button>
 						</view>
 					</view>
 				</form>
@@ -76,6 +76,7 @@
 <script>
 	import uniGrid from '@/components/uni-grid/uni-grid.vue'
 	import uniGridItem from '@/components/uni-grid-item/uni-grid-item.vue'
+	const recordInfo = ''
 	function getDate(type) {
 		const date = new Date();
 	
@@ -148,7 +149,8 @@
 						key: 6
 					}
 				],
-				id:'',
+				userid: '',
+				recordID: '',
 				editType: '',
 				date: getDate({
 					format: true
@@ -159,7 +161,6 @@
 				money: '',
 				category_key: 1,
 				classify_key: 1,
-				
 				category_type: '支出',
 				classify_type: '学习',
 				startDate:getDate('start'),
@@ -172,11 +173,12 @@
 			this.editType = e.type;
 			if(e.type == 'edit') {
 				uni.getStorage({
-					key:'id',
+					key:'recordInfo',
 					success: (e) => {
-						this.id = e.data.id;
-						this.content = e.data.content;
-						this.money = e.data.money;
+						this.userid = e.data.userid;
+						this.recordID = e.data.recordID;
+						this.remarks = e.data.remarks;
+						this.amount = e.data.amount;
 						this.category_key = e.data.category;
 						this.classify_type = e.data.classify;
 					}
@@ -201,39 +203,28 @@
 				let data={
 					// string转number,content可以省略,
 					// 支出为1 收入为2
-					"money": this.money - '0',
-					"content":this.content, 
+					"amount": this.money - '0',
+					"remarks":this.content, 
 					"category":this.category_key, // 具体类型
 					"classify": this.classify_type // 1 or 2
 				};
 				if(this.editType=='edit'){
 					data.id = this.id
 				}
-				if(!data.money){
+				if(!data.amount){
 					uni.showToast({title:'请输入金额',icon:'none'});
 					return ;
 				}
-				if(!data.content){
+				if(!data.remarks){
 					// uni.showToast({title:'请输入备注',icon:'none'});
-					this.content = '无'
+					this.remarks = '无'
 					// return ;
 				}
 				uni.showLoading({
 					title:'正在提交'
 				})
 				//实际应用中请提交ajax,模板定时器模拟提交效果
-				setTimeout(()=>{
-					uni.setStorage({
-						// key是什么
-						key:'saveCategory',
-						data:data,
-						success() {
-							// 成功后回到原界面
-							uni.hideLoading();
-							uni.navigateBack();
-						}
-					})
-				},300)
+				
 			},
 			del(){
 				uni.showModal({

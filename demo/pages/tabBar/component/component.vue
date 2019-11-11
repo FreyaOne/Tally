@@ -9,37 +9,41 @@
 					<!-- expenditure 外部卡片样式 内嵌记录列表 -->
 					<!-- 循环收支记录列表 -->
 					<!-- v-show="row.spend >= 0 && current === 0" -->
-					<view class="expenditure" v-for="(row,index) in expenditure" :key="index" @tap="select(row)" style="margin-top: 20upx;" v-show="row.money >=0  && current=== 0">
+					<view class="expenditure" v-for="(row,index) in expenditure" :key="index" @tap="select(row)" style="margin-top: 20upx;" v-if="current == 0">
 						<view class="uni-padding-wrap uni-common-mt">
 							<view class="uni-flex uni-row">
 								<!-- 记录左部分（内容 时间）占位70%，右侧（价格类别）为30% -->
 								<view class="detail-left" >
 									<view class="uni-flex uni-column" style="font-size: 30upx; color: #595BBC;">
-										{{row.content}}
+										{{row.remarks}}
 									</view>
 									<view class="uni-flex uni-column" style="font-size: 25upx; color: #BFBEBE;">
 										{{row.date}}
 									</view>
 								</view>
 								<view class="detail-right">
-									<view class="uni-flex uni-column" style="font-size: 30upx; color:#595BBC; font-weight: bold;" >
-										{{row.money}}
+									<view class="uni-flex uni-column" style="font-size: 30upx; color:#595BBC; font-weight: bold;" v-if="current == 0">
+										{{row.amount}}
 									</view>
+									
+									<view class="uni-flex uni-column" style="font-size: 30upx; color:#DC7004; font-weight: bold;" v-if="current == 1">
+										{{row.amount}}
+									</view>
+									
 									<view class="uni-flex uni-column" style="font-size: 25upx; color: #F5B940;">
-										{{row.category}}
+										{{row.classify}}
 									</view>
 								</view>
 							</view>
 						</view>
 					</view>
-					
-					<view class="expenditure" v-for="(row,index) in income" :key="index" @tap="select(row)" style="margin-top: 20upx;" v-show="row.money < 0 && current === 1">
+					<view class="expenditure" v-for="(row,index) in income" :key="index" @tap="select(row)" style="margin-top: 20upx;" v-if="current == 1">
 						<view class="uni-padding-wrap uni-common-mt">
 							<view class="uni-flex uni-row">
 								<!-- 记录左部分（内容 时间）占位70%，右侧（价格类别）为30% -->
 								<view class="detail-left" >
 									<view class="uni-flex uni-column" style="font-size: 30upx; color: #595BBC;">
-										{{row.content}}
+										{{row.remarks}}
 									</view>
 									<view class="uni-flex uni-column" style="font-size: 25upx; color: #BFBEBE;">
 										{{row.date}}
@@ -47,10 +51,10 @@
 								</view>
 								<view class="detail-right">
 									<view class="uni-flex uni-column" style="font-size: 30upx; color:#DC7004; font-weight: bold;" >
-										{{row.money}}
+										{{row.amount}}
 									</view>
 									<view class="uni-flex uni-column" style="font-size: 25upx; color: #F5B940;">
-										{{row.category}}
+										{{row.classify}}
 									</view>
 								</view>
 							</view>
@@ -161,6 +165,10 @@
 			]
 			
 			return {
+				userinfo : {
+					username: '',
+					userid: ''
+				},
 				expenditure: [],
 				recordList:[],
 				income: [],
@@ -188,20 +196,36 @@
 		},
 		methods: {
 			onLoad(e) {
+				uni.getStorage({
+					key: 'userinfo',
+					success: (res) => {
+						this.userinfo = res.data
+					},
+					fail: (e) => {
+						//this.toLogin(); 
+					}
+				});
+				// uni.request({
+				// 	var uri = 'http://39.107.125.67:8080/bill/add' + this.userinfo.userid;
+				// 	url: uri,
+				// 	success: (res) => {
+				// 	},
+				
+				// })
 				// 由接口请求后数据存放于recordlist中 花销过滤器
 				this.recordList = [
-					{ id : 1, content: '这是一个测试', date: '2019-10-1', money: 20, category: '运动'},
-					{ id : 2, content: '这是一个测试', date: '2019-11-7', money: 40, category: '学习'},
-					{ id : 3, content: '这是一个测试', date: '2019-11-7', money: -50, category: '水果'},
-					{ id : 4, content: '这是一个测试', date: '2019-11-7', money: 50, category: '水果'},
-					{ id : 5, content: '这是一个测试', date: '2019-10-7', money: 20, category: '水果'},
-					{ id : 6, content: '这是一个测试', date: '2019-12-7', money: 50, category: '水果'},
-					{ id : 7, content: '这是一个测试', date: '2019-11-7', money: -20, category: '水果'},
-					{ id : 8, content: '这是一个测试', date: '2019-11-7', money: -70, category: '水果'}
+					{ id : 1, remarks: '这是一个测试', date: '2019-10-1', amount: 20, classify: '运动', category: 1},
+					{ id : 2, remarks: '这是一个测试', date: '2019-11-7', amount: 40, classify: '学习', category: 2},
+					{ id : 3, remarks: '这是一个测试', date: '2019-11-7', amount: 50, classify: '水果', category: 1},
+					{ id : 4, remarks: '这是一个测试', date: '2019-11-7', amount: 50, classify: '水果', category: 2},
+					{ id : 5, remarks: '这是一个测试', date: '2019-10-7', amount: 20, classify: '水果', category: 1},
+					{ id : 6, remarks: '这是一个测试', date: '2019-12-7', amount: 50, classify: '水果', category: 1},
+					{ id : 7, remarks: '这是一个测试', date: '2019-11-7', amount: 20, classify: '水果', category: 2},
+					{ id : 8, remarks: '这是一个测试', date: '2019-11-7', amount: 70, classify: '水果', category: 1}
 				];
 				this.recordList.forEach( item =>{ 
 					// 支出为expenditure 收入为income
-				    if(item.money >= 0) {
+				    if(item.category == 1) {
 						this.expenditure.push(item)
 					} else {
 						this.income.push(item)
@@ -212,10 +236,19 @@
 				console.log("tets")
 			},
 			select(row){
+				let recordInfo = {
+					userid: this.userinfo.userid,
+					recordID: 1,
+					category: row.category,
+					classify: row.classify,
+					amount: row.amount,
+					remarks: row.remarks
+				}
 				uni.setStorage({
-					key:'id',
-					data:row,
+					key:'recordInfo',
+					data:recordInfo,
 					success() {
+						console.log(recordInfo)
 						uni.navigateTo({
 							// 点击某记录后 传递row数据about界面 并区分是edit 还是 add
 							url:"/pages/about/about?type=edit"

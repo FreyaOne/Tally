@@ -66,11 +66,11 @@
 		onLoad() {
 			// var  username;
 			uni.getStorage({
-				key: 'username',
+				key: 'userinfo',
 				success: (res) => {
 					console.log("获取成功");
 					console.log(res.data);
-					this.username = res.data;
+					this.username = res.data.username;
 					console.log("用户名为" + this.username);
 				},
 				fail: (e) => {

@@ -89,9 +89,13 @@
 							    url: './template'     //从非tabBar主页面跳转到tabBar页面，不可使用navigateTo方法
 								// url:'../component/component'
 							});
+							let userinfo = {
+								"username" : res.data.data[0].userName,
+								"userid" : res.data.data[0].id
+							}
 							uni.setStorage({
-								key:"username",
-								data:username,
+								key:"userinfo",
+								data:userinfo,
 								 success: function () {
 								        console.log('success');
 								    }

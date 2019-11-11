@@ -302,7 +302,7 @@
 			"path": "pages/about/about",
 			"style": {
 				"navigationBarBackgroundColor": "#595BBC",
-				"navigationBarTitleText": "添加明细"
+				"navigationBarTitleText": "编辑"
 			}
 		},
 		// #endif
