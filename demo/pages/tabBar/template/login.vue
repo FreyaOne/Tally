@@ -45,40 +45,7 @@
 				var username = this.username;
 				var passwd = this.passwd;
 				uni.hideKeyboard();
-				//验证用户名
-				// if(username.toString().length<=2){ 
-				// 	uni.showToast({title: '用户名请输入大于两位字符',icon:"none"});
-				// 	return false; 
-				// }
-				// uni.showLoading({
-				// 	title: '提交中...'
-				// })
 				var uri = 'http://39.107.125.67:8080/login/' + username + '&' + passwd;
-				// console.log(uri);
-				// setTimeout(()=>{
-				// 	let md5PW = md5(this.passwd)
-				// 	uni.getStorage({
-				// 		key: 'UserList',
-				// 		success: (res)=>{
-				// 			for(let i in res.data){
-				// 				let row = res.data[i];
-				// 				if(row.username==this.phoneNumber){
-				// 					uni.hideLoading()
-				// 					//比对密码
-				// 					if(md5PW == res.data[i].passwd){
-				// 						uni.showToast({title: '登录成功',icon:"success"});
-				// 					}else{
-				// 						uni.showToast({title: '账号或密码不正确',icon:"none"});
-				// 					}
-				// 				}
-				// 			}
-				// 		},
-				// 		fail:function(e){
-				// 			uni.hideLoading()
-				// 			uni.showToast({title: '手机号码未注册',icon:"none"});
-				// 		}
-				// 	});
-				// },1000)
 				uni.request({
 					url: uri,
 					success: (res) => {
@@ -86,7 +53,7 @@
 						this.text = 'request success';
 						if(res.data.code == 0){
 							uni.reLaunch({
-							    url: './template'     //从非tabBar主页面跳转到tabBar页面，不可使用navigateTo方法
+							    url: '../component/component'     //从非tabBar主页面跳转到tabBar页面，不可使用navigateTo方法
 								// url:'../component/component'
 							});
 							let userinfo = {
@@ -98,6 +65,7 @@
 								data:userinfo,
 								 success: function () {
 								        console.log('success');
+										// console.log(userinfo);
 								    }
 							})
 						}else{

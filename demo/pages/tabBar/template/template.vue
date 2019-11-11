@@ -14,11 +14,11 @@
 			<!-- <block v-for="(item,index) in lists" :key="index"> -->
 			<view class="uni-list-cell" hover-class="uni-list-cell-hover">
 				<view class="uni-triplex-row" style="height: 47px;">
-					<view class="uni-triplex-left">
+					<view class="uni-triplex-left" style="width:78%">
 						<text class="uni-title uni-ellipsis" style="float:left">用户ID</text>
 					</view>
-					<view class="uni-triplex-right">
-						<text class="uni-title" style="float:right;" v-model="userId">{{userId}}</text>	
+					<view class="uni-triplex-right" style="width:22%">
+						<text class="uni-title" style="float:right;color: #666666;" v-model="userId">{{userId}}</text>	
 					</view>
 				</view>
 			</view>
@@ -54,7 +54,7 @@
 				// title: 'list-triplex-row',
 				// lists: [],
 				username: "",
-				userId:"t00000000",
+				userId:"",
 			}
 		},
 		// onLoad(e){
@@ -65,19 +65,23 @@
 		// },
 		onLoad() {
 			// var  username;
+			let temp;
 			uni.getStorage({
 				key: 'userinfo',
 				success: (res) => {
 					console.log("获取成功");
-					console.log(res.data);
+					// console.log("2222131231" + res.data.userid);
 					this.username = res.data.username;
+					temp = res.data.userid;
 					console.log("用户名为" + this.username);
+					// console.log("userid为" + this.userid);
 				},
 				fail: (e) => {
-					//this.toLogin(); 
+					console.log(e.data);
 				}
 			});
-			// this.username = username;
+			
+			this.userId = "T" + this.PrefixInteger(temp,8);
 		},
 		methods: {
 			remove() {
@@ -101,6 +105,10 @@
 						}
 					}
 				})
+			},
+			
+			PrefixInteger(num, length){
+				return ( "0000000000000000" + num ).substr( -length );
 			}
 		},
 	}

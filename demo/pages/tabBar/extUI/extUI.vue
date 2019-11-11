@@ -1,44 +1,34 @@
 <template>
 	<view id="moments">
-
-		<view class="home-pic">
-			<view class="home-pic-base">
-				<view class="top-pic">
-					<image class="header" src="../../static/index/test/header06.jpg" @tap="test"></image>
-				</view>
-				<view class="top-name">Liuxy</view>
-			</view>
-		</view>
-
 		<view class="moments__post" v-for="(post,index) in posts" :key="index" :id="'post-'+index">
 			<view class="post-left">
-				<image class="post_header" :src="post.header_image"></image>
+				<!-- <image class="post_header" :src="post.header_image"></image> -->
 			</view>
 
 			<view class="post_right">
 				<text class="post-username">{{post.username}}</text>
-				<view id="paragraph" class="paragraph">{{post.content.text}}</view>
+				<!-- <view id="paragraph" class="paragraph">{{post.content.text}}</view> -->
 				<!-- 相册 -->
-				<view class="thumbnails">
+				<!-- <view class="thumbnails">
 					<view :class="post.content.images.length === 1?'my-gallery':'thumbnail'" v-for="(image, index_images) in post.content.images" :key="index_images">
 						<image class="gallery_img" lazy-load mode="aspectFill" :src="image" :data-src="image" @tap="previewImage(post.content.images,index_images)"></image>
 					</view>
-				</view>
+				</view> -->
 				<!-- 资料条 -->
 				<view class="toolbar">
 					<view class="timestamp">{{post.timestamp}}</view>
 					<view class="like" @tap="like(index)">
-						<image :src="post.islike===0?'../../static/index/islike.png':'../../static/index/like.png'"></image>
+						<image :src="post.islike===0?'../../../static/indexAboutChat/islike.png':'../../../static/indexAboutChat/like.png'"></image>
 					</view>
 					<view class="comment" @tap="comment(index)">
-						<image src="../../static/index/comment.png"></image>
+						<image src="../../../static/indexAboutChat/comment.png"></image>
 					</view>
 				</view>
 				<!-- 赞／评论区 -->
 				<view class="post-footer">
 					<view class="footer_content">
-						<image class="liked" src="../../static/index/liked.png"></image>
-						<text class="nickname" v-for="(user,index_like) in post.like" :key="index_like">{{user.username}}</text>
+						<image class="liked" src="../../../static/indexAboutChat/liked.png"></image>
+						<text class="nickname" v-for="(user,index_like) in post.like" :key="index_like">{{username}}</text>
 					</view>
 					<view class="footer_content" v-for="(comment,comment_index) in post.comments.comment" :key="comment_index" @tap="reply(index,comment_index)">
 						<text class="comment-nickname">{{comment.username}}: <text class="comment-content">{{comment.content}}</text></text>
@@ -59,17 +49,17 @@
 
 <script>
 	import chatInput from '../../../components/im-chat/chatinput.vue'; //input框
-	import postData from '../../../commonAboutChat/index/index.post.data.js';//朋友圈数据
-	
+	import postData from '../../../commonAboutChat/index/index.post.data.js'; //朋友圈数据
+
 	export default {
 		components: {
 			chatInput
 		},
 		data() {
 			return {
-				posts: postData,//模拟数据
+				posts: postData, //模拟数据
 				user_id: 4,
-				username: 'Liuxy',
+				username: '',
 
 				index: '',
 				comment_index: '',
@@ -81,22 +71,31 @@
 
 				screenHeight: '', //屏幕高度(系统)
 				platform: '',
-				windowHeight: '' ,//可用窗口高度(不计入软键盘)
-				
+				windowHeight: '', //可用窗口高度(不计入软键盘)
+
 				loadMoreText: "加载中...",
 				showLoadMore: false,
 			}
 		},
 		mounted() {
-			
+			// uni.getStorage({
+			// 	key: 'posts',
+			// 	success: function (res) {
+			// 		console.log(res.data);
+			// 		this.posts = res.data;
+			// 	}
+			// });
+			// var  username;
 			uni.getStorage({
-				key: 'posts',
-				success: function (res) {
-					console.log(res.data);
-					this.posts = res.data;
+				key: 'userinfo',
+				success: (res) => {
+					console.log("获取成功");
+					this.username = res.data.username;
+				},
+				fail: (e) => {
+					console.log(e.data);
 				}
 			});
-
 		},
 		onLoad() {
 			uni.getSystemInfo({ //获取设备信息
@@ -109,10 +108,10 @@
 		},
 		onShow() {
 			uni.onWindowResize((res) => { //监听窗口尺寸变化,窗口尺寸不包括底部导航栏
-				if(this.platform === 'ios'){
+				if (this.platform === 'ios') {
 					this.windowHeight = res.size.windowHeight;
 					this.adjust();
-				}else{
+				} else {
 					if (this.screenHeight - res.size.windowHeight > 60 && this.windowHeight <= res.size.windowHeight) {
 						this.windowHeight = res.size.windowHeight;
 						this.adjust();
@@ -134,9 +133,9 @@
 			this.showLoadMore = true;
 			setTimeout(() => {
 				//获取数据
-				if (this.posts.length < 20){//测试数据
+				if (this.posts.length < 20) { //测试数据
 					this.posts = this.posts.concat(this.posts);
-				}else{
+				} else {
 					this.loadMoreText = "暂无更多";
 				}
 			}, 1000);
@@ -149,16 +148,16 @@
 				uni.stopPullDownRefresh(); //停止下拉刷新
 			}, 1000);
 		},
-		onNavigationBarButtonTap(e) {//监听标题栏点击事件
+		onNavigationBarButtonTap(e) { //监听标题栏点击事件
 			if (e.index == 0) {
 				this.navigateTo('../publish/publish')
 			}
 		},
-		computed:{
-			
+		computed: {
+
 		},
 		methods: {
-			test(){
+			test() {
 				this.navigateTo('../test/test');
 			},
 			navigateTo(url) {
@@ -256,7 +255,12 @@
 					complete: () => {}
 				});
 			}
-		}
+		},
+		onNavigationBarButtonTap(e) {
+			uni.navigateTo({
+				url: '/pages/tabBar/extUI/publish'
+			});
+		},
 	}
 </script>
 

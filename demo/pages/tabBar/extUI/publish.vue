@@ -1,33 +1,9 @@
 <template>
 	<view class="page" @touchstart="touchStart" @touchend="touchEnd">
 		<form>
-			<view class="uni-textarea">
+			<view class="uni-textarea" style="height:180px;">
 				<textarea placeholder="这一刻的想法..." v-model="input_content" />
 				</view>
-			<view class="uni-list list-pd">
-				<view class="uni-list-cell cell-pd">
-					<view class="uni-uploader">
-						<view class="uni-uploader-head">
-							<view class="uni-uploader-title"></view>
-							<view class="uni-uploader-info">{{imageList.length}}/9</view>
-						</view>
-						<view class="uni-uploader-body">
-							<view class="uni-uploader__files">
-								<block v-for="(image,index) in imageList" :key="index">
-									<view class="uni-uploader__file" style="position: relative;">
-										<image class="uni-uploader__img" mode="aspectFill" :src="image" :data-src="image" @tap="previewImage"></image>
-										<view class="close-view" @click="close(index)">×</view>
-									</view>
-								</block>
-								<view class="uni-uploader__input-box" v-show="imageList.length < 9">
-									<view class="uni-uploader__input" @tap="chooseImage"></view>
-								</view>
-							</view>
-						</view>
-					</view>
-				</view>
-			</view>
-			
 			<view class="footer">
 				<button type="default" class="feedback-submit" @click="publish">提交</button>
 			</view>
