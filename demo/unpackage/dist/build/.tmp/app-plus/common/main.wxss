@@ -708,6 +708,10 @@ radio-group label, checkbox-group label{
 	-webkit-flex-direction: column;
 	    -ms-flex-direction: column;
 	        flex-direction: column;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
 }
 .uni-triplex-left {
 	width: 84%;

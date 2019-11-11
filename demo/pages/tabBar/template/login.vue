@@ -33,6 +33,24 @@
 				// isShowOauth:false,
 			}
 		},
+		onReady(){
+			uni.getStorage({
+				key: 'userinfo',
+				success: (res) => {
+					console.log("获取成功");
+					// console.log("2222131231" + res.data.userid);
+					this.username = res.data.username;
+					this.passwd = res.data.passwd;
+					console.log("用户名为 " + this.username);
+					console.log("密码为 " + this.passwd)
+					console.log("为啥没有数据啊啊啊啊啊啊啊啊啊");
+					// console.log("userid为" + this.userid);
+				},
+				fail: (e) => {
+					console.log(e.data);
+				}
+			});
+		},
 		methods: {
 			topage(page) {
 				uni.hideKeyboard()
@@ -58,14 +76,15 @@
 							});
 							let userinfo = {
 								"username" : res.data.data[0].userName,
-								"userid" : res.data.data[0].id
+								"userid" : res.data.data[0].id,
+								"passwd" :res.data.data[0].passwd,
 							}
 							uni.setStorage({
 								key:"userinfo",
 								data:userinfo,
 								 success: function () {
 								        console.log('success');
-										// console.log(userinfo);
+										console.log('用户信息是' + userinfo);
 								    }
 							})
 						}else{
