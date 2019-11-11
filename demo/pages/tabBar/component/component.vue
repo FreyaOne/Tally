@@ -136,7 +136,7 @@
 			}
 		},
 		methods: {
-			onLoad(e) {
+			onReady(e) {
 				uni.getStorage({
 					key: 'userinfo',
 					success: (res) => {
