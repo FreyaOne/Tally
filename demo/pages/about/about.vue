@@ -38,26 +38,26 @@
 					</view>
 					
 					<!-- 日期选择 -->
-					<!-- <view class="uni-form-item uni-column">
+					<view class="uni-form-item uni-column" v-show="editType == 'edit'">
 						<view class="uni-list" style="height: 80upx;">
 							<view class="uni-list-cell">
 								<view class="uni-list-cell-left" style="margin-top: 15upx;">
 									选择时间
 								</view>
-								<view class="uni-list-cell-db" style="height: 50upx;"> -->
+								<view class="uni-list-cell-db" style="height: 50upx;">
 									<!-- 时间选择器高度50upx -->
-									<!-- <picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
+									<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
 										<view class="uni-input" style="font-size: 30upx;">{{date}}</view>
 									</picker>
 								</view>
 							</view>
 						</view>
-					</view> -->
+					</view>
 					
 					<!-- 修改记录按钮 -->
 					<view class="button-area" v-show="this.editType == 'edit'" style="flex-direction: column; justify-content: space-between;">
 						<view class="uni-btn-v" style="width: 50%; align-items: center; display: flex;">
-							<button @tap="save" style="height: 70upx; font-size: 27upx; margin-right: 20upx;">修改</button>
+							<button @tap="edit" style="height: 70upx; font-size: 27upx; margin-right: 20upx;">修改</button>
 							<button @tap="del" style="height: 70upx; font-size: 27upx; background-color: #DD524D;">删除</button>
 						</view>
 					</view>
@@ -155,10 +155,11 @@
 				date: getDate({
 					format: true
 				}),
+				
 				// 作为表单内容回传
-				content: '',
+				remarks: '',
 				// 金额需要转成整数
-				money: '',
+				amount: '',
 				category_key: 1,
 				classify_key: 1,
 				category_type: '支出',
@@ -171,6 +172,7 @@
 		// 接收由component传的数据
 		onLoad(e) {
 			this.editType = e.type;
+			console.log(this.editType)
 			if(e.type == 'edit') {
 				uni.getStorage({
 					key:'recordInfo',
@@ -183,31 +185,28 @@
 						this.classify_type = e.data.classify;
 					}
 				})
+			} else {
+				uni.getStorage({
+					key:'userinfo',
+					success: (e) => {
+						this.userid = e.data.userid;
+					}
+				})
 			}
 		},
 		methods: {
-			test() {
-				let data={ 
-					// string转number,content可以省略,category对应后端的classify
-					// classify对应的是category,传的是key值
-					// 支出为1 收入为2
-					"money": this.money - '0',
-					"content":this.content, 
-					"category":this.category_key, // 具体类型
-					"classify": this.classify_type // 1 or 2
-				};
-				console.log(data);
-			},
 			// 获取表单数据 存入data
+			// 添加
 			save(){
 				let data={
 					// string转number,content可以省略,
 					// 支出为1 收入为2
-					"amount": this.money - '0',
-					"remarks":this.content, 
-					"category":this.category_key, // 具体类型
-					"classify": this.classify_type // 1 or 2
+					"amount": this.amount - '0',
+					"remarks":this.remarks, 
+					"category":this.category_key, 
+					"classify": this.classify_type
 				};
+				console.log(data)
 				if(this.editType=='edit'){
 					data.id = this.id
 				}
@@ -217,26 +216,65 @@
 				}
 				if(!data.remarks){
 					// uni.showToast({title:'请输入备注',icon:'none'});
-					this.remarks = '无'
+					data.remarks = '未备注'
 					// return ;
 				}
-				uni.showLoading({
-					title:'正在提交'
+				uni.request({
+					url: 'http://39.107.125.67:8080/bill/add/' + this.userid + '&' + data.category + '&' + encodeURI(data.classify) + '&' + data.amount + '&' + encodeURI(data.remarks),
+					method: 'POST',
+					success: (res) => {
+						uni.reLaunch({
+							url:"/pages/tabBar/component/component"	
+						})
+					}
+				})
+				//实际应用中请提交ajax,模板定时器模拟提交效果
+				
+			},
+			edit(){
+				console.log("我点击了修改")
+				let data={
+					"amount": this.amount - '0',
+					"remarks":this.remarks, 
+					"category":this.category_key, 
+					"classify": this.classify_type
+				};
+				if(this.editType=='edit'){
+					data.id = this.id
+				}
+				if(!data.amount){
+					uni.showToast({title:'请输入金额',icon:'none'});
+					return ;
+				}
+				if(!data.remarks){
+					data.remarks = '未备注'
+				}
+				uni.request({
+					url: 'http://39.107.125.67:8080/bill/update/' + this.userid + '&' + this.date + '&' + data.category + '&' + encodeURI(data.classify) + '&' + data.amount + '&' + encodeURI(data.remarks),
+					method: 'POST',
+					success: (res) => {
+						uni.reLaunch({
+							url:"/pages/tabBar/component/component"	
+						})
+					}
 				})
 				//实际应用中请提交ajax,模板定时器模拟提交效果
 				
 			},
 			del(){
+				console.log("带删除id" + this.recordID)
 				uni.showModal({
 					title: '删除提示',
-					content: '你将删除这个收货地址',
+					content: '你将删除这条记录',
 					success: (res)=>{
 						if (res.confirm) {
-							uni.setStorage({
-								key:'delAddress',
-								data:{id:this.id},
-								success() {
-									uni.navigateBack();
+							uni.request({
+								url: 'http://39.107.125.67:8080/bill/delete/' + this.recordID,
+								method: 'DELETE',
+								success: (res) => {
+									uni.reLaunch({
+										url:"/pages/tabBar/component/component"	
+									})
 								}
 							})
 						} else if (res.cancel) {

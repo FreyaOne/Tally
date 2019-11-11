@@ -18,18 +18,13 @@
 										{{row.remarks}}
 									</view>
 									<view class="uni-flex uni-column" style="font-size: 25upx; color: #BFBEBE;">
-										{{row.date}}
+										{{row.time}}
 									</view>
 								</view>
 								<view class="detail-right">
 									<view class="uni-flex uni-column" style="font-size: 30upx; color:#595BBC; font-weight: bold;" v-if="current == 0">
 										{{row.amount}}
 									</view>
-									
-									<view class="uni-flex uni-column" style="font-size: 30upx; color:#DC7004; font-weight: bold;" v-if="current == 1">
-										{{row.amount}}
-									</view>
-									
 									<view class="uni-flex uni-column" style="font-size: 25upx; color: #F5B940;">
 										{{row.classify}}
 									</view>
@@ -46,7 +41,7 @@
 										{{row.remarks}}
 									</view>
 									<view class="uni-flex uni-column" style="font-size: 25upx; color: #BFBEBE;">
-										{{row.date}}
+										{{row.time}}
 									</view>
 								</view>
 								<view class="detail-right">
@@ -205,32 +200,22 @@
 						//this.toLogin(); 
 					}
 				});
-				// uni.request({
-				// 	var uri = 'http://39.107.125.67:8080/bill/add' + this.userinfo.userid;
-				// 	url: uri,
-				// 	success: (res) => {
-				// 	},
-				
-				// })
-				// 由接口请求后数据存放于recordlist中 花销过滤器
-				this.recordList = [
-					{ id : 1, remarks: '这是一个测试', date: '2019-10-1', amount: 20, classify: '运动', category: 1},
-					{ id : 2, remarks: '这是一个测试', date: '2019-11-7', amount: 40, classify: '学习', category: 2},
-					{ id : 3, remarks: '这是一个测试', date: '2019-11-7', amount: 50, classify: '水果', category: 1},
-					{ id : 4, remarks: '这是一个测试', date: '2019-11-7', amount: 50, classify: '水果', category: 2},
-					{ id : 5, remarks: '这是一个测试', date: '2019-10-7', amount: 20, classify: '水果', category: 1},
-					{ id : 6, remarks: '这是一个测试', date: '2019-12-7', amount: 50, classify: '水果', category: 1},
-					{ id : 7, remarks: '这是一个测试', date: '2019-11-7', amount: 20, classify: '水果', category: 2},
-					{ id : 8, remarks: '这是一个测试', date: '2019-11-7', amount: 70, classify: '水果', category: 1}
-				];
-				this.recordList.forEach( item =>{ 
-					// 支出为expenditure 收入为income
-				    if(item.category == 1) {
-						this.expenditure.push(item)
-					} else {
-						this.income.push(item)
+				console.log(this.userinfo.userid)
+				uni.request({
+					url: 'http://39.107.125.67:8080/bill/get/user/' + this.userinfo.userid,
+					success: (res) => {
+						let recordList = res.data.data;
+						this.recordList = recordList
+						this.recordList.forEach( item =>{
+							// 支出为expenditure 收入为income
+						    if(item.category == 1) {
+								this.expenditure.push(item)
+							} else {
+								this.income.push(item)
+							}
+						});
 					}
-				});
+				})
 			},
 			cal() {
 				console.log("tets")
@@ -238,10 +223,11 @@
 			select(row){
 				let recordInfo = {
 					userid: this.userinfo.userid,
-					recordID: 1,
+					recordID: row.id,
 					category: row.category,
 					classify: row.classify,
 					amount: row.amount,
+					time: row.time,
 					remarks: row.remarks
 				}
 				uni.setStorage({
@@ -278,14 +264,14 @@
 				console.log(typeof(this.timeData.fulldate))
 				this.expenditure.forEach( item =>{
 					// 支出为expenditure 收入为income
-				    if(item.date == this.timeData.fulldate) {
+				    if(item.time == this.timeData.fulldate) {
 						this.expenditure = []
 						this.expenditure.push(item)
 					}
 				});
 				this.income.forEach( item =>{
 					// 支出为expenditure 收入为income
-				    if(item.date == this.timeData.fulldate) {
+				    if(item.time == this.timeData.fulldate) {
 						this.income = []
 						this.income.push(item)
 					}
