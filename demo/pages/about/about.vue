@@ -55,7 +55,7 @@
 					</view>
 					
 					<!-- 修改记录按钮 -->
-					<view class="button-area" v-show="this.editType == 'edit'" style="flex-direction: column; justify-content: space-between;">
+					<view class="button-area" v-show="editType == 'edit'" style="flex-direction: column; justify-content: space-between;">
 						<view class="uni-btn-v" style="width: 50%; align-items: center; display: flex;">
 							<button @tap="edit" style="height: 70upx; font-size: 27upx; margin-right: 20upx;">修改</button>
 							<button @tap="del" style="height: 70upx; font-size: 27upx; background-color: #DD524D;">删除</button>
@@ -63,7 +63,7 @@
 					</view>
 					
 					<!-- 新建记录传递 -->
-					<view class="button-area" v-show="this.editType == 'add'">
+					<view class="button-area" v-show="editType == 'add'">
 						<view class="uni-btn-v" style="width: 50%; align-items: center; display: flex; flex-direction: column;">
 							<button @tap="save" style="height: 70upx; font-size: 30upx;">新建</button>
 						</view>
@@ -232,7 +232,6 @@
 				
 			},
 			edit(){
-				console.log("我点击了修改")
 				let data={
 					"amount": this.amount - '0',
 					"remarks":this.remarks, 

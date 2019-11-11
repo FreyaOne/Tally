@@ -66,7 +66,7 @@
 				</view>
 			</view>
 		</view>
-			<uni-calendar ref="calendar" :lunar="tags[0].checked" :disable-before="tags[3].checked" :range="tags[5].checked" :start-date="startDate" :end-date="endDate" :date="date" :selected="selected" @confirm="confirm" @change="change" />
+			<uni-calendar ref="calendar" :date="date" @confirm="confirm" @change="change" />
 		
 	</view>
 </template>
@@ -95,67 +95,13 @@
 				let d = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate() // 获取当前几号，不足10补0
 				return y + '-' + m + '-' + d
 			}
-			let tags = [{
-					id: 0,
-					name: '农历',
-					checked: false,
-					attr: 'lunar'
-				},
+			let tags = [
 				{
 					id: 1,
-					name: '开始日期(' + getDate(new Date(), -1) + ')',
-					checked: false,
-					value: getDate(new Date(), -1),
-					attr: 'startDate'
-				},
-				{
-					id: 2,
-					name: '结束日期(' + getDate(new Date(), 2) + ')',
-					value: getDate(new Date(), 2),
-					checked: false,
-					attr: 'endDate'
-				},
-				{
-					id: 3,
-					name: '禁用今天之前的日期',
-					checked: false,
-					attr: 'disableBefore'
-				},
-				{
-					id: 4,
 					name: '自定义当前日期(' + getDate(new Date(), 1) + ')',
 					value: getDate(new Date(), 1),
 					checked: false,
 					attr: 'date'
-				},
-				{
-					id: 5,
-					name: '范围选择',
-					checked: false,
-					attr: 'range'
-				},
-				{
-					id: 6,
-					name: '打点',
-					value: [{
-							date: getDate(new Date(), 0, -1),
-							info: '打卡'
-						},
-						{
-							date: getDate(new Date(), 0),
-							info: '签到',
-							data: {
-								custom: '自定义信息',
-								name: '自定义消息头'
-							}
-						},
-						{
-							date: getDate(new Date(), 0, 1),
-							info: '已打卡'
-						}
-					],
-					checked: false,
-					attr: 'selected'
 				}
 			]
 			
@@ -190,7 +136,7 @@
 			}
 		},
 		methods: {
-			onLoad(e) {
+			onReady(e) {
 				uni.getStorage({
 					key: 'userinfo',
 					success: (res) => {
@@ -260,9 +206,9 @@
 			},
 			confirm(e) {
 				console.log('confirm 返回:', e)
-				this.timeData = e
-				console.log(typeof(this.timeData.fulldate))
+				console.log(this.startDate)
 				this.expenditure.forEach( item =>{
+					console.log(item.time)
 					// 支出为expenditure 收入为income
 				    if(item.time == this.timeData.fulldate) {
 						this.expenditure = []
@@ -289,25 +235,10 @@
 				this.$refs.calendar.open()
 			},
 			reckon() {
-				if (this.tags[1].checked) {
-					this.startDate = this.tags[1].value
-				} else {
-					this.startDate = ''
-				}
-				if (this.tags[2].checked) {
-					this.endDate = this.tags[2].value
-				} else {
-					this.endDate = ''
-				}
-				if (this.tags[4].checked) {
-					this.date = this.tags[4].value
+				if (this.tags[0].checked) {
+					this.date = this.tags[0].value
 				} else {
 					this.date = ''
-				}
-				if (this.tags[6].checked) {
-					this.selected = this.tags[6].value
-				} else {
-					this.selected = []
 				}
 			}
 		}

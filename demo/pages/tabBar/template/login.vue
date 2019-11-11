@@ -33,6 +33,19 @@
 				// isShowOauth:false,
 			}
 		},
+		onReady(){
+			uni.getStorage({
+				key: 'userinfo',
+				success: (res) => {
+					console.log("获取成功");
+					this.username = res.data.username;
+					// console.log("userid为" + this.userid);
+				},
+				fail: (e) => {
+					console.log(e.data);
+				}
+			});
+		},
 		methods: {
 			topage(page) {
 				uni.hideKeyboard()
@@ -49,7 +62,7 @@
 				uni.request({
 					url: uri,
 					success: (res) => {
-						// console.log("111111111" + res.data.code);
+						console.log("111111111" + res.data.data);
 						this.text = 'request success';
 						if(res.data.code == 0){
 							uni.reLaunch({
@@ -58,14 +71,14 @@
 							});
 							let userinfo = {
 								"username" : res.data.data[0].userName,
-								"userid" : res.data.data[0].id
+								"userid" : res.data.data[0].id,
 							}
 							uni.setStorage({
 								key:"userinfo",
 								data:userinfo,
 								 success: function () {
 								        console.log('success');
-										// console.log(userinfo);
+										// console.log('用户信息是' + userinfo.passwd);
 								    }
 							})
 						}else{

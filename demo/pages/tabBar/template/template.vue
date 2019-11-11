@@ -87,8 +87,8 @@
 			remove() {
 				uni.showModal({
 					content: "确定要退出该账户吗",
-					confirmText: "确定",
 					cancelText: "取消",
+					confirmText: "确定",
 					success: function(res) {
 						if (res.confirm) {
 							uni.removeStorage({

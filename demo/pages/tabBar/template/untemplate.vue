@@ -9,43 +9,43 @@
 			<view class="img">
 				<image mode="widthFix" src="../../../static/tabBar/user.png" @tap="navigateTo"></image>
 			</view>
-			<view> 
+			<view>
 				<!-- <text style="text-align: center;margin-left: 20px;">{{username}}</text> -->
 				<view style="">{{username}}</view>
 			</view>
 		</view>
 		<!-- <view class="uni-list">
 			<!- <block v-for="(item,index) in lists" :key="index"> -->
-			<view class="uni-list-cell" hover-class="uni-list-cell-hover">
-				<view class="uni-triplex-row">
-					<view class="uni-triplex-left">
-						<text class="uni-title uni-ellipsis">用户ID</text>
-					</view>
+		<view class="uni-list-cell" hover-class="uni-list-cell-hover">
+			<view class="uni-triplex-row">
+				<view class="uni-triplex-left">
+					<text class="uni-title uni-ellipsis">用户ID</text>
 				</view>
 			</view>
-			<view class="uni-list-cell" hover-class="uni-list-cell-hover">
-				<view class="uni-triplex-row">
-					<view class="uni-triplex-left">
-						<text class="uni-title uni-ellipsis">我的设置</text>
-					</view>
-				</view>
-			</view>
-			<view class="uni-list-cell" hover-class="uni-list-cell-hover">
-				<view class="uni-triplex-row">
-					<view class="uni-triplex-left">
-						<text class="uni-title uni-ellipsis">使用帮助</text>
-					</view>
-				</view>
-			</view>
-			<view class="uni-list-cell" hover-class="uni-list-cell-hover">
-				<view class="uni-triplex-row">
-					<view class="uni-triplex-left">
-						<text class="uni-title uni-ellipsis">退出登录</text>
-					</view>
-				</view>
-			</view>
-			<!-- </block> -->
 		</view>
+		<view class="uni-list-cell" hover-class="uni-list-cell-hover">
+			<view class="uni-triplex-row">
+				<view class="uni-triplex-left">
+					<text class="uni-title uni-ellipsis">我的设置</text>
+				</view>
+			</view>
+		</view>
+		<view class="uni-list-cell" hover-class="uni-list-cell-hover">
+			<view class="uni-triplex-row">
+				<view class="uni-triplex-left">
+					<text class="uni-title uni-ellipsis">使用帮助</text>
+				</view>
+			</view>
+		</view>
+		<view class="uni-list-cell" hover-class="uni-list-cell-hover">
+			<view class="uni-triplex-row">
+				<view class="uni-triplex-left">
+					<text class="uni-title uni-ellipsis">退出登录</text>
+				</view>
+			</view>
+		</view>
+		<!-- </block> -->
+	</view>
 	</view>
 </template>
 <script>
@@ -56,6 +56,19 @@
 				// lists: [],
 				username: "点击登录"
 			}
+		},
+		onload() {
+			uni.setStorage({
+				key: "userinfo",
+				data: userinfo,
+				success: function() {
+					console.log('success');
+					uni.reLaunch({
+						url:'./template'
+					})
+					// console.log(userinfo);
+				},
+			})
 		},
 		methods: {
 			navigateTo() {
@@ -77,9 +90,11 @@
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
+
 		.img {
 			width: 25%;
 			height: 26vw;
+
 			image {
 				width: 100%;
 				border-radius: 50%;

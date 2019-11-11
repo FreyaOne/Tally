@@ -57,7 +57,6 @@
 	-webkit-flex-direction: column;
 	    -ms-flex-direction: column;
 	        flex-direction: column;
-	margin-top: 20rpx;
 }
 button {
 	width: 50%;
@@ -74,7 +73,7 @@ button {
 	height: 140rpx;
 	padding-top: 15rpx;
 	margin-top: 25rpx;
-	height: 1150rpx;
+	height: 1350rpx;
 }
 /* 九宫格 */
 .example {

@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/tabBar/template/untemplate",
     "pages/tabBar/component/component",
     "pages/tabBar/API/ucharts",
     "pages/tabBar/template/template",
