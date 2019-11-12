@@ -66,7 +66,7 @@
 				</view>
 			</view>
 		</view>
-			<uni-calendar ref="calendar" :date="date" @confirm="confirm" @change="change" />
+			<uni-calendar ref="calendar" :date="date" @confirm="confirm" @change="change"/>
 		
 	</view>
 </template>
@@ -93,7 +93,7 @@
 				let y = dd.getFullYear()
 				let m = dd.getMonth() + 1 < 10 ? '0' + (dd.getMonth() + 1) : dd.getMonth() + 1 // 获取当前月份的日期，不足10补0
 				let d = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate() // 获取当前几号，不足10补0
-				return y + '-' + m + '-' + d
+				return dd;
 			}
 			let tags = [
 				{
@@ -205,8 +205,6 @@
 				this.infoShow = true
 			},
 			confirm(e) {
-				console.log('confirm 返回:', e)
-				console.log(this.startDate)
 				this.expenditure.forEach( item =>{
 					console.log(item.time)
 					// 支出为expenditure 收入为income

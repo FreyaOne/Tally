@@ -94,12 +94,6 @@
 	
 		return `${year}-${month}-${day}`;
 	}
-	// const data = {
-	// 	"money": null,
-	// 	"content": null,
-	// 	"category": null,
-	// 	"classify": null
-	// }
 	export default {
 		components: {
 			uniGrid,
@@ -193,6 +187,8 @@
 					}
 				})
 			}
+			if(this.category_key == 1) this.category_type = '支出'
+			else this.category_type = '收入'
 		},
 		methods: {
 			// 获取表单数据 存入data
@@ -249,7 +245,7 @@
 					data.remarks = '未备注'
 				}
 				uni.request({
-					url: 'http://39.107.125.67:8080/bill/update/' + this.userid + '&' + this.date + '&' + data.category + '&' + encodeURI(data.classify) + '&' + data.amount + '&' + encodeURI(data.remarks),
+					url: 'http://39.107.125.67:8080/bill/update/' + this.recordID + '&' + this.date + '&' + data.category + '&' + encodeURI(data.classify) + '&' + data.amount + '&' + encodeURI(data.remarks),
 					method: 'POST',
 					success: (res) => {
 						uni.reLaunch({
@@ -330,9 +326,6 @@
 			// 日期选择器
 			bindDateChange: function(e) {
 				this.date = e.target.value
-			},
-			bindTimeChange: function(e) {
-				this.time = e.target.value
 			}
 		}
 	}
