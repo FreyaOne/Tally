@@ -102,12 +102,12 @@
 		data() {
 			return {
 				list1: [{
-						url: '/static/img/category/7.png',
+						url: '/static/img/category/10.png',
 						category: '支出',
 						key: 1
 					},
 					{
-						url: '/static/img/category/6.png',
+						url: '/static/img/category/11.png',
 						category: '收入',
 						key: 2
 					}

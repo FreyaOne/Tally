@@ -65,15 +65,14 @@
 					<view class="choseDate">
 						<view class="calendar-tags" @click="open">
 							<view class="calendar-tags-item calendar-button">
-								<!-- <image src="/static/img/category/9.png" class="image"/> -->
-								<view> 查找</view>
+								<image src="/static/img/category/9.png" class="image"/>
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-			<uni-calendar ref="calendar" :date="date" :value="c_time" @confirm="confirm" @change="change"/>
+			<uni-calendar ref="calendar" :date="date"  @confirm="confirm" @change="change"/>
 		
 	</view>
 </template>
@@ -131,21 +130,7 @@
 				styleType: 'button',
 				tags,
 				date: '',
-				startDate: '',
-				endDate: '',
-				timeData: {
-					clockinfo: '',
-					date: '',
-					fulldate: '',
-					lunar: '',
-					month: '',
-					range: '',
-					year: ''
-				},
-				c_time: '',
-				selected: [],
-				infoShow: false,
-				showCalendar: false
+				infoShow: false
 			}
 		},
 		methods: {
@@ -160,7 +145,7 @@
 					fail: (e) => {
 					}
 				});
-				
+				let temp;
 				//请求ajax 拉取该用户的所有账单
 				uni.request({
 					url: 'http://39.107.125.67:8080/bill/get/user/' + this.userinfo.userid,
@@ -171,8 +156,12 @@
 							// 支出为expenditure 收入为income
 							// 对类型进行过滤
 						    if(item.category == 1) {
+								temp = item.time.toString();
+								item.time = temp.substring(0,10)
 								this.expenditure.push(item)
 							} else {
+								temp = item.time.toString();
+								item.time = temp.substring(0,10)
 								this.income.push(item)
 							}
 							this.ex_temp = this.expenditure
@@ -225,31 +214,39 @@
 				if (this.current !== index) {
 					this.current = index
 				}
+				this.expenditure = this.ex_temp
+				this.income = this.in_temp
 			},
-			change(e) {
-				console.log('change 返回:', e)
-				this.timeData = e
-				this.infoShow = true
-			},
+			change(e) {},
+			
+			/*
+				按照日历查询 confirm
+			*/
 			confirm(e) {
-				console.log(e)
-				this.expenditure.forEach( item =>{
-					console.log(item.time)
-					// 支出为expenditure 收入为income
-				    if(item.time == this.timeData.fulldate) {
-						this.expenditure = []
-						this.expenditure.push(item)
-					}
-				});
-				this.income.forEach( item =>{
-					// 支出为expenditure 收入为income
-				    if(item.time == this.timeData.fulldate) {
-						this.income = []
-						this.income.push(item)
-					}
-				});
+				this.expenditure = this.ex_temp
+				this.income = this.in_temp
+				let curr = []
+				if(this.current == 0) {
+					this.expenditure.forEach( item =>{
+						// 支出为expenditure 收入为income
+						if(item.time == e.fulldate) {
+							curr.push(item)
+						}
+						this.expenditure = curr
+					})
+				} else {
+					this.income.forEach( item =>{
+						// 支出为expenditure 收入为income
+					    if(item.time == e.fulldate) {
+							curr.push(item)
+						}
+						this.income = curr
+					});
+				}
 				this.infoShow = true
 			},
+			
+			/* 日历组件 接口自带方法 */
 			retract() {
 				this.infoShow = !this.infoShow
 			},toggle(index, item) {
@@ -267,6 +264,9 @@
 					this.date = ''
 				}
 			},
+			
+			/*-------------------------------------------*/
+			
 			// 搜索操作 不分类识别
 			search(res) {
 				this.searchVal = res.value
@@ -290,11 +290,9 @@
 						this.income = curr;
 					}
 				}
-				// uni.showModal({
-				// 	content: '搜索：' + res.value,
-				// 	showCancel: false
-				// })
 			},
+			
+			// 搜索栏的 取消 功能
 			cancel(res) {
 				this.expenditure = this.ex_temp
 				this.income = this.in_temp
@@ -368,7 +366,7 @@
 		border-radius: 47upx; 
 		font-size: 30upx;
 		box-shadow: 0upx 0upx 25upx rgba(0,0,0,0.1);
-		background-color: #F5B940;
+		background-color: #FFFFFF;
 		color: #FFFFFF;
 		text-align: center;
 		justify-content: center;
@@ -383,6 +381,6 @@
 	}
 	.image {
 		width: 50upx;
-		height: 70upx;
+		height: 50upx;
 	}
 </style>
