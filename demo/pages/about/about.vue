@@ -207,7 +207,7 @@
 					data.id = this.id
 				}
 				if(!data.amount){
-					uni.showToast({title:'请输入金额',icon:'none'});
+					uni.showToast({title:'请输入正确格式',icon:'none'});
 					return ;
 				}
 				if(!data.remarks){

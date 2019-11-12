@@ -1,6 +1,11 @@
 <template>
 	<view>
-		<view class="uni-padding-wrap uni-common-mt">
+		<view class="example-body">
+			<uni-search-bar @confirm="search" @input="input" @cancel="cancel" />
+			<view class="" style="margin-bottom: 20px;text-align: center;">
+			</view>
+		</view>
+		<view class="uni-padding-wrap uni-common-mt" style="margin-top: 0px;">
 			<uni-segmented-control :current="current" :values="items" :style-type="styleType" :active-color="activeColor" @clickItem="onClickItem" />
 		</view>
 		<view class="content">
@@ -55,29 +60,33 @@
 							</view>
 						</view>
 					</view>
+					<!-- <button @click="cal()">测试</button> -->
 					<!-- 筛选日期 -->
 					<view class="choseDate">
 						<view class="calendar-tags" @click="open">
 							<view class="calendar-tags-item calendar-button">
-								<image src="/static/img/category/9.png" class="image"/>
+								<!-- <image src="/static/img/category/9.png" class="image"/> -->
+								<view> 查找</view>
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-			<uni-calendar ref="calendar" :date="date" @confirm="confirm" @change="change"/>
+			<uni-calendar ref="calendar" :date="date" :value="c_time" @confirm="confirm" @change="change"/>
 		
 	</view>
 </template>
 
 <script>
+	import uniSearchBar from '@/components/uni-search-bar/uni-search-bar.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
 	import uniCalendar from '@/components/uni-calendar/uni-calendar.vue'
 	export default {
 		components: {
 			uniSegmentedControl,
-			uniCalendar
+			uniCalendar,
+			uniSearchBar
 		},
 		data() {
 			/**
@@ -106,13 +115,16 @@
 			]
 			
 			return {
+				searchVal: '', // 搜索
 				userinfo : {
 					username: '',
 					userid: ''
 				},
-				expenditure: [],
-				recordList:[],
-				income: [],
+				expenditure: [], //支出
+				ex_temp: [],
+				recordList:[], //临时存储所有账单
+				income: [], //收入
+				in_temp: [],
 				items: ['支出明细', '收入明细'],
 				current: 0,
 				activeColor: '#595BBC',
@@ -130,23 +142,26 @@
 					range: '',
 					year: ''
 				},
+				c_time: '',
 				selected: [],
 				infoShow: false,
 				showCalendar: false
 			}
 		},
 		methods: {
+			// 初始界面加载 拉取用户信息 及 本用户的所有账单
 			onReady(e) {
+				//从缓存中读取userinfo
 				uni.getStorage({
 					key: 'userinfo',
 					success: (res) => {
 						this.userinfo = res.data
 					},
 					fail: (e) => {
-						//this.toLogin(); 
 					}
 				});
-				console.log(this.userinfo.userid)
+				
+				//请求ajax 拉取该用户的所有账单
 				uni.request({
 					url: 'http://39.107.125.67:8080/bill/get/user/' + this.userinfo.userid,
 					success: (res) => {
@@ -154,18 +169,22 @@
 						this.recordList = recordList
 						this.recordList.forEach( item =>{
 							// 支出为expenditure 收入为income
+							// 对类型进行过滤
 						    if(item.category == 1) {
 								this.expenditure.push(item)
 							} else {
 								this.income.push(item)
 							}
+							this.ex_temp = this.expenditure
+							this.in_temp = this.income
 						});
 					}
 				})
 			},
 			cal() {
-				console.log("tets")
 			},
+			
+			//选择某一条记录 跳转至修改界面
 			select(row){
 				let recordInfo = {
 					userid: this.userinfo.userid,
@@ -189,9 +208,17 @@
 				});
 				
 			},
+			
+			//导航栏的 ‘+’ 号跳转至about，默认type为添加记录 
 			onNavigationBarButtonTap(e) {
 				uni.navigateTo({
 					url: '/pages/about/about?type=add'
+				});
+			},
+			onNavigationBarSearchInputClicked(e) {
+				console.log('事件执行了')
+				uni.navigateTo({
+					url: '/pages/template/nav-search-input/detail/detail'
 				});
 			},
 			onClickItem(index) {
@@ -205,6 +232,7 @@
 				this.infoShow = true
 			},
 			confirm(e) {
+				console.log(e)
 				this.expenditure.forEach( item =>{
 					console.log(item.time)
 					// 支出为expenditure 收入为income
@@ -238,7 +266,40 @@
 				} else {
 					this.date = ''
 				}
-			}
+			},
+			// 搜索操作 不分类识别
+			search(res) {
+				this.searchVal = res.value
+				this.expenditure = this.ex_temp
+				this.income = this.in_temp
+				let curr = []
+				if(res.value != null ) {
+					if(this.current == 0) {
+						this.expenditure.forEach( item=> {
+							if(item.remarks == this.searchVal || this.searchVal - '0' == item.amount || this.searchVal == item.classify) {
+								curr.push(item)
+							}
+						})
+						this.expenditure = curr;
+					} else {
+						this.income.forEach( item=> {
+							if(item.remarks == this.searchVal || this.searchVal - '0' == item.amount || this.searchVal == item.classify) {
+								curr.push(item)
+							}
+						})
+						this.income = curr;
+					}
+				}
+				// uni.showModal({
+				// 	content: '搜索：' + res.value,
+				// 	showCancel: false
+				// })
+			},
+			cancel(res) {
+				this.expenditure = this.ex_temp
+				this.income = this.in_temp
+			},
+			input(res) {}
 		}
 	}
 </script>
