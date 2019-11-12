@@ -51,38 +51,17 @@
 					return false;
 				}
 				if(passwd.toString().length<=8){
-					uni.showToast({title:'密码长度应大于8位',icon:"none"});
+					uni.showToast({title:'密码长度应至少为8位',icon:"none"});
+					return false;
+				}
+				if(passwd.toString().length>=20){
+					uni.showToast({title:'密码长度应小于20位',icon:"none"});
 					return false;
 				}
 				// uni.showLoading({
 				// 	title: '注册中...'
 				// })
 				var uri = 'http://39.107.125.67:8080/register/' + username + '&' + passwd;
-				// console.log(uri);
-				// setTimeout(()=>{
-				// 	let md5PW = md5(this.passwd)
-				// 	uni.getStorage({
-				// 		key: 'UserList',
-				// 		success: (res)=>{
-				// 			for(let i in res.data){
-				// 				let row = res.data[i];
-				// 				if(row.username==this.phoneNumber){
-				// 					uni.hideLoading()
-				// 					//比对密码
-				// 					if(md5PW == res.data[i].passwd){
-				// 						uni.showToast({title: '登录成功',icon:"success"});
-				// 					}else{
-				// 						uni.showToast({title: '账号或密码不正确',icon:"none"});
-				// 					}
-				// 				}
-				// 			}
-				// 		},
-				// 		fail:function(e){
-				// 			uni.hideLoading()
-				// 			uni.showToast({title: '手机号码未注册',icon:"none"});
-				// 		}
-				// 	});
-				// },1000)
 				uni.request({
 					url: uri,
 					method:'POST',

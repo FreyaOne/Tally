@@ -143,7 +143,8 @@
     "pages/template/timeline/timeline",
     "pages/template/vant-button/vant-button",
     "pages/template/datachecker/datachecker",
-    "pages/template/global/global"
+    "pages/template/global/global",
+    "pages/tabBar/template/usehelp/help"
   ],
   "window": {
     "navigationBarTextStyle": "white",

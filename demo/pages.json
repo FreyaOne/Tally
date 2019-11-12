@@ -1189,7 +1189,16 @@
 						"navigationBarTitleText": "GlobalData和vuex"
 					}
 				}
-
+			]
+		},
+		{
+			"root": "pages/tabBar/template",
+			"pages": [{
+					"path": "usehelp/help",
+					"style": {
+						"navigationBarTitleText": "使用说明"
+					}
+				}
 			]
 		}
 	],
@@ -1234,3 +1243,4 @@
 		]
 	}
 }
+

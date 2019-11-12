@@ -1,6 +1,5 @@
 <template>
 	<view id="moments">
-
 		<view class="home-pic">
 			<view class="home-pic-base">
 				<view class="top-pic">
@@ -58,8 +57,8 @@
 </template>
 
 <script>
-	import chatInput from '../../components/im-chat/chatinput.vue'; //input框
-	import postData from '../../common/index/index.post.data.js';//朋友圈数据
+	// import chatInput from '../../../components/im-chat/chatinput.vue'; //input框
+	// import postData from '../../../common/index/index.post.data.js';//朋友圈数据
 	
 	export default {
 		components: {

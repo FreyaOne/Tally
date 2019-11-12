@@ -33,7 +33,12 @@
 				// isShowOauth:false,
 			}
 		},
-		onReady(){
+		mounted(){
+			let pass = uni.getStorageSync('passwd');
+			// console.log("密码是啥" + pass);
+			this.passwd = pass;
+		},
+		onReady() {
 			uni.getStorage({
 				key: 'userinfo',
 				success: (res) => {
@@ -64,36 +69,35 @@
 					success: (res) => {
 						console.log("111111111" + res.data.data);
 						this.text = 'request success';
-						if(res.data.code == 0){
+						if (res.data.code == 0) {
+							uni.setStorageSync('passwd', this.passwd);
+							// console.log()
 							uni.reLaunch({
-							    url: '../component/component'     //从非tabBar主页面跳转到tabBar页面，不可使用navigateTo方法
+								url: '../component/component' //从非tabBar主页面跳转到tabBar页面，不可使用navigateTo方法
 								// url:'../component/component'
 							});
 							let userinfo = {
-								"username" : res.data.data[0].userName,
-								"userid" : res.data.data[0].id,
+								"username": res.data.data[0].userName,
+								"userid": res.data.data[0].id,
 							}
 							uni.setStorage({
-								key:"userinfo",
-								data:userinfo,
-								 success: function () {
-								        console.log('success');
-										// console.log('用户信息是' + userinfo.passwd);
-								    }
+								key: "userinfo",
+								data: userinfo,
+								success: function() {
+									console.log('success');
+									// console.log('用户信息是' + userinfo.passwd);
+								}
 							})
-						}else{
+						} else {
 							uni.showToast({
-								title:'用户名或密码输入错误',
-								icon:"none",
+								title: '用户名或密码输入错误',
+								icon: "none",
 							})
 						}
 					},
 
 				})
 			},
-			
-			
-
 		},
 	}
 </script>
