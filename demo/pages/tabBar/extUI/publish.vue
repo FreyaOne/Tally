@@ -3,11 +3,15 @@
 		<form>
 			<view class="uni-textarea" style="height:180px;">
 				<textarea placeholder="这一刻的想法..." v-model="input_content" />
-				</view>
+			</view>
+			<view>
+				
+			</view>
 			<view class="footer">
 				<button type="default" class="feedback-submit" @click="publish">提交</button>
 			</view>
 		</form>
+		<!-- <view v-model="userid"></view> -->
 	</view>
 </template>
 
@@ -29,16 +33,13 @@
 			return {
 				// title: 'choose/previewImage',
 				input_content:'',
-				imageList: [],
-				
-				
-				
-				sourceTypeIndex: 2,
-				sourceType: ['拍照', '相册', '拍照或相册'],
-				sizeTypeIndex: 2,
-				sizeType: ['压缩', '原图', '压缩或原图'],
-				countIndex: 8,
-				count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+				userid:'',
+				// sourceTypeIndex: 2,
+				// sizeTypeIndex: 2,
+				// countIndex: 8,
+				longitude: '',   //经度
+				latitude: '',   //纬度
+				// count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
 				
 				//侧滑返回start
 				startX: 0, //点击屏幕起始位置
@@ -47,69 +48,35 @@
 				//end
 			}
 		},
-		onUnload() {
-			this.imageList = [],
-				this.sourceTypeIndex = 2,
-				this.sourceType = ['拍照', '相册', '拍照或相册'],
-				this.sizeTypeIndex = 2,
-				this.sizeType = ['压缩', '原图', '压缩或原图'],
-				this.countIndex = 8;
+		// onUnload() {
+		// 		this.sourceTypeIndex = 2,
+		// 		this.sizeTypeIndex = 2,
+		// 		this.countIndex = 8;
+		// },
+		mounted(){
+			uni.getStorage({
+				key: 'userinfo',
+				success: (res) => {
+					console.log("获取成功");
+					// this.username = res.data.username;
+					this.userid = res.data.userid;
+					console.log("userid为" + this.userid);
+				},
+				fail: (e) => {
+					console.log(e.data);
+				}
+			});
 		},
 		
 		methods: {
-			async publish(){
-				if (!this.input_content) {
-					uni.showModal({ content: '内容不能为空', showCancel: false, });
-					return;
-				}
-				
-				uni.showLoading({title:'发布中'});
-				
-				var location = await this.getLocation();//位置信息,可删除,主要想记录一下异步转同步处理
-				var images = [];
-				for(var i = 0,len = this.imageList.length; i < len; i++){
-					var image_obj = {name:'image-'+i,uri:this.imageList[i]};
-					images.push(image_obj);
-				}
-				
-				uni.uploadFile({//该上传仅为示例,可根据自己业务修改或封装,注意:统一上传可能会导致服务器压力过大
-					url: 'moment/moments', //仅为示例，非真实的接口地址
-					files:images,//有files时,会忽略filePath和name
-					filePath: '',
-					name: '',
-					formData: {//后台以post方式接收
-						'user_id':'1',//自己系统中的用户id
-						'text': this.input_content,//moment文字部分
-						'longitude':location.longitude,//经度
-						'latitude':location.latitude//纬度
-					},
-					success: (uploadFileRes) => {
-						uni.hideLoading();
-						uni.showToast({
-							icon:'success',
-							title:"发布成功"
-						})
-						uni.navigateBack({//可根据实际情况使用其他路由方式
-							delta:1
-						});
-					},
-					fail: (e) => {
-						console.log("e: " + JSON.stringify(e));
-						uni.hideLoading();
-						uni.showToast({
-							icon:'none',
-							title:"发布失败,请检查网络"
-						})
-					}
-				});
-			},
-			
-			getLocation(){//h5中可能不支持,自己选择
+			getLocation(){    //h5中可能不支持
 				return new Promise((resolve, reject) => {
 					uni.getLocation({
 						type: 'wgs84',
 						success: function (res) {
 							resolve(res);
+							this.latitude = res.latitude;
+							this.longitude = res.longitude;
 						},
 						fail: (e) => {  
 							reject(e);
@@ -117,6 +84,48 @@
 					});
 				} )
 			},
+			
+			async publish(){
+				if (!this.input_content) {
+					uni.showModal({ content: '内容不能为空', showCancel: false, });
+					return;
+				}
+				uni.showLoading({title:'发布中'});
+				// var location = await this.getLocation();  //位置信息,可删除,主要想记录一下异步转同步处理
+				uni.request({
+					url: 'http://39.107.125.67:8080/socials',
+					dataType:'json',
+					method:'POST',
+					data:{
+						"userId" : this.userid,
+						"socialContent" : this.input_content,
+						"time": "2019-11-17 13:34:00",
+						"location" : { 
+							"latitude": 11.05, 
+							"longitude" : 12.01,
+						}
+					},
+					success: (res) => {
+						this.text = 'request success';
+						if (res.data.code == 0) {
+							// console.log("11111" + res.data);
+							uni.reLaunch({
+								url:'./extUI'
+							})
+						} else {
+							uni.showToast({
+								title: '发表出现错误',
+								icon: "none",
+							})
+						}
+					},
+					fail:(e)=>{
+						console.log(e.data);
+					}
+				
+				})
+			},
+			
 			
 			close(e){
 			    this.imageList.splice(e,1);

@@ -3,20 +3,8 @@ export default [{
 							"uid": 1,
 							"username": "龙葵",
 							// "header_image": "/static/index/test/header03.jpg",
-							"content": {
-								"text": "这是一个测试",
-								// "images": ["/static/index/test/test2.jpg"]
-							},
+							"content": "这是一个测试",
 							"islike": 0,
-							"like": [{
-									"uid": 2,
-									"username": "小李子,"
-								},
-								{
-									"uid": 3,
-									"username": "小张子"
-								}
-							],
 							"comments": {
 								"total": 2,
 								"comment": [{
