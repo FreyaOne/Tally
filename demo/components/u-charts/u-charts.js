@@ -31,7 +31,7 @@ var config = {
   fontSize: 13,
   //dataPointShape: ['diamond', 'circle', 'triangle', 'rect'],
   dataPointShape: ['circle', 'circle', 'circle', 'circle'],
-  colors: ['#1890ff', '#2fc25b', '#facc14', '#f04864', '#8543e0', '#90ed7d'],
+  colors: ['#D79851', '#F1D6B1', '#C8E0EC', '#87944E', '#877DBB', '#006B60'],
   pieChartLinePadding: 15,
   pieChartTextPadding: 5,
   xAxisTextPadding: 3,

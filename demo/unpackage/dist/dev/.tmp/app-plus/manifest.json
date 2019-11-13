@@ -11,7 +11,7 @@
     "code": "100"
   },
   "description": "应用描述",
-  "launch_path": "__uniappview.html",
+  "launch_path": "__uniapptabbar.html",
   "developer": {
     "name": "",
     "email": "",
@@ -30,7 +30,7 @@
   },
   "plus": {
     "useragent": {
-      "value": "uni-app",
+      "value": "uni-app appservice",
       "concatenate": true
     },
     "splashscreen": {
@@ -40,11 +40,7 @@
       "delay": 0
     },
     "popGesture": "close",
-    "launchwebview": {
-      "id": "1",
-      "kernel": "WKWebview",
-      "uni-app": "auto"
-    },
+    "launchwebview": {},
     "statusbar": {
       "immersed": "supportedDevice",
       "style": "light",
@@ -121,7 +117,7 @@
       }
     },
     "uni-app": {
-      "compilerVersion": "2.3.7",
+      "compilerVersion": "2.3.3",
       "control": "v8",
       "nvueCompiler": "uni-app",
       "renderer": "auto",
@@ -129,38 +125,10 @@
         "flex-direction": "column"
       }
     },
-    "tabBar": {
-      "color": "#BFBEBE",
-      "selectedColor": "#595BBC",
-      "borderStyle": "rgba(0,0,0,0.4)",
-      "backgroundColor": "#F8F8F8",
-      "list": [
-        {
-          "pagePath": "pages/tabBar/component/component",
-          "iconPath": "static/tabBar/Record.png",
-          "selectedIconPath": "static/tabBar/Record-on.png",
-          "text": "明细"
-        },
-        {
-          "pagePath": "pages/tabBar/API/ucharts",
-          "iconPath": "static/tabBar/Chart.png",
-          "selectedIconPath": "static/tabBar/Chart-on.png",
-          "text": "图表"
-        },
-        {
-          "pagePath": "pages/tabBar/extUI/extUI",
-          "iconPath": "static/tabBar/Community.png",
-          "selectedIconPath": "static/tabBar/Community-on.png",
-          "text": "社区"
-        },
-        {
-          "pagePath": "pages/tabBar/template/template",
-          "iconPath": "static/tabBar/Setting.png",
-          "selectedIconPath": "static/tabBar/Setting-on.png",
-          "text": "设置"
-        }
-      ],
-      "height": "50px"
+    "secondwebview": {
+      "id": "1",
+      "launch_path": "__uniappview.html",
+      "kernel": "WKWebview"
     }
   }
 }

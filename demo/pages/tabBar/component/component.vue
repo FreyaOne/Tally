@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="example-body">
-			<uni-search-bar @confirm="search" @input="input" @cancel="cancel" />
+			<uni-search-bar @confirm="search" @input="input" @cancel="Serach_cancel"/>
 			<view class="" style="margin-bottom: 20px;text-align: center;">
 			</view>
 		</view>
@@ -14,7 +14,7 @@
 					<!-- expenditure 外部卡片样式 内嵌记录列表 -->
 					<!-- 循环收支记录列表 -->
 					<!-- v-show="row.spend >= 0 && current === 0" -->
-					<view class="expenditure" v-for="(row,index) in expenditure" :key="index" @tap="select(row)" style="margin-top: 20upx;" v-if="current == 0">
+					<view class="expenditure" v-for="(row,index) in expenditure" :key="index" @tap="select(row)" @longtap="share(row)" style="margin-top: 20upx;" v-if="current == 0">
 						<view class="uni-padding-wrap uni-common-mt">
 							<view class="uni-flex uni-row">
 								<!-- 记录左部分（内容 时间）占位70%，右侧（价格类别）为30% -->
@@ -37,7 +37,7 @@
 							</view>
 						</view>
 					</view>
-					<view class="expenditure" v-for="(row,index) in income" :key="index" @tap="select(row)" style="margin-top: 20upx;" v-if="current == 1">
+					<view class="expenditure" v-for="(row,index) in income" :key="index" @tap="select(row)" @longtap="share(row)" style="margin-top: 20upx;" v-if="current == 1">
 						<view class="uni-padding-wrap uni-common-mt">
 							<view class="uni-flex uni-row">
 								<!-- 记录左部分（内容 时间）占位70%，右侧（价格类别）为30% -->
@@ -72,8 +72,24 @@
 				</view>
 			</view>
 		</view>
-			<uni-calendar ref="calendar" :date="date"  @confirm="confirm" @change="change"/>
+		<uni-calendar ref="calendar" :date="date"  @confirm="confirm" @change="change"/>
 		
+		<!-- 底部弹窗 -->
+		<uni-popup ref="share" :type="type" :custom="true" @change="change">
+			<view class="uni-share">
+				<view class="uni-share-title">分享到</view>
+				<view class="uni-share-content">
+					<view v-for="(item, index) in bottomData" :key="index" class="uni-share-content-box" @click="confirmShare()">
+						<view class="uni-share-content-image">
+							<image :src="item.url" class="image" />
+						</view>
+						<view class="uni-share-content-text">{{ item.text }}</view>
+					</view>
+				</view>
+				<view class="uni-share-btn" @click="popup_cancel()">取消分享</view>
+				<view style="height: 100upx;">占位符</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -81,11 +97,13 @@
 	import uniSearchBar from '@/components/uni-search-bar/uni-search-bar.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue'
 	import uniCalendar from '@/components/uni-calendar/uni-calendar.vue'
+	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	export default {
 		components: {
 			uniSegmentedControl,
 			uniCalendar,
-			uniSearchBar
+			uniSearchBar,
+			uniPopup
 		},
 		data() {
 			/**
@@ -125,12 +143,24 @@
 				income: [], //收入
 				in_temp: [],
 				items: ['支出明细', '收入明细'],
+				// ----- 分段器 0为支出 1为收入
 				current: 0,
-				activeColor: '#595BBC',
+				activeColor: '#595BBC', //控制分段器颜色
 				styleType: 'button',
 				tags,
 				date: '',
-				infoShow: false
+				infoShow: false,
+				show: false,
+				type: '',
+				list: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+				content: '顶部弹 popup',
+				bottomData: [{
+						text: '社区',
+						url: '/static/img/category/community.png',
+						name: 'wx'
+					}
+				],
+				userShareInfo:'' //用户待分享信息
 			}
 		},
 		methods: {
@@ -184,6 +214,7 @@
 					time: row.time,
 					remarks: row.remarks
 				}
+				console.log(this.userinfo.userid)
 				uni.setStorage({
 					key:'recordInfo',
 					data:recordInfo,
@@ -202,12 +233,6 @@
 			onNavigationBarButtonTap(e) {
 				uni.navigateTo({
 					url: '/pages/about/about?type=add'
-				});
-			},
-			onNavigationBarSearchInputClicked(e) {
-				console.log('事件执行了')
-				uni.navigateTo({
-					url: '/pages/template/nav-search-input/detail/detail'
 				});
 			},
 			onClickItem(index) {
@@ -293,11 +318,33 @@
 			},
 			
 			// 搜索栏的 取消 功能
-			cancel(res) {
+			Serach_cancel(res) {
 				this.expenditure = this.ex_temp
 				this.income = this.in_temp
 			},
-			input(res) {}
+			input(res) {},
+			
+			// 分享弹窗
+			share(row) {
+				this.userShareInfo = row;
+				this.type = 'bottom'
+				this.$refs['share'].open()
+			},
+			popup_cancel(){
+				this.$refs['share'].close()
+			},
+			confirmShare() {
+				let shareInfo = this.userShareInfo;
+				// uni.request({
+				// 	url: '',
+				// 	method:'POST',
+				// 	success: (res) => {
+						
+				// 	}
+				// })
+				uni.showToast({title:'分享成功',icon:'none'});
+				this.$refs['share'].close()
+			}
 		}
 	}
 </script>
@@ -382,5 +429,61 @@
 	.image {
 		width: 50upx;
 		height: 50upx;
+	}
+	
+	/* 底部分享 */
+	.uni-share {
+		background: #fff;
+	}
+	
+	.uni-share-title {
+		line-height: 60upx;
+		font-size: 24upx;
+		padding: 15upx 0;
+		text-align: center;
+	}
+	
+	.uni-share-content {
+		display: flex;
+		flex-wrap: wrap;
+		padding: 15px;
+	}
+	
+	.uni-share-content-box {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 25%;
+		box-sizing: border-box;
+	}
+	
+	.uni-share-content-image {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 60upx;
+		height: 60upx;
+		overflow: hidden;
+		border-radius: 10upx;
+	}
+	
+	.uni-share-content-image .image {
+		width: 100%;
+		height: 100%;
+	}
+	
+	.uni-share-content-text {
+		font-size: 26upx;
+		color: #333;
+		padding-top: 5px;
+		padding-bottom: 10px;
+	}
+	
+	.uni-share-btn {
+		height: 90upx;
+		line-height: 90upx;
+		border-top: 1px #f5f5f5 solid;
+		text-align: center;
+		color: #666;
 	}
 </style>

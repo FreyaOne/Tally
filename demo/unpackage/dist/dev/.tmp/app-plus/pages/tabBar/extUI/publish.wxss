@@ -1,26 +1,26 @@
 
-.footer.data-v-3e13bf00 {
+.footer.data-v-59893e27 {
 	margin-top: 80rpx;
 }
-.cell-pd.data-v-3e13bf00 {
+.cell-pd.data-v-59893e27 {
 	padding: 20rpx 30rpx;
 }
-.uni-textarea.data-v-3e13bf00 {
+.uni-textarea.data-v-59893e27 {
 	width: auto;
 	padding: 20rpx 25rpx;
 	line-height: 1.6;
 	height: 150rpx;
 }
-.uni-list.data-v-3e13bf00::before {
+.uni-list.data-v-59893e27::before {
 	height: 0;
 }
-.uni-list.data-v-3e13bf00:after {
+.uni-list.data-v-59893e27:after {
 	height: 0;
 }
-.list-pd.data-v-3e13bf00 {
+.list-pd.data-v-59893e27 {
 	margin-top: 0;
 }
-.close-view.data-v-3e13bf00{
+.close-view.data-v-59893e27{
     text-align: center;
 	line-height:30rpx;
 	height: 35rpx;
@@ -33,7 +33,7 @@
 	font-size: 35rpx;
 	border-radius: 8rpx;
 }
-.page.data-v-3e13bf00 {
+.page.data-v-59893e27 {
 	width: 750rpx;
 	height: 100%;
 }

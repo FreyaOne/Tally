@@ -8,12 +8,20 @@
 			</view>
 			 <view style="width: 60%; text-align: left; flex-direction: column; display: flex;">
 			 	<view class="dailyExpen">本月支出:<text style="color: #F5B940; margin-left: 10upx;">{{spend}}</text></view>
-				<view class="dailyExpen">结余: <text style="color: #F5B940; margin-left: 10upx;">{{surplus}}</text></view>
+				<view class="dailyExpen">预算结余: <text style="color: #F5B940; margin-left: 10upx;">{{surplus}}</text></view>
+			 </view>
+		</view>
+		<view class="top-card" style="height: 100upx;">
+			<view style="width: 60%;margin-left: 40upx;text-align: left; flex-direction: column; display: flex;">
+				<view class="dailyExpen">本月预算:<text style="color: #F5B940; margin-left: 10upx;">{{spend}}</text></view>
+			</view>
+			 <view style="width: 30%; text-align: right;margin-right: 40upx; flex-direction: column; display: flex;">
+			 	<view class="dailyExpen" @click="edit()">修改预算</view>
 			 </view>
 		</view>
 		<view class="chart-card">
 			<view class="qiun-bg-white qiun-title-bar qiun-common-mt" >
-				<view class="qiun-title-dot-light">同比支出</view>
+				<view class="qiun-title-dot-light">分类对比</view>
 				<!-- 使用图表拖拽功能时，建议给canvas增加disable-scroll=true属性，在拖拽时禁止屏幕滚动 -->
 			</view>
 			<view class="qiun-charts">
@@ -27,9 +35,12 @@
 				<!--#endif-->
 			</view>
 		</view>
+		<!-- <view>
+			<button @click="test"> 测试</button>
+		</view> -->
 		<view class="chart-card">
 			<view class="qiun-bg-white qiun-title-bar qiun-common-mt" >
-				<view class="qiun-title-dot-light">同期对比</view>
+				<view class="qiun-title-dot-light">收入 / 支出</view>
 			</view>
 			<view class="qiun-charts">
 				<!--#ifdef MP-ALIPAY -->
@@ -53,6 +64,7 @@
 	export default {
 		data() {
 			return {
+				userinfo: '',
 				cWidth: '',
 				cHeight: '',
 				tips: '',
@@ -84,18 +96,79 @@
 			//this.fillData(Data);
 		},
 		onReady() {
-			this.getServerData();
+			this.LineChartYear()
+			this.PieChart()
+			// this.getServerData();
+			uni.getStorage({
+				key: 'userinfo',
+				success: (res) => {
+					this.userinfo = res.data
+				},
+				fail: (e) => {
+					uni.showToast({'title' : '拉取信息失败，请检查网络连接'})
+				}
+			});
 		},
 		methods: {
+			
+			//修改预算
+			edit() {
+				
+			},
 			getServerData() {
 				uni.showLoading({
 					title: "正在加载数据..."
 				})
 				uni.request({
 					url: 'https://unidemo.dcloud.net.cn/hello-uniapp-ucharts-data.json',
+					// url: 'http://39.107.125.67:8080/bill/category/sum?userid=3&year=2019&month=0&day=0',
 					data: {},
 					success: function(res) {
 						_self.fillData(res.data);
+						// let resp = res.data.data
+						// console.log(resp.series)
+						// _self.fillData(resp);
+					},
+					fail: () => {
+						_self.tips = "网络错误，小程序端请检查合法域名";
+					},
+					complete() {
+						uni.hideLoading();
+					}
+				});
+			},
+			
+			// 折线图显示某年的12个月的收入支出变化
+			LineChartYear(year) {
+				uni.request({
+					// url: 'https://unidemo.dcloud.net.cn/hello-uniapp-ucharts-data.json',
+					url: 'http://39.107.125.67:8080/bill/category/each/?userid = 1' + '&' + 'year=2019',
+					success: function(res) {
+						//_self.fillData(res.data);
+						let resp = res.data.data
+						_self.fill_data('LineA', resp);
+						console.log(resp.series)
+					},
+					fail: () => {
+						_self.tips = "网络错误，小程序端请检查合法域名";
+					},
+					complete() {
+						uni.hideLoading();
+					}
+				});
+			},
+			
+			// 饼状图显示收入与支出
+			PieChart(year, month, day) {
+				uni.request({
+					// url: 'https://unidemo.dcloud.net.cn/hello-uniapp-ucharts-data.json',
+					url: 'http://39.107.125.67:8080/bill/category/sum?userid=1&year=2019&month=11&day=11',
+					data: {},
+					success: function(res) {
+						//_self.fillData(res.data);
+						let resp = res.data.data
+						_self.fill_data('Pie', resp);
+						console.log(resp.series)
 					},
 					fail: () => {
 						_self.tips = "网络错误，小程序端请检查合法域名";
@@ -106,9 +179,6 @@
 				});
 			},
 			fillData(data) {
-				this.serverData = data;
-				this.tips = data.tips;
-				this.sliderMax = data.Candle.categories.length;
 				let LineA = {
 					categories: [],
 					series: []
@@ -123,6 +193,25 @@
 				
 				this.showLineA("canvasLineA", LineA);
 				this.showPie("canvasPie", Pie);
+			},
+			fill_data(type, data) {
+				if(type == 'LineA') {
+					let LineA = {
+						categories: [],
+						series: []
+					};
+					LineA.categories = data.categories;
+					LineA.series = data.series;
+					this.showLineA("canvasLineA", LineA);
+				} else {
+					if(type == 'Pie') {
+						let Pie = {
+							series: []
+						}
+						Pie.series = data.series;
+						this.showPie("canvasPie", Pie)
+					}
+				}
 			},
 			showLineA(canvasId, chartData) {
 				canvasObj[canvasId] = new uCharts({
@@ -200,13 +289,6 @@
 							lableWidth: 15
 						}
 					},
-				});
-			},
-
-			changeData() {
-				canvasObj['canvasColumn'].updateData({
-					series: _self.serverData.ColumnB.series,
-					categories: _self.serverData.ColumnB.categories
 				});
 			},
 			touchLineA(e) {
@@ -320,7 +402,7 @@
 
 	/* 通用样式 */
 	.qiun-charts {
-		width: 92%;
+		width: 100%;
 		height: 500upx;
 		background-color: #FFFFFF;
 	}

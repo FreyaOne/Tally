@@ -1,43 +1,43 @@
-.liked.data-v-4a331cb4{
+.liked.data-v-242f8e8d{
 	/* display: inline-block; */
 	position: relative;
 	margin-right: 10rpx;
 	width: 34rpx;
 	height: 34rpx;
 }
-.post-username.data-v-4a331cb4{
+.post-username.data-v-242f8e8d{
 	font-size:32rpx;
 	font-weight: 600;
 	color: #36648B;
 }
-.gallery_img.data-v-4a331cb4 {
+.gallery_img.data-v-242f8e8d {
 	width: 100%;
 	height: 100%
 }
-.header.data-v-4a331cb4 {
+.header.data-v-242f8e8d {
 	width: 100%;
 	height: 100%;
 	z-index: 10;
 	border-radius: 40rpx;
 }
-.publish.data-v-4a331cb4 {
+.publish.data-v-242f8e8d {
 	position: absolute;
 	top: 20rpx;
 	right: 20rpx;
 
 	/* z-index: 9999; */
 }
-.post_header.data-v-4a331cb4 {
+.post_header.data-v-242f8e8d {
 	
 	width: 90rpx !important;
 	height: 90rpx !important;
 	border-radius: 10rpx;
 	margin-top: 8rpx;
 }
-#moments.data-v-4a331cb4 {
+#moments.data-v-242f8e8d {
 	background: #fff;
 }
-#moments .home-pic.data-v-4a331cb4 {
+#moments .home-pic.data-v-242f8e8d {
 	width: 100%;
 	/* margin-top: -150upx; */
 	position: relative;
@@ -47,7 +47,7 @@
 	background-size: cover;
 	margin-bottom: 50rpx
 }
-#moments .home-pic-base.data-v-4a331cb4 {
+#moments .home-pic-base.data-v-242f8e8d {
 	position: absolute;
 	left: -60rpx;
 	bottom: -40rpx;
@@ -55,7 +55,7 @@
 	height: 160rpx;
 	padding: 0 30rpx;
 }
-#moments .home-pic-base .top-pic.data-v-4a331cb4 {
+#moments .home-pic-base .top-pic.data-v-242f8e8d {
 	width: 360rpx;
 	height: 360rpx;
 	
@@ -70,7 +70,7 @@
 	
 	float: right
 }
-#moments .home-pic-base .top-name.data-v-4a331cb4 {
+#moments .home-pic-base .top-name.data-v-242f8e8d {
 	position: absolute;
 	/* left: 20px; */
 	right: 240rpx;
@@ -81,7 +81,7 @@
 	color: #ffffff;
 	overflow: hidden
 }
-#moments .moments__post.data-v-4a331cb4 {
+#moments .moments__post.data-v-242f8e8d {
 	background: #fff;
 	display: block;
 	border-bottom: 1px solid #f2eeee;
@@ -92,10 +92,10 @@
 	display: -ms-flexbox;
 	display: flex;
 }
-#moments .moments__post.data-v-4a331cb4::before {
+#moments .moments__post.data-v-242f8e8d::before {
 	content: none
 }
-#moments .moments__post .post_right.data-v-4a331cb4 {
+#moments .moments__post .post_right.data-v-242f8e8d {
 	font-size: 32rpx;
 	display: table-cell;
 	padding-left: 20rpx;
@@ -108,10 +108,10 @@
 		display: -ms-flexbox;
 		display: flex
 	} */
-#moments .moments__post .title.data-v-4a331cb4 {
+#moments .moments__post .title.data-v-242f8e8d {
 	color: #094dcc
 }
-#moments .moments__post .thumbnails.data-v-4a331cb4 {
+#moments .moments__post .thumbnails.data-v-242f8e8d {
 	width: 100%;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -126,21 +126,21 @@
 	/* -webkit-flex-wrap: wrap;
 	-ms-flex-wrap: wrap; */
 }
-#moments .moments__post .thumbnails .thumbnail.data-v-4a331cb4 {
+#moments .moments__post .thumbnails .thumbnail.data-v-242f8e8d {
 	width: 30%;
 	height: 180rpx;
 	margin: 4rpx;
 	background: #757575;
 	overflow: hidden;
 }
-.my-gallery.data-v-4a331cb4{
+.my-gallery.data-v-242f8e8d{
 	width: 250rpx;
 	height: 400rpx;
 	margin: 4rpx;
 	background: #757575;
 	overflow: hidden
 }
-#moments .moments__post .toolbar.data-v-4a331cb4 {
+#moments .moments__post .toolbar.data-v-242f8e8d {
 	position: relative;
 	top: 10rpx;
 	display: -webkit-box;
@@ -152,11 +152,11 @@
 	-ms-flex-align: center;
 	align-items: center
 }
-#moments .moments__post .toolbar .timestamp.data-v-4a331cb4 {
+#moments .moments__post .toolbar .timestamp.data-v-242f8e8d {
 	color: #757575;
 	font-size: 22rpx;
 }
-#moments .moments__post .like.data-v-4a331cb4 {
+#moments .moments__post .like.data-v-242f8e8d {
 	width: auto;
 	height: auto;
 	position: absolute;
@@ -170,7 +170,7 @@
 	    -ms-flex-align: center;
 	        align-items: center;
 }
-#moments .moments__post .comment.data-v-4a331cb4 {
+#moments .moments__post .comment.data-v-242f8e8d {
 	width: auto;
 	height: auto;
 	position: absolute;
@@ -184,17 +184,17 @@
 	    -ms-flex-align: center;
 	        align-items: center;
 }
-#moments .moments__post .toolbar image.data-v-4a331cb4{
+#moments .moments__post .toolbar image.data-v-242f8e8d{
 	padding-left: 20rpx;
 	width: 40rpx;
 	height: 40rpx;
 }
-.post-footer.data-v-4a331cb4{
+.post-footer.data-v-242f8e8d{
 	margin-top: 30rpx;
 	background-color: #f3f3f5;
 	width: 100%;
 }
-#moments .moments__post .footer_content.data-v-4a331cb4 {
+#moments .moments__post .footer_content.data-v-242f8e8d {
 	padding-left: 10rpx;
 	position: relative;
 	display: -webkit-box;
@@ -209,19 +209,19 @@
 	-ms-flex-wrap: wrap;
 	flex-wrap: wrap
 }
-#moments .moments__post .footer_content .nickname.data-v-4a331cb4 {
+#moments .moments__post .footer_content .nickname.data-v-242f8e8d {
 	color: #36648B;
 	font-size: 24rpx
 }
-#moments .moments__post .footer_content .comment-nickname.data-v-4a331cb4 {
+#moments .moments__post .footer_content .comment-nickname.data-v-242f8e8d {
 	color: #36648B;
 	font-size: 24rpx
 }
-#moments .moments__post .footer_content .comment-content.data-v-4a331cb4 {
+#moments .moments__post .footer_content .comment-content.data-v-242f8e8d {
 	color: #000000;
 	font-size: 24rpx
 }
-.foot.data-v-4a331cb4 {
+.foot.data-v-242f8e8d {
 	position: fixed;
 	width: 100%;
 	height: 90rpx;

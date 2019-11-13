@@ -114,12 +114,12 @@
 				],
 				list2: [{
 						url: '/static/img/category/7.png',
-						classify: '学习',
+						classify: '餐饮',
 						key: 1
 					},
 					{
 						url: '/static/img/category/6.png',
-						classify: '运动',
+						classify: '购物',
 						key: 2
 					},
 					{
@@ -129,17 +129,17 @@
 					},
 					{
 						url: '/static/img/category/1.png',
-						classify: '衣服',
+						classify: '娱乐',
 						key: 4
 					},
 					{
 						url: '/static/img/category/4.png',
-						classify: '工具',
+						classify: '书籍',
 						key: 5
 					},
 					{
 						url: '/static/img/category/5.png',
-						classify: '食物',
+						classify: '其他',
 						key: 6
 					}
 				],
@@ -300,12 +300,12 @@
 				// 显示用户选择
 				switch(this.classify_key) {
 					// category_type是为了给用户看的 且回传给数据库
-					case 1: this.classify_type = '学习'; break;
-					case 2: this.classify_type = '运动'; break;
+					case 1: this.classify_type = '餐饮'; break;
+					case 2: this.classify_type = '购物'; break;
 					case 3: this.classify_type = '交通'; break;
-					case 4: this.classify_type = '衣服'; break;
-					case 5: this.classify_type = '工具'; break;
-					case 6: this.classify_type = '食物'; break;
+					case 4: this.classify_type = '娱乐'; break;
+					case 5: this.classify_type = '书籍'; break;
+					case 6: this.classify_type = '其他'; break;
 					default: this.classify_type = '无';
 				}
 			},
