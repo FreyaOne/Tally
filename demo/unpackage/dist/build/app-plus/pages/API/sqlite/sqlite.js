@@ -1,2 +1,0 @@
-setCssToHead([".",[1],"uni-btn-v { margin: ",[0,20]," 0; padding: 0; }\n",],undefined,{path:"./pages/API/sqlite/sqlite.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/API/sqlite/sqlite.wxml') } }));

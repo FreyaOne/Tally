@@ -1,2 +1,0 @@
-setCssToHead([".",[1],"shake { background-color: #FFCC33; color: #ffffff; margin-bottom: ",[0,50],"; }\n.",[1],"uni-textarea .",[1],"acc-show{ height: ",[0,240],"; }\n",],undefined,{path:"./pages/API/on-accelerometer-change/on-accelerometer-change.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/API/on-accelerometer-change/on-accelerometer-change.wxml') } }));

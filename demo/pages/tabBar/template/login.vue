@@ -67,7 +67,7 @@
 				uni.request({
 					url: uri,
 					success: (res) => {
-						console.log("111111111" + res.data.data);
+						// console.log("111111111" + res.data.data);
 						this.text = 'request success';
 						if (res.data.code == 0) {
 							uni.setStorageSync('passwd', this.passwd);

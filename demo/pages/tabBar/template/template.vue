@@ -91,12 +91,13 @@
 					confirmText: "确定",
 					success: function(res) {
 						if (res.confirm) {
-							uni.removeStorage({
-								key: 'userinfo',
-								success: function(res) {
-									console.log('清除本地缓存成功');
-								}
-							});
+							// uni.removeStorage({
+							// 	key: 'userinfo',
+							// 	success: function(res) {
+							// 		console.log('清除本地缓存成功');
+							// 	}
+							// });
+							uni.removeStorageSync('passwd');
 							uni.reLaunch({
 								url: './untemplate'
 							});

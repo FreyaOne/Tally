@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "指纹",
-  "usingComponents": {
-    "page-head": "/components/page-head"
-  }
-}

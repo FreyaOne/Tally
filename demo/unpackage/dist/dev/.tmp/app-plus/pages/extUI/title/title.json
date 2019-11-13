@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "Title 标题栏",
-  "usingComponents": {
-    "uni-title": "/components/uni-title/uni-title",
-    "uni-list": "/components/uni-list/uni-list",
-    "uni-list-item": "/components/uni-list-item/uni-list-item"
-  }
-}

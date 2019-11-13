@@ -1,1 +1,0 @@
-<view><web-view src="/hybrid/html/local.html" data-event-opts="{{[['message',[['getMessage',['$event']]]]]}}" bindmessage="__e"></web-view></view>

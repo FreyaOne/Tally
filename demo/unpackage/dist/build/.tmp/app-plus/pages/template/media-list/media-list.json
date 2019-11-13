@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "图文列表",
-  "usingComponents": {
-    "page-head": "/components/page-head"
-  }
-}
