@@ -73,7 +73,7 @@ view {
 	font-size: 30rpx;
 	-webkit-box-shadow: 0rpx 0rpx 25rpx rgba(0,0,0,0.1);
 	        box-shadow: 0rpx 0rpx 25rpx rgba(0,0,0,0.1);
-	background-color: #F5B940;
+	background-color: #FFFFFF;
 	color: #FFFFFF;
 	text-align: center;
 	-webkit-box-pack: center;
@@ -106,6 +106,6 @@ view {
 }
 .image {
 	width: 50rpx;
-	height: 70rpx;
+	height: 50rpx;
 }
 

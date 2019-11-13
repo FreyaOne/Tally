@@ -90,7 +90,7 @@
 					uni.showModal({ content: '内容不能为空', showCancel: false, });
 					return;
 				}
-				uni.showLoading({title:'发布中'});
+				// uni.showLoading({title:'发布中'});
 				// var location = await this.getLocation();  //位置信息,可删除,主要想记录一下异步转同步处理
 				uni.request({
 					url: 'http://39.107.125.67:8080/socials',

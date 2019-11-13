@@ -16,11 +16,11 @@
 					</view>
 				</view>
 				<!-- 赞／评论区 -->
-				<!-- <view class="post-footer">
-					<view class="footer_content" v-for="(comment,comment_index) in post.comments.comment" :key="comment_index" @tap="reply(index,comment_index)">
-						<text class="comment-nickname">{{commentUsername}}: <text class="comment-content">{{commentContent}}</text></text>
+				<view class="post-footer">
+					<view class="footer_content" v-for="(comment,comment_index) in chatList.comment" :key="comment_index" @tap="reply(index,comment_index)">
+						<text class="comment-nickname">{{comment.username}}: <text class="comment-content">{{comment.commentContent}}</text></text>
 					</view>
-				</view> -->
+				</view>
 			</view>
 			
 			<!-- 结束 post -->

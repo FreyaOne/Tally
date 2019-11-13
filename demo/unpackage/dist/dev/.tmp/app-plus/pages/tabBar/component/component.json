@@ -14,6 +14,7 @@
   },
   "usingComponents": {
     "uni-segmented-control": "/components/uni-segmented-control/uni-segmented-control",
-    "uni-calendar": "/components/uni-calendar/uni-calendar"
+    "uni-calendar": "/components/uni-calendar/uni-calendar",
+    "uni-search-bar": "/components/uni-search-bar/uni-search-bar"
   }
 }

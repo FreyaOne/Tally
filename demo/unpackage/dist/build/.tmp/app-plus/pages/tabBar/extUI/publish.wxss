@@ -1,26 +1,26 @@
 
-.footer.data-v-7241f05f {
+.footer.data-v-7da62c01 {
 	margin-top: 80rpx;
 }
-.cell-pd.data-v-7241f05f {
+.cell-pd.data-v-7da62c01 {
 	padding: 20rpx 30rpx;
 }
-.uni-textarea.data-v-7241f05f {
+.uni-textarea.data-v-7da62c01 {
 	width: auto;
 	padding: 20rpx 25rpx;
 	line-height: 1.6;
 	height: 150rpx;
 }
-.uni-list.data-v-7241f05f::before {
+.uni-list.data-v-7da62c01::before {
 	height: 0;
 }
-.uni-list.data-v-7241f05f:after {
+.uni-list.data-v-7da62c01:after {
 	height: 0;
 }
-.list-pd.data-v-7241f05f {
+.list-pd.data-v-7da62c01 {
 	margin-top: 0;
 }
-.close-view.data-v-7241f05f{
+.close-view.data-v-7da62c01{
     text-align: center;
 	line-height:30rpx;
 	height: 35rpx;
@@ -33,7 +33,7 @@
 	font-size: 35rpx;
 	border-radius: 8rpx;
 }
-.page.data-v-7241f05f {
+.page.data-v-7da62c01 {
 	width: 750rpx;
 	height: 100%;
 }
