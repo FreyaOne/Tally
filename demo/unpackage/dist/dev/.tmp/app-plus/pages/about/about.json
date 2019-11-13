@@ -1,0 +1,8 @@
+{
+  "navigationBarBackgroundColor": "#595BBC",
+  "navigationBarTitleText": "编辑",
+  "usingComponents": {
+    "uni-grid": "/components/uni-grid/uni-grid",
+    "uni-grid-item": "/components/uni-grid-item/uni-grid-item"
+  }
+}

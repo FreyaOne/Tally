@@ -107,7 +107,6 @@ view {
 .image {
 	width: 50rpx;
 	height: 50rpx;
-<<<<<<< HEAD
 }
 
 /* 底部分享 */
@@ -182,7 +181,5 @@ view {
 	border-top: 1px #f5f5f5 solid;
 	text-align: center;
 	color: #666;
-=======
->>>>>>> 4a201f9239de71a43b14df1cfa2f25761d655b62
 }
 
