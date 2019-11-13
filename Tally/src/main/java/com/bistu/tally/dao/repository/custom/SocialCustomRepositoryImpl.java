@@ -28,7 +28,7 @@ public class SocialCustomRepositoryImpl implements SocialCustomRepository{
 				"*pi()/180-entity.latitude*pi()/180)/2),2)+cos(" + location.getLatitude()
 				+ "*pi()/180)*cos(entity.latitude*pi()/180)* pow(sin( (" +
 				location.getLongitude() + "*pi()/180-entity.longitude*pi()/180)/2),2)))*1000) < 1000 " + 
-				"ORDER BY time";
+				"ORDER BY time desc";
 		log.info("select query is: {}", jpql);
         List<Social> entities = this.entityManager.createQuery(String.format(jpql, location))
                 .getResultList();

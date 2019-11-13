@@ -2,13 +2,14 @@ package com.bistu.tally.service;
 
 import java.util.ArrayList;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bistu.tally.dao.entity.User;
 import com.bistu.tally.dao.repository.UserRepository;
-
 @Service
 public class UserService {
 	@Autowired
@@ -33,7 +34,7 @@ public class UserService {
 	 * @param password 密码
 	 * @return 增加成功 true
 	 */
-	public @ResponseBody boolean addUserFromUserNameAndPassword(String username, String password) {
+	public @ResponseBody boolean addUser(String username, String password) {
 		User user = new User();
 		user.setUserName(username);
 		user.setUserPassword(password);
@@ -52,6 +53,15 @@ public class UserService {
 		ArrayList<User> users = new ArrayList<User>();
 		users = userRepository.findByUserNameAndUserPassword(username, password);
 		return users;
+	}
+	@Transactional
+	public boolean updatePassword(String username,String password) {
+		if(userRepository.updatePassword(password, username)==1) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 }
