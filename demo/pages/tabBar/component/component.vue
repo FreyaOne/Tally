@@ -14,7 +14,7 @@
 					<!-- expenditure 外部卡片样式 内嵌记录列表 -->
 					<!-- 循环收支记录列表 -->
 					<!-- v-show="row.spend >= 0 && current === 0" -->
-					<view class="expenditure" v-for="(row,index) in expenditure" :key="index" @tap="select(row)" @longtap="share(row)" style="margin-top: 20upx;" v-if="current == 0">
+					<view class="expenditure" v-for="(row,index) in expenditure" :key="index" @click="select(row)" @longtap="share(row)" style="margin-top: 20upx;" v-if="current == 0">
 						<view class="uni-padding-wrap uni-common-mt">
 							<view class="uni-flex uni-row">
 								<!-- 记录左部分（内容 时间）占位70%，右侧（价格类别）为30% -->
@@ -28,7 +28,7 @@
 								</view>
 								<view class="detail-right">
 									<view class="uni-flex uni-column" style="font-size: 30upx; color:#595BBC; font-weight: bold;" v-if="current == 0">
-										{{row.amount}}
+										{{row.amount}} 元
 									</view>
 									<view class="uni-flex uni-column" style="font-size: 25upx; color: #F5B940;">
 										{{row.classify}}
@@ -37,7 +37,7 @@
 							</view>
 						</view>
 					</view>
-					<view class="expenditure" v-for="(row,index) in income" :key="index" @tap="select(row)" @longtap="share(row)" style="margin-top: 20upx;" v-if="current == 1">
+					<view class="expenditure" v-for="(row,index) in income" :key="index" @click="select(row)" @longtap="share(row)" style="margin-top: 20upx;" v-if="current == 1">
 						<view class="uni-padding-wrap uni-common-mt">
 							<view class="uni-flex uni-row">
 								<!-- 记录左部分（内容 时间）占位70%，右侧（价格类别）为30% -->
@@ -51,7 +51,7 @@
 								</view>
 								<view class="detail-right">
 									<view class="uni-flex uni-column" style="font-size: 30upx; color:#DC7004; font-weight: bold;" >
-										{{row.amount}}
+										{{row.amount}} 元
 									</view>
 									<view class="uni-flex uni-column" style="font-size: 25upx; color: #F5B940;">
 										{{row.classify}}
@@ -87,7 +87,6 @@
 					</view>
 				</view>
 				<view class="uni-share-btn" @click="popup_cancel()">取消分享</view>
-				<view style="height: 100upx;">占位符</view>
 			</view>
 		</uni-popup>
 	</view>
