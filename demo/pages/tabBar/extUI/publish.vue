@@ -64,10 +64,12 @@
 	export default {
 		data() {
 			return {
+				type: 'add',
 				// title: 'choose/previewImage',
 				input_content:'',
 				userid:'',
 				time:'',
+				category_type: '',
 				// sourceTypeIndex: 2,
 				// sizeTypeIndex: 2,
 				// countIndex: 8,
@@ -91,6 +93,30 @@
 			
 		},
 		methods: {
+			// 用于接收从 component传递的 用户分享数据
+			onLoad(e) {
+				// 类型为share时 拉取分享缓存
+				this.type = e.type
+				if(this.type == 'share') {
+					uni.getStorage({
+						key: 'userShareInfo',
+						success: (res) => {
+							let curr = res.data
+							switch(curr.category) {
+								case 1: this.category_type = '支出'; break;
+								case 2: this.category_type = '收入'; break;
+								default: this.category_type = '无';
+							}
+							// textarea内容为自动填充
+							let info = '类型: ' + this.category_type + ', 种类: ' + curr.classify + ', 金额: ' + curr.amount + ', 备注: ' + curr.remarks;
+							this.input_content = info
+						},
+						fail: (e) => {
+							console.log(e.data);
+						}
+					});
+				}
+			},
 			onReady(){
 				uni.getStorage({    //获取缓存
 					key: 'userinfo',
@@ -102,6 +128,7 @@
 						console.log(e.data);
 					}
 				});
+				
 				let long = uni.getStorageSync('longitude');
 				let lat = uni.getStorageSync('latitude');
 				this.longitude = long;

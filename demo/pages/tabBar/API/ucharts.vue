@@ -8,14 +8,14 @@
 			</view>
 			 <view style="width: 60%; text-align: left; flex-direction: column; display: flex;">
 			 	<view class="dailyExpen">本月支出:<text style="color: #F5B940; margin-left: 10upx;">{{spend}}</text></view>
-				<view class="dailyExpen">预算结余: <text style="color: #F5B940; margin-left: 10upx;">{{surplus}}</text></view>
+				<!-- <view class="dailyExpen">预算结余: <text style="color: #F5B940; margin-left: 10upx;">{{surplus}}</text></view> -->
 			 </view>
 		</view>
 		<view class="top-card" style="height: 100upx;">
 			<view style="width: 60%;margin-left: 40upx;text-align: left; flex-direction: column; display: flex;">
 				<view class="dailyExpen">本月预算:
-					<text style="color: #F5B940; margin-left: 10upx;" v-show="editbudget == true">{{spend}}</text>
-					<input placeholder="请输入预算..." v-show="editbudget == false" style="placeholder-color: #F5B940; width: 300upx; font-size: 20upx;"></input>
+					<text style="color: #F5B940; margin-left: 10upx;" v-show="editbudget == true">{{budget}}</text>
+					<input placeholder="请输入预算..." v-model="budget" v-show="editbudget == false" placeholder-style="color: #BFBEBE" style=" color: #F5B940; width: 150upx; font-size: 30upx;"></input>
 				</view>
 			</view>
 			 <view style="width: 30%; text-align: right;margin-right: 40upx; flex-direction: column; display: flex;">
@@ -164,6 +164,7 @@
 				date2: getDate({
 					format : true
 				}),
+				budget: '',
 				editbudget: true,
 				LineDate:  startDay,
 				PieDate: startDay,
@@ -204,10 +205,10 @@
 				}
 			});
 			this.LineDate = startDay
-			console.log(this.LineDate.year)
 			this.PieDate = startDay
 			this.ColumnDate = startDay
 			
+			this.getUserBudget(this.userinfo.userid)
 			this.LineChartYear(startDay.year)
 			this.PieChart(startDay.year, startDay.month, startDay.day)
 			this.ColumnChart(startDay.year, startDay.month, startDay.day)
@@ -216,14 +217,36 @@
 			//修改预算
 			edit() {
 				this.editbudget = false
-				
 			},
 			
 			// 确认修改预算
 			save() {
 				this.editbudget = true
-				uni.showToast({
-					'title' : '修改成功'
+				let bud = this.budget - '0'
+				console.log(typeof(this.budget - '0'))
+				uni.request({
+					url : 'http://39.107.125.67:8080/budget/update/?userid=' + this.userinfo.userid + '&' + 'budget=' + bud,
+					method: 'POST',
+					success: (res) => {
+						// console.log(res.data.data[0].budget)
+						// this.budget = res.data.data
+						uni.showToast({
+							'title' : '修改成功'
+						})
+					}
+				})
+			},
+			
+			getUserBudget(id) {
+				uni.request({
+					 url : 'http://39.107.125.67:8080/budget/get/?userid=' + id,
+					 method: 'GET',
+					 success: (res) => {
+						 this.budget = res.data.data[0].budget
+					 },
+					 fail: (res) => {
+					 	
+					 }
 				})
 			},
 			//修改
