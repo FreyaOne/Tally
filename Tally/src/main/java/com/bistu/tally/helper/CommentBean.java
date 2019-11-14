@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CommentBean {
 	private Long socialId;
 	private Long userId;
+	private String userName;
 	private String commentContent;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date time;

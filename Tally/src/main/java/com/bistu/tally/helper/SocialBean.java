@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SocialBean {
 	private Long userId;
 	private Long socialId;
+	private String userName;
 	private String socialContent;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date time;

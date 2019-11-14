@@ -3,9 +3,8 @@
 		<form>
 			<view class="uni-textarea" style="height:180px;">
 				<textarea placeholder="这一刻的想法..." v-model="input_content" />
-			</view>
+				</view>
 			<view>
-				
 			</view>
 			<view class="footer">
 				<button type="default" class="feedback-submit" @click="publish">提交</button>
@@ -18,27 +17,62 @@
 <script>
 	import image from '@/commonAboutChat/image.js';
 	
-	var sourceType = [
-		['camera'],
-		['album'],
-		['camera', 'album']
-	]
-	var sizeType = [
-		['compressed'],
-		['original'],
-		['compressed', 'original']
-	]
+	Date.prototype.pattern=function(fmt) {     //日期格式化
+	    var o = {         
+	    "M+" : this.getMonth()+1, //月份         
+	    "d+" : this.getDate(), //日         
+	    "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //小时         
+	    "H+" : this.getHours(), //小时         
+	    "m+" : this.getMinutes(), //分         
+	    "s+" : this.getSeconds(), //秒         
+	    "q+" : Math.floor((this.getMonth()+3)/3), //季度         
+	    "S" : this.getMilliseconds() //毫秒         
+	    };         
+	    var week = {         
+	    "0" : "/u65e5",         
+	    "1" : "/u4e00",         
+	    "2" : "/u4e8c",         
+	    "3" : "/u4e09",         
+	    "4" : "/u56db",         
+	    "5" : "/u4e94",         
+	    "6" : "/u516d"        
+	    };         
+	    if(/(y+)/.test(fmt)){         
+	        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));         
+	    }         
+	    if(/(E+)/.test(fmt)){         
+	        fmt=fmt.replace(RegExp.$1, ((RegExp.$1.length>1) ? (RegExp.$1.length>2 ? "/u661f/u671f" : "/u5468") : "")+week[this.getDay()+""]);         
+	    }         
+	    for(var k in o){         
+	        if(new RegExp("("+ k +")").test(fmt)){         
+	            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));         
+	        }         
+	    }         
+	    return fmt;         
+	}     
+	
+	// var sourceType = [
+	// 	['camera'],
+	// 	['album'],
+	// 	['camera', 'album']
+	// ]
+	// var sizeType = [
+	// 	['compressed'],
+	// 	['original'],
+	// 	['compressed', 'original']
+	// ]
 	export default {
 		data() {
 			return {
 				// title: 'choose/previewImage',
 				input_content:'',
 				userid:'',
+				time:'',
 				// sourceTypeIndex: 2,
 				// sizeTypeIndex: 2,
 				// countIndex: 8,
-				longitude: '',   //经度
-				latitude: '',   //纬度
+				longitude: 0,   //经度
+				latitude: 0,   //纬度
 				// count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
 				
 				//侧滑返回start
@@ -54,59 +88,58 @@
 		// 		this.countIndex = 8;
 		// },
 		mounted(){
-			uni.getStorage({
-				key: 'userinfo',
-				success: (res) => {
-					console.log("获取成功");
-					// this.username = res.data.username;
-					this.userid = res.data.userid;
-					console.log("userid为" + this.userid);
-				},
-				fail: (e) => {
-					console.log(e.data);
-				}
-			});
-		},
-		
-		methods: {
-			getLocation(){    //h5中可能不支持
-				return new Promise((resolve, reject) => {
-					uni.getLocation({
-						type: 'wgs84',
-						success: function (res) {
-							resolve(res);
-							this.latitude = res.latitude;
-							this.longitude = res.longitude;
-						},
-						fail: (e) => {  
-							reject(e);
-						}
-					});
-				} )
-			},
 			
+		},
+		methods: {
+			onReady(){
+				uni.getStorage({    //获取缓存
+					key: 'userinfo',
+					success: (res) => {
+						this.username = res.data.username;
+						this.userid = res.data.userid;
+					},
+					fail: (e) => {
+						console.log(e.data);
+					}
+				});
+				let long = uni.getStorageSync('longitude');
+				let lat = uni.getStorageSync('latitude');
+				this.longitude = long;
+				this.latitude = lat;
+				console.log("发表的地址是");
+				console.log(long);
+				console.log(lat);
+				
+			},
 			async publish(){
+				// var myDate = new Date();
+				// var time = myDate.Format("yyyy-MM-dd hh:mm:ss");
+				// console.log("格式化时间为" + time);
 				if (!this.input_content) {
 					uni.showModal({ content: '内容不能为空', showCancel: false, });
 					return;
 				}
+				var date = new Date();
+				var time = date.pattern("yyyy-MM-dd HH:mm:ss");    //格式化时间
+				this.time = time;
 				// uni.showLoading({title:'发布中'});
 				// var location = await this.getLocation();  //位置信息,可删除,主要想记录一下异步转同步处理
-				uni.request({
+				uni.request({   //请求分享
 					url: 'http://39.107.125.67:8080/socials',
 					dataType:'json',
 					method:'POST',
 					data:{
 						"userId" : this.userid,
 						"socialContent" : this.input_content,
-						"time": "2019-11-17 13:34:00",
+						"time": this.time,
 						"location" : { 
-							"latitude": 11.05, 
-							"longitude" : 12.01,
+							"latitude": this.latitude, 
+							"longitude" : this.longitude,
 						}
 					},
 					success: (res) => {
 						this.text = 'request success';
+						console.log("时间是" + date.pattern("yyyy-MM-dd hh:mm:ss"));
 						if (res.data.code == 0) {
 							// console.log("11111" + res.data);
 							uni.reLaunch({
@@ -122,66 +155,6 @@
 					fail:(e)=>{
 						console.log(e.data);
 					}
-				
-				})
-			},
-			
-			
-			close(e){
-			    this.imageList.splice(e,1);
-			},
-			chooseImage: async function() {
-				if (this.imageList.length === 9) {
-					let isContinue = await this.isFullImg();
-					console.log("是否继续?", isContinue);
-					if (!isContinue) {
-						return;
-					}
-				}
-				uni.chooseImage({
-					sourceType: sourceType[this.sourceTypeIndex],
-					sizeType: sizeType[this.sizeTypeIndex],
-					count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
-					success: (res) => {
-
-						// #ifdef APP-PLUS
-						//提交压缩,因为使用了H5+ Api,所以自定义压缩目前仅支持APP平台
-						var compressd = cp_images=> {
-							this.imageList = this.imageList.concat(cp_images)//压缩后的图片路径
-						}
-						image.compress(res.tempFilePaths,compressd);
-						// #endif
-						
-						// #ifndef APP-PLUS
-						this.imageList = this.imageList.concat(res.tempFilePaths)//非APP平台不支持自定义压缩,暂时没有处理,可通过uni-app上传组件的sizeType属性压缩
-						// #endif
-						
-					}
-				})
-			},
-			isFullImg: function() {
-				return new Promise((res) => {
-					uni.showModal({
-						content: "已经有9张图片了,是否清空现有图片？",
-						success: (e) => {
-							if (e.confirm) {
-								this.imageList = [];
-								res(true);
-							} else {
-								res(false)
-							}
-						},
-						fail: () => {
-							res(false)
-						}
-					})
-				})
-			},
-			previewImage: function(e) {
-				var current = e.target.dataset.src
-				uni.previewImage({
-					current: current,
-					urls: this.imageList
 				})
 			},
 			touchStart: function(e) {

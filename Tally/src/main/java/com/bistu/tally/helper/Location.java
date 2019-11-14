@@ -8,12 +8,12 @@ import lombok.Data;
 public class Location implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private float latitude;
-	private float longitude;
+	private double latitude;
+	private double longitude;
 	
 	public Location() {}
-	public Location(float lati, float longi) {
-		this.latitude = lati;
-		this.longitude = longi;
+	public Location(double d, double e) {
+		this.latitude = d;
+		this.longitude = e;
 	}
 }

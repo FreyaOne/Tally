@@ -12,6 +12,7 @@ import com.bistu.tally.dao.entity.Social;
 import com.bistu.tally.dao.repository.CommentRepository;
 import com.bistu.tally.dao.repository.PraiseRepository;
 import com.bistu.tally.dao.repository.SocialRepository;
+import com.bistu.tally.dao.repository.UserRepository;
 import com.bistu.tally.helper.CommentBean;
 import com.bistu.tally.helper.Location;
 import com.bistu.tally.helper.PraiseBean;
@@ -31,6 +32,9 @@ public class SocialService {
 	
 	@Autowired
 	private PraiseRepository praiseRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	/**
 	 * 通过作者编号获取数据库中所有动态
 	 * @param authorId
@@ -43,6 +47,7 @@ public class SocialService {
 		for(int i = 0; i < socials.size(); i++) {
 			SocialBean bean = SocialBean.of(socials.get(i));
 			bean.setPraise(this.praiseRepository.existsByUserIdAndSocialId(userId, bean.getSocialId()));
+			bean.setUserName(this.userRepository.findCase(bean.getUserId()));
 			if(bean.getCommentsNum() > 0)
 				bean.setComments(getBySocialId(bean.getSocialId()));
 			beans.add(bean);
@@ -60,6 +65,7 @@ public class SocialService {
 		List<CommentBean> entities = new ArrayList<CommentBean>();
 		for(int i = 0; i < comments.size(); i++) {
 			CommentBean bean = CommentBean.of(comments.get(i));
+			bean.setUserName(this.userRepository.findCase(bean.getUserId()));
 			entities.add(bean);
 		}
 		return entities;
@@ -76,6 +82,7 @@ public class SocialService {
 		for(int i = 0; i < socials.size(); i++) {
 			SocialBean bean = SocialBean.of(socials.get(i));
 			bean.setPraise(this.praiseRepository.existsByUserIdAndSocialId(userId, bean.getSocialId()));
+			bean.setUserName(this.userRepository.findCase(bean.getUserId()));
 			if(bean.getCommentsNum() > 0)
 				bean.setComments(getBySocialId(bean.getSocialId()));
 			beans.add(bean);
@@ -96,6 +103,7 @@ public class SocialService {
 		entity = this.socialRepository.save(entity);
 		log.info("entity saved: {}", entity);
 		SocialBean bean2 = SocialBean.of(entity);
+		bean2.setUserName(this.userRepository.findCase(bean2.getUserId()));
 		return bean2;
 	}
 	/**

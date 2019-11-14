@@ -19,8 +19,8 @@ public class Social extends BaseEntity implements java.io.Serializable{
 	private int commentsNum;			//评论数
 	
 	@Column(name = "longitude", nullable = false)
-	private float longitude;			//纬度
+	private double longitude;			//纬度
 	
 	@Column(name = "latitude", nullable = false)
-	private float latitude; 			//经度
+	private double latitude; 			//经度
 }
