@@ -36,7 +36,6 @@
 
 <script>
 	import chatInput from '../../../components/im-chat/chatinput.vue'; //input框
-	// import postData from '../../../commonAboutChat/index/index.post.data.js'; //朋友圈数据
 
 	export default {
 		components: {
@@ -47,8 +46,8 @@
 				// posts: postData, //模拟数据
 				userid: '',
 				username: '',
-				latitude: 11.05,
-				longitude: 12.01,
+				latitude: 0,
+				longitude: 0,
 				content: '',
 				time: '',
 				index: '',
@@ -103,6 +102,9 @@
 				this.loadMoreText = "加载更多",
 				this.showLoadMore = false;
 		},
+		onshow(){
+
+		},
 		// onReachBottom() { //监听上拉触底事件
 		// 	console.log('onReachBottom');
 		// 	this.showLoadMore = true;
@@ -134,9 +136,10 @@
 		methods: {
 			onReady() {
 				uni.getStorage({
+					
 					key: 'userinfo',
 					success: (res) => {
-						console.log("获取成功");
+						// console.log("获取成功");
 						this.userid = res.data.userid;
 						this.username = res.data.username;
 					},
@@ -144,9 +147,11 @@
 						console.log(e.data);
 					}
 				});
+				this.longitude = uni.getStorageSync('longitude');
+				this.latitude = uni.getStorageSync('latitude');
 				console.log("123213 " + this.userid);
 				var uri = 'http://39.107.125.67:8080/socials/v1/' + this.latitude + '&' + this.longitude + '&' + this.userid;
-				console.log("是不是true" + this.chatList[0]);
+				console.log("url是");
 				console.log(uri);
 				uni.request({
 					url: uri,
@@ -155,23 +160,22 @@
 						// this.text = 'request success';
 						if (res.data.code == 0) {
 							this.chatList = res.data.data;
-							// console.log(this.chatList[1].comments[0]);
-							console.log("标志");
-							// console.log(this.chatList[23].praise);
-							for(let i in this.chatList){
-								console.log(this.chatList[i].praise);
-							}
+							uni.setStorageSync('chatList',this.chatList);
+							// for(let i in this.chatList){
+								// console.log(this.chatList);
+								// console.log(this.chatList[i].location.longitude);
+							// }
 						}
 					},
 					fail: (e) => {
 						console.log(e.data);
 					}
-
+				
 				})
 			},
-			test() {
-				this.navigateTo('../test/test');
-			},
+			// test() {
+			// 	this.navigateTo('../test/test');
+			// },
 			navigateTo(url) {
 				uni.navigateTo({
 					url: url
@@ -238,7 +242,7 @@
 						this.showInput = true; //调起input框
 						this.focus = true;
 						this.index = index;
-						console.log("231231index是 " + this.index);
+						uni.setStorageSync('index',this.index);
 					},
 					adjust() { //当弹出软键盘发生评论动作时,调整页面位置pageScrollTo
 						return;

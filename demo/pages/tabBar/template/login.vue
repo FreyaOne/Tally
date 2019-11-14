@@ -30,6 +30,8 @@
 				username: '',
 				passwd: '',
 				userid: '',
+				longitude:0,
+				latitude:0
 				// isShowOauth:false,
 			}
 		},
@@ -38,11 +40,26 @@
 			// console.log("密码是啥" + pass);
 			this.passwd = pass;
 		},
+		onShow(){
+			uni.getLocation({
+			    type: 'wgs84',
+			    success: function (res) {
+					// this.longitude = res.longitude.toString();
+					// this.latitude = res.latitude.toString();
+			        console.log('当前位置的经度：' + res.longitude);
+			        console.log('当前位置的纬度：' + res.latitude);
+					uni.setStorageSync('longitude', res.longitude);
+					uni.setStorageSync('latitude', res.latitude);
+					// var address = res.address;
+					// console.log(res.country);
+			    }
+			});
+		},
 		onReady() {
 			uni.getStorage({
 				key: 'userinfo',
 				success: (res) => {
-					console.log("获取成功");
+					// console.log("获取成功");
 					this.username = res.data.username;
 					// console.log("userid为" + this.userid);
 				},

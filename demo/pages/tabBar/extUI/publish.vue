@@ -71,8 +71,8 @@
 				// sourceTypeIndex: 2,
 				// sizeTypeIndex: 2,
 				// countIndex: 8,
-				longitude: '',   //经度
-				latitude: '',   //纬度
+				longitude: 0,   //经度
+				latitude: 0,   //纬度
 				// count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
 				
 				//侧滑返回start
@@ -88,35 +88,29 @@
 		// 		this.countIndex = 8;
 		// },
 		mounted(){
-			uni.getStorage({    //获取缓存
-				key: 'userinfo',
-				success: (res) => {
-					console.log("获取成功");
-					// this.username = res.data.username;
-					this.userid = res.data.userid;
-					console.log("userid为" + this.userid);
-				},
-				fail: (e) => {
-					console.log(e.data);
-				}
-			});
+			
 		},
 		methods: {
-			// getLocation(){    //h5中可能不支持
-			// 	return new Promise((resolve, reject) => {
-			// 		uni.getLocation({
-			// 			type: 'wgs84',
-			// 			success: function (res) {
-			// 				resolve(res);
-			// 				this.latitude = res.latitude;
-			// 				this.longitude = res.longitude;
-			// 			},
-			// 			fail: (e) => {  
-			// 				reject(e);
-			// 			}
-			// 		});
-			// 	} )
-			// },
+			onReady(){
+				uni.getStorage({    //获取缓存
+					key: 'userinfo',
+					success: (res) => {
+						this.username = res.data.username;
+						this.userid = res.data.userid;
+					},
+					fail: (e) => {
+						console.log(e.data);
+					}
+				});
+				let long = uni.getStorageSync('longitude');
+				let lat = uni.getStorageSync('latitude');
+				this.longitude = long;
+				this.latitude = lat;
+				console.log("发表的地址是");
+				console.log(long);
+				console.log(lat);
+				
+			},
 			async publish(){
 				// var myDate = new Date();
 				// var time = myDate.Format("yyyy-MM-dd hh:mm:ss");
@@ -126,19 +120,8 @@
 					return;
 				}
 				var date = new Date();
-				var time = date.pattern("yyyy-MM-dd hh:mm:ss");    //格式化时间
+				var time = date.pattern("yyyy-MM-dd HH:mm:ss");    //格式化时间
 				this.time = time;
-				uni.getLocation({
-				    type: 'wgs84',
-				    success: function (res) {
-						this.longitude = res.longitude;
-						this.latitude = res.latitude;
-				        console.log('当前位置的经度：' + res.longitude);
-				        console.log('当前位置的纬度：' + res.latitude);
-						// var address = res.address;
-						console.log(res.country);
-				    }
-				});
 				// uni.showLoading({title:'发布中'});
 				// var location = await this.getLocation();  //位置信息,可删除,主要想记录一下异步转同步处理
 				uni.request({   //请求分享

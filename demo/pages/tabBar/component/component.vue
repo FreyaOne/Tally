@@ -199,7 +199,7 @@
 						});
 					}
 				})
-				console.log(this.ex_temp)
+				// console.log(this.ex_temp)
 			},
 			cal() {
 			},
