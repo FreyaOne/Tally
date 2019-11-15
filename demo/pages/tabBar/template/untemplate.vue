@@ -7,7 +7,7 @@
 		</view> -->
 		<view class="logo">
 			<view class="img">
-				<image mode="widthFix" src="../../../static/tabBar/user.png" @tap="navigateTo"></image>
+				<image mode="widthFix" src="../../../static/person1.png" @tap="navigateTo"></image>
 			</view>
 			<view>
 				<!-- <text style="text-align: center;margin-left: 20px;">{{username}}</text> -->
@@ -54,7 +54,7 @@
 			return {
 				// title: 'list-triplex-row',
 				// lists: [],
-				username: "点击登录"
+				username: "点击头像登录"
 			}
 		},
 		onload() {

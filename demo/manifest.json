@@ -1,6 +1,6 @@
 {
     "name" : "Tally",
-    "appid" : "__UNI__44759A8",
+    "appid" : "__UNI__D366444",
     "description" : "应用描述",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -75,13 +75,28 @@
                     "ifly" : {}
                 },
                 "maps" : {
-                    "amap" : {
-                        "appkey_ios" : "bb1f2a4f550444ff41e8cdca7f32f076",
-                        "appkey_android" : "bb1f2a4f550444ff41e8cdca7f32f076"
+                    "baidu" : {
+                        "appkey_ios" : "m1qDhFBuz9L7H6mnLHp5UAdQe3Bhpe5I",
+                        "appkey_android" : "mEGisxA5fZvN1wTsBf8UvjX58BK2OdSC"
                     }
                 }
             },
-            "orientation" : [ "portrait-primary" ]
+            "orientation" : [ "portrait-primary" ],
+            "splashscreen" : {
+                "android" : {
+                    "hdpi" : "",
+                    "xhdpi" : "",
+                    "xxhdpi" : ""
+                }
+            },
+            "icons" : {
+                "android" : {
+                    "hdpi" : "static/logo2.png",
+                    "xhdpi" : "static/logo2.png",
+                    "xxhdpi" : "static/logo2.png",
+                    "xxxhdpi" : "static/logo2.png"
+                }
+            }
         }
     },
     /* 快应用特有相关 */

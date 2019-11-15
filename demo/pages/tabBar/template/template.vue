@@ -1,9 +1,9 @@
 <template>
 	<!--我的设置界面-->
 	<view class="page">
-		<view class="logo">
+		<view class="logo" style="background:#FFF;">
 			<view class="img">
-				<image mode="widthFix" src="../../../static/tabBar/user.png"></image>
+				<image mode="widthFix" src="../../../static/person1.png"></image>
 			</view>
 			<view>
 				<!-- <text style="text-align: center;margin-left: 20px;">{{username}}</text> -->
@@ -133,6 +133,9 @@
 </script>
 
 <style lang="scss">
+	page {
+		background-color: #FFFFFF;
+	}
 	// @import "../../../static/css/login.scss";
 	.logo {
 		width: 100%;
