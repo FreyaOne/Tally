@@ -2,7 +2,7 @@
 	<view class="page" @touchstart="touchStart" @touchend="touchEnd">
 		<form>
 			<view class="uni-textarea" style="height:180px;">
-				<textarea placeholder="这一刻的想法..." v-model="input_content" />
+				<textarea placeholder="这一刻的想法..." v-model="input_content" maxlength="150"/>
 				</view>
 			<view>
 			</view>
