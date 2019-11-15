@@ -1,10 +1,11 @@
-<template>    <!--输入评论-->
+<template>
+	<!--输入评论-->
 	<view class="footer">
 		<!-- <view class="footer-left">
 			<view class="uni-icon uni-icon-mic" @tap="startRecognize"> </view>
 		</view> -->
 		<view class="footer-center">
-			<input class="input-text" type="text" v-model="inputValue"></input>
+			<textarea class="input-text" maxlength="150" type="text" v-model="inputValue" :placeholder="placeholder" auto-height :focus="focus" @blur="blur"></textarea>
 		</view>
 		<view class="footer-right" @tap="sendMessge">
 			<view id='msg-type'>发送</view>
@@ -57,15 +58,33 @@
 				userid: '',
 				socialId: '',
 				index: '',
-				chatList:[],
+				chatList: [],
+			}
+		},
+		props: {
+			placeholder: {
+				type: String,
+				required: true
+			},
+			focus: {
+				type: Boolean,
+				required: true
 			}
 		},
 		methods: {
 			sendMessge: function() {
-				var that = this;
-				if (that.inputValue.trim() == '') {
-					that.inputValue = '';
-				} else {
+				if (!this.inputValue) {
+					uni.showModal({
+						content: "还没有输入内容哦!",
+						showCancel: false
+					})
+					return;
+				}
+				// var that = this;
+				// if (that.inputValue.trim() == '') {
+				// 	that.inputValue = '';
+				// } 
+				else {
 					var date = new Date();
 					var time = date.pattern("yyyy-MM-dd HH:mm:ss"); //格式化时间
 					this.time = time;
@@ -76,41 +95,48 @@
 					// console.log(this.userid);
 					// console.log(this.time);
 					// console.log(this.chatList);
-					uni.request({ //请求分享
-						url: 'http://39.107.125.67:8080/comments',
-						dataType: 'json',
-						method: 'POST',
-						data: {
-							"userId": this.userid,
-							"socialId": this.chatList[this.index].socialId,
-							"time": this.time,
-							"commentContent": this.inputValue
-						},
-						success: (res) => {
-							if (res.data.code == 0) {
-								uni.reLaunch({
-									url: './extUI'
-								})
-								console.log("测试");
-							} else {
-								uni.showToast({
-									title: '评论出现错误',
-									icon: "none",
-								});
-								console.log("urlshi");
-								console.log(url);
+					if (this.inputValue.length > 150) {
+						uni.showToast({
+							title: '字数超过150',
+							icon: "none",
+						});
+					} else {
+						uni.request({ //请求分享
+							url: 'http://39.107.125.67:8080/comments',
+							dataType: 'json',
+							method: 'POST',
+							data: {
+								"userId": this.userid,
+								"socialId": this.chatList[this.index].socialId,
+								"time": this.time,
+								"commentContent": this.inputValue
+							},
+							success: (res) => {
+								if (res.data.code == 0) {
+									uni.reLaunch({
+										url: './extUI'
+									})
+									console.log("测试");
+								} else {
+									uni.showToast({
+										title: '评论出现错误',
+										icon: "none",
+									});
+									console.log("urlshi");
+									console.log(url);
+								}
+							},
+							fail: (e) => {
+								console.log(e.data);
 							}
-						},
-						fail: (e) => {
-							console.log(e.data);
-						}
-					})
+						})
+					}
 					// 点击发送按钮时，通知父组件用户输入的内容
-					this.$emit('send-message', {
-						type: 'text',
-						content: that.inputValue
-					});
-					that.inputValue = '';
+					// this.$emit('send-message', {
+					// 	type: 'text',
+					// 	content: that.inputValue
+					// });
+					this.inputValue = '';
 				}
 			},
 			onReady() {
@@ -125,7 +151,12 @@
 						console.log(e.data);
 					}
 				});
-			}
+			},
+			blur: function() { //失焦触发通知父组件
+				var that = this;
+				// this.$emit('blur')
+				this.$element('textarea').focus({ focus: false })
+			},
 		}
 	}
 </script>

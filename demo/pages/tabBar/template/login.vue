@@ -43,6 +43,7 @@
 		onShow(){
 			uni.getLocation({
 			    type: 'wgs84',
+				geocode: true,
 			    success: function (res) {
 					// this.longitude = res.longitude.toString();
 					// this.latitude = res.latitude.toString();
@@ -50,8 +51,14 @@
 			        console.log('当前位置的纬度：' + res.latitude);
 					uni.setStorageSync('longitude', res.longitude);
 					uni.setStorageSync('latitude', res.latitude);
+					uni.setStorageSync('city',res.address.city);
+					uni.setStorageSync('district',res.address.district);
+					uni.setStorageSync('poiName',res.address.poiName);
 					// var address = res.address;
-					// console.log(res.country);
+					console.log("地址");
+					console.log(res.address.city);
+					console.log(res.address.district);
+					console.log(res.address.poiName);
 			    }
 			});
 		},
