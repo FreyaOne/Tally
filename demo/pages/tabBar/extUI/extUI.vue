@@ -20,7 +20,7 @@
 				</view>
 				<!-- 赞／评论区 -->
 				<view class="post-footer" style="marign-top:5px;">
-					<view class="footer_content" v-for="(row_comment,com_index) in row.comments" :key="com_index">
+					<view class="footer_content" v-for="(row_comment,com_index) in row.comments" :key="com_index" @longpress="deleteReview(index,com_index)">
 						<text class="comment-nickname">{{row_comment.userName}}: <text class="comment-content">{{row_comment.commentContent}}</text></text>
 					</view>
 				</view>
@@ -55,10 +55,11 @@
 				content: '',
 				time: '',
 				index: '',
+				com_index: '',
 				click_id: '',
 				comment_index: '',
 				chatList: [],
-				address:uni.getStorageSync('city')+'-'+uni.getStorageSync('district')+'-'+uni.getStorageSync('poiName'),
+				address: uni.getStorageSync('city') + '-' + uni.getStorageSync('district') + '-' + uni.getStorageSync('poiName'),
 				// is_like:'',
 
 				input_placeholder: '评论', //占位内容
@@ -68,7 +69,7 @@
 				screenHeight: '', //屏幕高度(系统)
 				platform: '',
 				windowHeight: '', //可用窗口高度(不计入软键盘)
-				loadMoreText: "加载中...",
+				// loadMoreText: "加载中...",
 				showLoadMore: false,
 			}
 		},
@@ -100,12 +101,12 @@
 		onHide() {
 			uni.offWindowResize(); //取消监听窗口尺寸变化
 		},
-		onUnload() {
-			this.max = 0,
-				this.data = [],
-				this.loadMoreText = "加载更多",
-				this.showLoadMore = false;
-		},
+		// onUnload() {
+		// 	this.max = 0,
+		// 		this.data = [],
+		// 		this.loadMoreText = "加载更多",
+		// 		this.showLoadMore = true;
+		// },
 		onReady() { //打开页面时获取全部全部社区内容
 			uni.getStorage({
 				key: 'userinfo',
@@ -144,18 +145,18 @@
 
 			})
 		},
-		onReachBottom() { //监听上拉触底事件
-			console.log('onReachBottom');
-			this.showLoadMore = true;
-			setTimeout(() => {
-				//获取数据
-				if (this.chatList.length < 20) { //测试数据
-					// this.chatList = this.chatList.concat(this.chatList);
-				} else {
-					this.loadMoreText = "暂无更多";
-				}
-			}, 1000);
-		},
+		// onReachBottom() { //监听上拉触底事件
+		// 	console.log('onReachBottom');
+		// 	this.showLoadMore = true;
+		// 	setTimeout(() => {
+		// 		//获取数据
+		// 		if (this.chatList.length < 20) { //测试数据
+		// 			// this.chatList = this.chatList.concat(this.chatList);
+		// 		} else {
+		// 			this.loadMoreText = "暂无更多";
+		// 		}
+		// 	}, 1000);
+		// },
 		onPullDownRefresh() { //监听下拉刷新动作
 			console.log('onPullDownRefresh');
 			// 这里获取数据
@@ -173,6 +174,42 @@
 
 		},
 		methods: {
+			deleteReview(index, com_index) {
+				this.index = index;
+				this.com_index = com_index;
+				console.log("测试评论，");
+				console.log(this.chatList[index].comments[com_index].userId);
+				console.log("31213" + this.userid);
+				if (this.chatList[index].comments[com_index].userId == this.userid) {
+					uni.showModal({
+						content: "确定要删除该条评论吗",
+						cancelText: "取消",
+						confirmText: "确定",
+						success: (res) => {
+							if (res.confirm) {
+								console.log("评论");
+								console.log(this.chatList[index].comments[com_index]);
+								uni.request({
+									url:'http://39.107.125.67:8080/comments/' + this.chatList[index].comments[com_index].commentId + '&' + this.chatList[index].comments[com_index].userId,
+									method:'DELETE',
+									success: (res) => {
+										console.log("评论");
+										console.log(this.chatList[index].comments);
+										this.chatList[index].comments.splice(com_index,1);
+										uni.showToast({
+											title: '删除成功',
+											icon: "none",
+											duration: 1500,
+										});
+									}
+								});
+							} else {
+
+							}
+						}
+					})
+				}
+			},
 			deleteShare(index) {
 				this.index = index;
 				uni.showModal({
@@ -192,7 +229,7 @@
 									if (res.data.code == 0) {
 										console.log("删除")
 										// console.log(this.chatList[index]);
-										this.chatList.splice(index,1);
+										this.chatList.splice(index, 1);
 										uni.showToast({
 											title: '删除成功',
 											icon: "none",
@@ -308,19 +345,6 @@
 				url: '/pages/tabBar/extUI/publish'
 			});
 		},
-		onPullDownRefresh() {
-			// uni.startPullDownRefresh({
-			// 	success: (res) => {
-			// 		uni.reLaunch({
-			// 			url: './extUI'
-			// 		})
-			// 	},
-			// });
-			console.log('refresh');
-			setTimeout(function() {
-				uni.stopPullDownRefresh();
-			}, 1000);
-		}
 	}
 </script>
 

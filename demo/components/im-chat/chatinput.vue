@@ -154,8 +154,8 @@
 			},
 			blur: function() { //失焦触发通知父组件
 				var that = this;
-				// this.$emit('blur')
-				this.$element('textarea').focus({ focus: false })
+				this.$emit('blur')
+				// this.$element('textarea').focus({ focus: false })
 			},
 		}
 	}

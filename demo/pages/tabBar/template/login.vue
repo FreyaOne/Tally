@@ -55,10 +55,10 @@
 					uni.setStorageSync('district',res.address.district);
 					uni.setStorageSync('poiName',res.address.poiName);
 					// var address = res.address;
-					console.log("地址");
-					console.log(res.address.city);
-					console.log(res.address.district);
-					console.log(res.address.poiName);
+					// console.log("地址");
+					// console.log(res.address.city);
+					// console.log(res.address.district);
+					// console.log(res.address.poiName);
 			    }
 			});
 		},
