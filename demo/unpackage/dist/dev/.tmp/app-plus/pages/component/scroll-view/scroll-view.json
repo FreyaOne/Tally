@@ -1,6 +1,4 @@
 {
   "navigationBarTitleText": "scroll-view",
-  "usingComponents": {
-    "page-head": "/components/page-head"
-  }
+  "usingComponents": {}
 }

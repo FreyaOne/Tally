@@ -1,6 +1,4 @@
 {
   "navigationBarTitleText": "震动",
-  "usingComponents": {
-    "page-head": "/components/page-head"
-  }
+  "usingComponents": {}
 }

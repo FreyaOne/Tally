@@ -1,6 +1,4 @@
 {
   "navigationBarTitleText": "switch",
-  "usingComponents": {
-    "page-head": "/components/page-head"
-  }
+  "usingComponents": {}
 }

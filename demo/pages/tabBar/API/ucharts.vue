@@ -34,7 +34,7 @@
 					<view class="" @click="changeYear(1)" >下年</view>
 				</view>	
 			</view>
-			<view class="chart_title">{{LineDate.year}}年收支折线图</view>
+			<view class="chart_title">{{Line_data}}年收支折线图</view>
 			<view class="qiun-charts">
 				<!--#ifdef MP-ALIPAY -->
 				<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" :width="cWidth*pixelRatio" :height="cHeight*pixelRatio" :style="{'width':cWidth+'px','height':cHeight+'px'}" disable-scroll=true @touchstart="touchLineA" @touchmove="moveLineA" @touchend="touchEndLineA"></canvas>
@@ -46,44 +46,29 @@
 				<!--#endif-->
 			</view>
 		</view>
+		
 		<view class="chart-card">
 			<view style="display: flex; flex-direction: row;">
 				<view class="qiun-bg-white qiun-title-bar qiun-common-mt" style="width: 70%;">
 					<view class="qiun-title-dot-light">分类对比</view>
 					<!-- 使用图表拖拽功能时，建议给canvas增加disable-scroll=true属性，在拖拽时禁止屏幕滚动 -->
 				</view>
-				<view class="chage_button" style="width: 30%; display: flex; flex-direction: row; justify-content: center; align-items: center; margin-right: 30upx;">
-					<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange_pie">
-						<view class="uni-input">{{date}}</view>
+				<view class="chage_button" style="width: 100%; display: flex; flex-direction: row; justify-content: center; align-items: center; margin-right: 30upx;">
+					<picker @change="bindPickerChange" :value="index" :range="array" range-key="name">
+						<view class="uni-input" style="width: 100upx;">{{array[index].name}}</view>
+					</picker>
+					<picker mode="date" :value="toYear" start="startDate" end="endDate" fields="year" @change="bindTimeChange" v-show="index == 0">
+						<view class="uni-input">{{toYear}}</view>
+					</picker>
+					<picker mode="date" :value="toMonth" start="startDate" end="endDate" fields="month" @change="bindTimeChange" v-show="index == 1">
+						<view class="uni-input">{{toMonth}}</view>
+					</picker>
+					<picker mode="date" :value="toDay" start="startDate" end="endDate" fields="day" @change="bindTimeChange" v-show="index == 2">
+						<view class="uni-input">{{toDay}}</view>
 					</picker>
 				</view>	
 			</view>
-			<view class="chart_title">{{PieDate.year}}年{{PieDate.month}}月{{PieDate.day}}日收支饼图</view>
-			<view class="qiun-charts">
-				<!--#ifdef MP-ALIPAY -->
-				<canvas canvas-id="canvasPie" id="canvasPie" class="charts" :width="cWidth*pixelRatio" :height="cHeight*pixelRatio" :style="{'width':cWidth+'px','height':cHeight+'px'}" @touchstart="touchPie($event,'canvasPie')"></canvas>
-				<!--#endif-->
-				<!--#ifndef MP-ALIPAY -->
-				<canvas canvas-id="canvasPie" id="canvasPie" class="charts" @touchstart="touchPie($event,'canvasPie')"></canvas>
-				<!--#endif-->
-			</view>
-		</view>
-		<!-- <view>
-			<button @click="test"> 测试</button>
-		</view> -->
-		<view class="chart-card">
-			<view style="display: flex; flex-direction: row;">
-				<view class="qiun-bg-white qiun-title-bar qiun-common-mt" style="width: 70%;">
-					<view class="qiun-title-dot-light">分类对比</view>
-					<!-- 使用图表拖拽功能时，建议给canvas增加disable-scroll=true属性，在拖拽时禁止屏幕滚动 -->
-				</view>
-				<view class="chage_button" style="width: 30%; display: flex; flex-direction: row; justify-content: center; align-items: center; margin-right: 30upx;">
-					<picker mode="date" :value="date2" :start="startDate" :end="endDate" @change="bindDateChange_column">
-						<view class="uni-input">{{date2}}</view>
-					</picker>
-				</view>	
-			</view>
-			<view class="chart_title">{{ColumnDate.year}}年{{ColumnDate.month}}月{{ColumnDate.day}}日收支饼图</view>
+			<!-- <view class="chart_title">{{}}年{{ColumnDate.month}}月{{ColumnDate.day}}日收支饼图</view> -->
 			<view class="qiun-charts" style="background-color: #FFFFFF;">
 			  <!--#ifdef MP-ALIPAY -->
 			  <canvas canvas-id="canvasColumn" id="canvasColumn" class="charts" style="background-color: #FFFFFF;" :width="cWidth*pixelRatio" :height="cHeight*pixelRatio" :style="{'width':cWidth+'px','height':cHeight+'px'}" @touchstart="touchIt($event,'canvasColumn')"></canvas>
@@ -148,31 +133,29 @@
 	export default {
 		data() {
 			return {
+				array: [{name:'按年'},{name: '按月'}, {name:'按日'}],
+				index: 0,
 				userinfo: '',
 				cWidth: '',
 				cHeight: '',
 				tips: '',
-				index: 0,
 				// 支出与结余
 				spend: '1000',
 				surplus: '200',
 				pixelRatio: 1,
 				serverData: '',
-				date: getDate({
-					format: true
-				}),
-				date2: getDate({
-					format : true
-				}),
 				budget: '',
 				editbudget: true,
-				LineDate:  startDay,
-				PieDate: startDay,
-				ColumnDate: startDay,
+				Line_data: '',
 				startDate:getDate('start'),
 				endDate:getDate('end'),
 				itemCount: 30, //x轴单屏数据密度
-				sliderMax: 50
+				sliderMax: 50,
+				toYear: '2019',
+				toMonth: '2019-11',
+				toDay: getDate({
+					format: true
+				})
 			}
 		},
 		onLoad() {
@@ -204,26 +187,61 @@
 					uni.showToast({'title' : '拉取信息失败，请检查网络连接'})
 				}
 			});
-			this.LineDate = startDay
-			this.PieDate = startDay
-			this.ColumnDate = startDay
-			
+			this.Line_data = startDay.year
 			this.getUserBudget(this.userinfo.userid)
-			this.LineChartYear(startDay.year)
-			this.PieChart(startDay.year, startDay.month, startDay.day)
-			this.ColumnChart(startDay.year, startDay.month, startDay.day)
+			this.LineChartYear(this.Line_data)
+			this.ColumnChart(startDay.year)
 		},
 		methods: {
 			//修改预算
 			edit() {
 				this.editbudget = false
 			},
-			
+			// 分类选择器
+			bindPickerChange: function(e) {
+				console.log('picker发送选择改变，携带值为：' + e.target.value)
+				this.index = e.target.value
+				if(this.index == 0 ) {
+					this.LineChartYear()
+				} else if(this.index == 1) {
+					this.ColumnChart(2019, startDay.month)
+				} else {
+					this.ColumnChart(2019, startDay.month, startDay.day)
+				}
+				// 年 0 / 月 1 / 日 2
+				
+			},
+			bindTimeChange: function(e) {
+				let pickerTime = e.target.value
+				if(this.index == 0 ) {
+					console.log("i chose year")
+					this.toYear = pickerTime.substring(0,4)
+					this.ColumnChart(this.toYear - '0')
+				} else if(this.index == 1) {
+					console.log("i chose month")
+					this.toMonth = pickerTime.substring(0, 7)
+					let yyyy = this.toMonth.substring(0, 4) - '0'
+					let mm = this.toMonth.substring(5,7) - '0'
+					this.ColumnChart(2019, startDay.month)
+					console.log(yyyy + " + " + mm)
+				} else {
+					console.log("i chose day")
+					this.toDay = pickerTime.substring(0, 10)
+					this.ColumnChart(2019, startDay.month, startDay.day)
+				}
+			},
 			// 确认修改预算
 			save() {
-				this.editbudget = true
-				let bud = this.budget - '0'
-				console.log(typeof(this.budget - '0'))
+				let bud = this.budget
+				if(bud){
+					let x = String(bud).indexOf(".") + 1
+					let count = String(bud).length - x
+					if(count > 2 && x!=0) {
+						uni.showToast({title:'仅保留小数点后两位',icon:'none'});
+						return;
+					}
+				}
+				bud = bud - '0'
 				uni.request({
 					url : 'http://39.107.125.67:8080/budget/update/?userid=' + this.userinfo.userid + '&' + 'budget=' + bud,
 					method: 'POST',
@@ -235,6 +253,7 @@
 						})
 					}
 				})
+				this.editbudget = true
 			},
 			
 			getUserBudget(id) {
@@ -248,42 +267,31 @@
 					 	
 					 }
 				})
-			},
-			//修改
-			bindDateChange_pie: function(e) {
-				// this.month = e.target.value
-				let time = e.target.value.toString()
-				this.PieDate.year = time.substring(0,4)
-				this.PieDate.month = time.substring(5,7)
-				this.PieDate.day = time.substring(8,10)
-				this.date = e.target.value
-				this.PieChart(this.PieDate.year, this.PieDate.month, this.PieDate.day)
-				// this.PieChart(this.year, this.month, this.day)
-			},
-			
-			bindDateChange_column: function(e) {
-				// this.month = e.target.value
-				let time = e.target.value.toString()
-				this.ColumnDate.year = time.substring(0,4)
-				this.ColumnDate.month = time.substring(5,7)
-				this.ColumnDate.day = time.substring(8,10)
-				this.date2 = e.target.value
-				this.ColumnChart(this.ColumnDate.year, this.ColumnDate.month, this.ColumnDate.day)
-				// this.PieChart(this.year, this.month, this.day)
+				
+				uni.request({
+					 url : 'http://39.107.125.67:8080/bill/category/sum?userid='+ this.userinfo.userid + '&year=2019&month=' + startDay.month + '&day=0',
+					 method: 'GET',
+					 success: (res) => {
+						 let amount = res.data.data;
+						 this.spend = this.budget - amount.series[0].data + amount.series[1].data
+					 },
+					 fail: (res) => {
+					 	
+					 }
+				})
 			},
 			
 			//折线图切换年份显示
 			changeYear(val) {
-				this.LineDate.year += val
-				this.LineChartYear(this.LineDate.year);
+				this.Line_data = this.Line_data - '0' + val
+				this.LineChartYear(this.Line_data);
 			},
 			
 			// 折线图显示某年的12个月的收入支出变化 仅支持年份
-			LineChartYear(year) {
+			LineChartYear(year=2019) {
 				uni.request({
 					url: 'http://39.107.125.67:8080/bill/category/each/?userid=' + this.userinfo.userid + '&' + 'year=' + year,
 					success: function(res) {
-						//_self.fillData(res.data);
 						let resp = res.data.data
 						_self.fill_data('LineA', resp);
 					},
@@ -292,28 +300,9 @@
 					}
 				});
 			},
-			
-			// 饼状图显示收入与支出 支持年月日
-			PieChart(year, month, day) {
-				uni.request({
-					url: 'http://39.107.125.67:8080/bill/category/sum?userid=' + this.userinfo.userid + '&' + 'year=' + year +  '&' + 'month=' + month + '&' + 'day=' + day,
-					// data: {},
-					success: function(res) {
-						//_self.fillData(res.data);
-						let resp = res.data.data
-						_self.fill_data('Pie', resp);
-					},
-					fail: () => {
-						_self.tips = "账单拉取失败，请检查网络！";
-					},
-					complete() {
-						
-					}
-				});
-			},
-			
 			// 柱状图显示 classify 支持年月日
-			ColumnChart(year, month, day) {
+			ColumnChart(year, month=0, day=0) {
+				console.log(year + " " + month +  " + " + day)
 				uni.request({
 					url: 'http://39.107.125.67:8080/bill/classify/each?userid=' + this.userinfo.userid + '&' + 'year=' + year +  '&' + 'month=' + month + '&' + 'day=' + day,
 					success: (res) => {
@@ -336,12 +325,6 @@
 					LineA.categories = data.categories;
 					LineA.series = data.series;
 					this.showLineA("canvasLineA", LineA);
-				} else if (type == 'Pie'){
-					let Pie = {
-						series: []
-					}
-					Pie.series = data.series;
-					this.showPie("canvasPie", Pie)
 				} else {
 					let Column = {
 						categories: [],
@@ -442,33 +425,6 @@
 				});
 
 			},
-			showPie(canvasId, chartData) {
-				canvasObj[canvasId] = new uCharts({
-					$this: _self,
-					canvasId: canvasId,
-					type: 'pie',
-					fontSize: 11,
-					padding:[15,15,0,15],
-					legend:{
-						show:true,
-						padding:5,
-						lineHeight:11,
-						margin:0,
-					},
-					background: '#FFFFFF',
-					pixelRatio: _self.pixelRatio,
-					series: chartData.series,
-					animation: false,
-					width: _self.cWidth * _self.pixelRatio,
-					height: _self.cHeight * _self.pixelRatio,
-					dataLabel: true,
-					extra: {
-						pie: {
-							lableWidth: 15
-						}
-					},
-				});
-			},
 			touchLineA(e) {
 				canvasObj['canvasLineA'].scrollStart(e);
 			},
@@ -484,27 +440,19 @@
 					}
 				});
 			},
-          touchPie(e,id) {
-            canvasObj[id].showToolTip(e, {
-                format: function(item) {
-					console.log(item)
-                    return item.name + ':' + item.data
-                }
-            });
-          },
 		  touchIt(e,id) {
 		  canvasObj[id].touchLegend(e, {
 		  	animation : false
 		  });
-		  		canvasObj[id].showToolTip(e, {
-		  			format: function (item, category) {
-		  				if(typeof item.data === 'object'){
-		  					return category + ' ' + item.name + ':' + item.data.value 
-		  				}else{
-		  					return category + ' ' + item.name + ':' + item.data 
-		  				}
-		  			}
-		  		});
+			canvasObj[id].showToolTip(e, {
+				format: function (item, category) {
+					if(typeof item.data === 'object'){
+						return category + ' ' + item.name + ':' + item.data.value 
+					}else{
+						return category + ' ' + item.name + ':' + item.data 
+					}
+				}
+			});
 		  	},
 		}
 	}

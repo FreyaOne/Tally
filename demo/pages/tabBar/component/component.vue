@@ -14,7 +14,7 @@
 					<!-- expenditure 外部卡片样式 内嵌记录列表 -->
 					<!-- 循环收支记录列表 -->
 					<!-- v-show="row.spend >= 0 && current === 0" -->
-					<view class="expenditure" v-for="(row,index) in expenditure" :key="index" @click="select(row)" @longtap="share(row)" style="margin-top: 20upx;" v-if="current == 0">
+					<view class="expenditure" v-for="(row,index) in expenditure" :key="index" @click="select(row)" @longpress="share(row)" style="margin-top: 20upx;" v-if="current == 0">
 						<view class="uni-padding-wrap uni-common-mt">
 							<view class="uni-flex uni-row">
 								<!-- 记录左部分（内容 时间）占位70%，右侧（价格类别）为30% -->
@@ -37,7 +37,7 @@
 							</view>
 						</view>
 					</view>
-					<view class="expenditure" v-for="(row,index) in income" :key="index" @click="select(row)" @longtap="share(row)" style="margin-top: 20upx;" v-if="current == 1">
+					<view class="expenditure" v-for="(row,index) in income" :key="index" @click="select(row)" @longpress="share(row)" style="margin-top: 20upx;" v-if="current == 1">
 						<view class="uni-padding-wrap uni-common-mt">
 							<view class="uni-flex uni-row">
 								<!-- 记录左部分（内容 时间）占位70%，右侧（价格类别）为30% -->
@@ -394,11 +394,11 @@
 	*/
 	.detail-left {
 		text-align: left;
-		width: 70%;
+		width: 65%;
 		height: 50upx;
 	}
 	.detail-right {
-		width: 30%;
+		width: 35%;
 		height: 50upx;
 	}
 	.color-tag {

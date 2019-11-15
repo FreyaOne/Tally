@@ -177,6 +177,7 @@
 						this.amount = e.data.amount;
 						this.category_key = e.data.category;
 						this.classify_type = e.data.classify;
+						this.date = e.data.time
 					}
 				})
 			} else {
@@ -197,7 +198,7 @@
 				let data={
 					// string转number,content可以省略,
 					// 支出为1 收入为2
-					"amount": this.amount - '0',
+					"amount": this.amount,
 					"remarks":this.remarks, 
 					"category":this.category_key, 
 					"classify": this.classify_type
@@ -210,11 +211,20 @@
 					uni.showToast({title:'请输入正确格式',icon:'none'});
 					return ;
 				}
+				if(data.amount){
+					let x = String(data.amount).indexOf(".") + 1
+					let count = String(data.amount).length - x
+					if(count > 2 && x!=0) {
+						uni.showToast({title:'仅保留小数点后两位',icon:'none'});
+						return;
+					}
+				}
 				if(!data.remarks){
 					// uni.showToast({title:'请输入备注',icon:'none'});
 					data.remarks = '未备注'
 					// return ;
 				}
+				data.amount = data.amount - '0'
 				uni.request({
 					url: 'http://39.107.125.67:8080/bill/add/' + this.userid + '&' + data.category + '&' + encodeURI(data.classify) + '&' + data.amount + '&' + encodeURI(data.remarks),
 					method: 'POST',
@@ -229,7 +239,7 @@
 			},
 			edit(){
 				let data={
-					"amount": this.amount - '0',
+					"amount": this.amount,
 					"remarks":this.remarks, 
 					"category":this.category_key, 
 					"classify": this.classify_type
@@ -241,9 +251,18 @@
 					uni.showToast({title:'请输入金额',icon:'none'});
 					return ;
 				}
+				if(data.amount){
+					let x = String(data.amount).indexOf(".") + 1
+					let count = String(data.amount).length - x
+					if(count > 2 && x!=0) {
+						uni.showToast({title:'仅保留小数点后两位',icon:'none'});
+						return;
+					}
+				}
 				if(!data.remarks){
 					data.remarks = '未备注'
 				}
+				data.amount = data.amount - '0'
 				uni.request({
 					url: 'http://39.107.125.67:8080/bill/update/' + this.recordID + '&' + this.date + '&' + data.category + '&' + encodeURI(data.classify) + '&' + data.amount + '&' + encodeURI(data.remarks),
 					method: 'POST',

@@ -52,7 +52,7 @@
 					当前选择
 				</view>
 				<view class="uni-list-cell-db">
-					<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
+					<picker mode="date" :value="date" :start="startDate" :end="endDate" :fields="year" @change="bindDateChange">
 						<view class="uni-input">{{date}}</view>
 					</picker>
 				</view>

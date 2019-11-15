@@ -24,6 +24,9 @@
     "Share": {},
     "Speech": {},
     "VideoPlayer": {},
+    "Maps": {
+      "coordType": "gcj02"
+    },
     "UniNView": {
       "description": "UniNView原生渲染"
     }
@@ -101,6 +104,12 @@
       "plugins": {
         "speech": {
           "ifly": {}
+        },
+        "maps": {
+          "amap": {
+            "appkey_ios": "bb1f2a4f550444ff41e8cdca7f32f076",
+            "appkey_android": "bb1f2a4f550444ff41e8cdca7f32f076"
+          }
         },
         "audio": {
           "mp3": {
