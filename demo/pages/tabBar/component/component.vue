@@ -342,12 +342,12 @@
 						console.log(shareInfo)
 						uni.navigateTo({
 							// 点击某记录后 传递row数据about界面 并区分是edit 还是 add
-							url:"/pages/tabBar/extUI/publish??type=share"
+							url:"/pages/tabBar/extUI/publish?type=share"
 						})
 					}
 				})
-				uni.showToast({title:'分享成功',icon:'none'});
-				this.$refs['share'].close()
+				// uni.showToast({title:'分享成功',icon:'none'});
+				// this.$refs['share'].close()
 			}
 		}
 	}

@@ -57,17 +57,21 @@
 					<picker @change="bindPickerChange" :value="index" :range="array" range-key="name">
 						<view class="uni-input" style="width: 100upx;">{{array[index].name}}</view>
 					</picker>
-					<picker mode="date" :value="toYear" start="startDate" end="endDate" fields="year" @change="bindTimeChange" v-show="index == 0">
+					<!-- <picker mode="date" :value="toYear" start="startDate" end="endDate" @change="bindTimeChange" v-show="index == 0">
 						<view class="uni-input">{{toYear}}</view>
 					</picker>
-					<picker mode="date" :value="toMonth" start="startDate" end="endDate" fields="month" @change="bindTimeChange" v-show="index == 1">
+					<picker mode="date" :value="toMonth" start="startDate" end="endDate" @change="bindTimeChange" v-show="index == 1">
 						<view class="uni-input">{{toMonth}}</view>
 					</picker>
-					<picker mode="date" :value="toDay" start="startDate" end="endDate" fields="day" @change="bindTimeChange" v-show="index == 2">
+					<picker mode="date" :value="toDay" start="startDate" end="endDate"  @change="bindTimeChange" v-show="index == 2">
 						<view class="uni-input">{{toDay}}</view>
+					</picker> -->
+					<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindTimeChange">
+						<view class="uni-input" style="font-size: 30upx;">{{date}}</view>
 					</picker>
 				</view>	
 			</view>
+			<view class="chart_title">{{t_year}}年 {{t_month}}月 {{t_day}}日汇总图</view>
 			<!-- <view class="chart_title">{{}}年{{ColumnDate.month}}月{{ColumnDate.day}}日收支饼图</view> -->
 			<view class="qiun-charts" style="background-color: #FFFFFF;">
 			  <!--#ifdef MP-ALIPAY -->
@@ -139,6 +143,9 @@
 				cWidth: '',
 				cHeight: '',
 				tips: '',
+				date: getDate({
+					format: true
+				}),
 				// 支出与结余
 				spend: '1000',
 				surplus: '200',
@@ -155,7 +162,11 @@
 				toMonth: '2019-11',
 				toDay: getDate({
 					format: true
-				})
+				}),
+				t_year:2019,
+				t_month: '-',
+				t_day: '-'
+				
 			}
 		},
 		onLoad() {
@@ -177,6 +188,8 @@
 			//this.fillData(Data);
 		},
 		onReady() {
+			this.index = 0
+			console.log(this.index)
 			// this.getServerData();
 			uni.getStorage({
 				key: 'userinfo',
@@ -190,7 +203,8 @@
 			this.Line_data = startDay.year
 			this.getUserBudget(this.userinfo.userid)
 			this.LineChartYear(this.Line_data)
-			this.ColumnChart(startDay.year)
+			this.ColumnChart(2019)
+			
 		},
 		methods: {
 			//修改预算
@@ -199,36 +213,49 @@
 			},
 			// 分类选择器
 			bindPickerChange: function(e) {
-				console.log('picker发送选择改变，携带值为：' + e.target.value)
 				this.index = e.target.value
 				if(this.index == 0 ) {
 					this.LineChartYear()
+					this.t_month = '-'
+					this.t_day = '-'
 				} else if(this.index == 1) {
 					this.ColumnChart(2019, startDay.month)
+					this.t_month = startDay.month
+					this.t_day = '-'
 				} else {
 					this.ColumnChart(2019, startDay.month, startDay.day)
+					this.t_month = startDay.month
+					this.t_day = startDay.day
 				}
 				// 年 0 / 月 1 / 日 2
 				
 			},
 			bindTimeChange: function(e) {
+				this.date = e.target.value
 				let pickerTime = e.target.value
+				let yyyy = pickerTime.substring(0, 4) - '0'
+				let mm = pickerTime.substring(5,7) - '0'
+				let dd = pickerTime.substring(8,10) - '0'
+				console.log(typeof(pickerTime))
 				if(this.index == 0 ) {
-					console.log("i chose year")
-					this.toYear = pickerTime.substring(0,4)
-					this.ColumnChart(this.toYear - '0')
+					this.ColumnChart(yyyy)
+					this.t_year = yyyy
+					this.t_month = '-'
+					this.t_day = '-'
+					console.log("本次选择的是年份：" + yyyy)
 				} else if(this.index == 1) {
-					console.log("i chose month")
-					this.toMonth = pickerTime.substring(0, 7)
-					let yyyy = this.toMonth.substring(0, 4) - '0'
-					let mm = this.toMonth.substring(5,7) - '0'
-					this.ColumnChart(2019, startDay.month)
-					console.log(yyyy + " + " + mm)
+					this.ColumnChart(yyyy, mm)
+					this.t_year = yyyy
+					this.t_month = mm
+					this.t_day = '-'
+					console.log("本次选择的是：" + yyyy + " " + mm)
 				} else {
-					console.log("i chose day")
-					this.toDay = pickerTime.substring(0, 10)
-					this.ColumnChart(2019, startDay.month, startDay.day)
-				}
+					this.ColumnChart(yyyy, mm, dd)
+					this.t_year = yyyy
+					this.t_month = mm
+					this.t_day = dd
+					console.log("本次选择的是：" + yyyy + " " + mm + " " + dd)
+				} 
 			},
 			// 确认修改预算
 			save() {
@@ -302,7 +329,6 @@
 			},
 			// 柱状图显示 classify 支持年月日
 			ColumnChart(year, month=0, day=0) {
-				console.log(year + " " + month +  " + " + day)
 				uni.request({
 					url: 'http://39.107.125.67:8080/bill/classify/each?userid=' + this.userinfo.userid + '&' + 'year=' + year +  '&' + 'month=' + month + '&' + 'day=' + day,
 					success: (res) => {
