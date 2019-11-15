@@ -1,2 +1,0 @@
-<import src="./gauge.vue.wxml" />
-    <template is="59aefb60" data="{{ ...$root['0'], $root }}"/>

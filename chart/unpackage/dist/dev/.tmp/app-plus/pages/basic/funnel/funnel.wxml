@@ -1,2 +1,0 @@
-<import src="./funnel.vue.wxml" />
-    <template is="29069adc" data="{{ ...$root['0'], $root }}"/>

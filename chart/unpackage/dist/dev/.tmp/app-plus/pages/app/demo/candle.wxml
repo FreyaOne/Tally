@@ -1,2 +1,0 @@
-<import src="./candle.vue.wxml" />
-    <template is="18104799" data="{{ ...$root['0'], $root }}"/>

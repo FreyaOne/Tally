@@ -1,2 +1,0 @@
-setCssToHead([".",[1],"qiun-charts-rotate { width: ",[0,700],"; height: ",[0,1100],"; background-color: #FFFFFF; padding: ",[0,25],"; }\n.",[1],"charts-rotate { width: ",[0,700],"; height: ",[0,1100],"; background-color: #FFFFFF; }\n",],undefined,{path:"./pages/basic/column/rotate.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/basic/column/rotate.wxml') } }));
