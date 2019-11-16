@@ -15,13 +15,13 @@
 		<引言>
 			<使用人员>本文档的使用人员为领航团队全体成员。</使用人员>
 			<编写目的>编写本文档是为了让团队成员知晓项目进展到了哪一步，完成了那些任务，没完成那些进度，以及目前遇见的问题和困难。</编写目的>
-			<背景><div xmlns="http://www.w3.org/1999/xhtml">Tally记账软件是由手机应用软件开发有限公司委托我们开发的应用软件，主要功能是记录分析个人日常生活收支，包括收支记账，收支显示，收支统计，好友动态等功能。</div>
-<div xmlns="http://www.w3.org/1999/xhtml">待开发的软件系统的名称：Tally</div>
-<div xmlns="http://www.w3.org/1999/xhtml">本项目的任务提出者：徐月</div>
-<div xmlns="http://www.w3.org/1999/xhtml">本项目的开发者：领航团队</div>
-<div xmlns="http://www.w3.org/1999/xhtml">本项目的用户：需要归纳整理消费记录的个人</div>
-<div xmlns="http://www.w3.org/1999/xhtml">实现该软件的计算中心或计算机网络：手机</div>
-<div xmlns="http://www.w3.org/1999/xhtml">本软件系统为一个独立的软件系统，与现运行的其他系统或机构无相互往来关系。</div></背景>
+			<背景><div xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Tally记账软件是由手机应用软件开发有限公司委托我们开发的应用软件，主要功能是记录分析个人日常生活收支，包括收支记账，收支显示，收支统计，好友动态等功能。</div>
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">待开发的软件系统的名称：Tally</div>
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">本项目的任务提出者：徐月</div>
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">本项目的开发者：领航团队</div>
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">本项目的用户：需要归纳整理消费记录的个人</div>
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><span style="FONT-SIZE: 10.5pt"><font face="宋体">实现该软件的硬件设备：个人笔记本电脑</font></span></div>
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><font face="undefined"><font face="宋体">本软件系统服务器为租借的阿里云服务器，定位功能采用第三方百度地图的</font>SDK</font><font face="宋体">。</font></div></背景>
 			<定义与缩写>
 				<术语>PPR</术语>
 				<解释>Project Process Report项目评审报告英文缩写。</解释>
@@ -34,7 +34,7 @@
 	<编号></编号>
 	<项目阶段>编码</项目阶段>
 	<项目经理>刘小函</项目经理>
-	<日期>2019-11-13</日期>
+	<日期>2019-11-16</日期>
 	<项目进展情况>
 		<任务与进度>
 			<计划><div xmlns="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
