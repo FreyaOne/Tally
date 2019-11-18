@@ -50,7 +50,7 @@
 					uni.showToast({title:'密码不能为空',icon:"none"});
 					return false;
 				}
-				if(passwd.toString().lengtih<8){
+				if(passwd.toString().length<8){
 					uni.showToast({title:'密码长度应至少为8位',icon:"none"});
 					return false;
 				}
