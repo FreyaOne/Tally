@@ -24,7 +24,7 @@ public class PraiseBean {
 		log.info("entity is: {}", entity);
 		PraiseBean bean = new PraiseBean();
 		bean.setUserId(entity.getUserId());
-		bean.setSocialId(entity.getId());
+		bean.setSocialId(entity.getSocialId());
 		log.info("bean is: {}", bean);
 		return bean;
 	}

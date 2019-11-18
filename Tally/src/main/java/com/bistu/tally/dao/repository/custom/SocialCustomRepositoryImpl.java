@@ -23,12 +23,12 @@ public class SocialCustomRepositoryImpl implements SocialCustomRepository{
 	 */
 	public List<Social> findByDistance(Location location) {
 		//sql语句 查找和所给的定位信息距离在1000米内的所有记录，按时间排序
-		String jpql = "SELECT entity from Social entity where " + 
-				"round(6378.138*2*asin(sqrt(pow(sin( ("+ location.getLatitude() + 
-				"*pi()/180-entity.latitude*pi()/180)/2),2)+cos(" + location.getLatitude()
-				+ "*pi()/180)*cos(entity.latitude*pi()/180)* pow(sin( (" +
-				location.getLongitude() + "*pi()/180-entity.longitude*pi()/180)/2),2)))*1000) < 1000 " + 
-				"ORDER BY time desc";
+		String jpql = "SELECT entity from Social entity "
+				+ "where round(6367000 * 2 * asin(sqrt(pow(sin(((latitude * pi()) "
+				+ "/ 180 - (" + location.getLatitude() + " * pi()) / 180) / 2), 2) + "
+				+ "cos((" + location.getLatitude() + " * pi()) / 180) * "
+				+ "cos((latitude * pi()) / 180) * pow(sin(((longitude * pi()) "
+				+ "/ 180 - (" + location.getLongitude() + " * pi()) / 180) / 2), 2))))<1000 order by time desc";
 		log.info("select query is: {}", jpql);
         List<Social> entities = this.entityManager.createQuery(String.format(jpql, location))
                 .getResultList();

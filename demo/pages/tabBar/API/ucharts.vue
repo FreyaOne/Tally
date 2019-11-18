@@ -7,14 +7,15 @@
 				<text class="topImage" value=""></text>
 			</view>
 			 <view style="width: 60%; text-align: left; flex-direction: column; display: flex;">
-			 	<view class="dailyExpen">本月支出:<text style="color: #F5B940; margin-left: 10upx;">{{spend}}</text></view>
+			 	<view class="dailyExpen" v-show="redInk == false">本月支出:<text style="color: #F5B940; margin-left: 10upx;"> {{spend}} 元</text></view>
+				<view class="dailyExpen" v-show="redInk == true">本月支出:<text style="color:#DC7004; margin-left: 10upx;">{{spend}}元</text></view>
 				<!-- <view class="dailyExpen">预算结余: <text style="color: #F5B940; margin-left: 10upx;">{{surplus}}</text></view> -->
 			 </view>
 		</view>
 		<view class="top-card" style="height: 100upx;">
 			<view style="width: 60%;margin-left: 40upx;text-align: left; flex-direction: column; display: flex;">
 				<view class="dailyExpen">本月预算:
-					<text style="color: #F5B940; margin-left: 10upx;" v-show="editbudget == true">{{budget}}</text>
+					<text style="color: #F5B940; margin-left: 10upx;" v-show="editbudget == true">{{budget}}元</text>
 					<input placeholder="请输入预算..." v-model="budget" v-show="editbudget == false" placeholder-style="color: #BFBEBE" style=" color: #F5B940; width: 150upx; font-size: 30upx;"></input>
 				</view>
 			</view>
@@ -57,15 +58,6 @@
 					<picker @change="bindPickerChange" :value="index" :range="array" range-key="name">
 						<view class="uni-input" style="width: 100upx;">{{array[index].name}}</view>
 					</picker>
-					<!-- <picker mode="date" :value="toYear" start="startDate" end="endDate" @change="bindTimeChange" v-show="index == 0">
-						<view class="uni-input">{{toYear}}</view>
-					</picker>
-					<picker mode="date" :value="toMonth" start="startDate" end="endDate" @change="bindTimeChange" v-show="index == 1">
-						<view class="uni-input">{{toMonth}}</view>
-					</picker>
-					<picker mode="date" :value="toDay" start="startDate" end="endDate"  @change="bindTimeChange" v-show="index == 2">
-						<view class="uni-input">{{toDay}}</view>
-					</picker> -->
 					<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindTimeChange">
 						<view class="uni-input" style="font-size: 30upx;">{{date}}</view>
 					</picker>
@@ -165,7 +157,8 @@
 				}),
 				t_year:2019,
 				t_month: '-',
-				t_day: '-'
+				t_day: '-',
+				redInk: false
 				
 			}
 		},
@@ -268,19 +261,33 @@
 						return;
 					}
 				}
+				if(isNaN(bud) == true){
+					uni.showToast({title:'请输入正确格式',icon:'none'});
+					return;
+				}
+				// console.log(typeof(bud))
+				// console.log(bud)
 				bud = bud - '0'
+				console.log(bud)
+				console.log(typeof(bud))
 				uni.request({
 					url : 'http://39.107.125.67:8080/budget/update/?userid=' + this.userinfo.userid + '&' + 'budget=' + bud,
 					method: 'POST',
 					success: (res) => {
+						// if(res.data.mesg)
 						// console.log(res.data.data[0].budget)
 						// this.budget = res.data.data
 						uni.showToast({
 							'title' : '修改成功'
 						})
+						this.editbudget = true
+					},
+					fail: (res) => {
+						uni.showToast({
+							'title':'请输入正确格式'
+						})
 					}
 				})
-				this.editbudget = true
 			},
 			
 			getUserBudget(id) {
@@ -300,7 +307,11 @@
 					 method: 'GET',
 					 success: (res) => {
 						 let amount = res.data.data;
-						 this.spend = this.budget - amount.series[0].data + amount.series[1].data
+						 this.spend = amount.series[0].data - amount.series[1].data
+						 if(this.spend < 0 || this.budget < this.spend) {
+							 this.redInk = true;
+						 }
+						 // this.spend = this.budget - amount.series[0].data + amount.series[1].data
 					 },
 					 fail: (res) => {
 					 	

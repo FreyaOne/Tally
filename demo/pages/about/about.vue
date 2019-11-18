@@ -157,7 +157,7 @@
 				category_key: 1,
 				classify_key: 1,
 				category_type: '支出',
-				classify_type: '学习',
+				classify_type: '餐饮',
 				startDate:getDate('start'),
 				endDate:getDate('end')
 			}
