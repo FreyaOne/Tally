@@ -19,7 +19,6 @@ import com.bistu.tally.helper.PraiseBean;
 import com.bistu.tally.helper.SocialBean;
 
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.asm.Advice.This;
 
 @Slf4j
 @Service
@@ -46,7 +45,10 @@ public class SocialService {
 		List<SocialBean> beans = new ArrayList<SocialBean>();
 		for(int i = 0; i < socials.size(); i++) {
 			SocialBean bean = SocialBean.of(socials.get(i));
+			log.info("my bean is: {}", bean);
 			bean.setPraise(this.praiseRepository.existsByUserIdAndSocialId(userId, bean.getSocialId()));
+			log.info("userId is {}, socialId is {}", userId, bean.getSocialId());
+			log.info("praise is: {}", bean.isPraise() );
 			bean.setUserName(this.userRepository.findCase(bean.getUserId()));
 			if(bean.getCommentsNum() > 0)
 				bean.setComments(getBySocialId(bean.getSocialId()));
@@ -82,6 +84,7 @@ public class SocialService {
 		for(int i = 0; i < socials.size(); i++) {
 			SocialBean bean = SocialBean.of(socials.get(i));
 			bean.setPraise(this.praiseRepository.existsByUserIdAndSocialId(userId, bean.getSocialId()));
+			log.info("praise is: {}", bean.isPraise() );
 			bean.setUserName(this.userRepository.findCase(bean.getUserId()));
 			if(bean.getCommentsNum() > 0)
 				bean.setComments(getBySocialId(bean.getSocialId()));
@@ -140,7 +143,6 @@ public class SocialService {
 		log.info("entity saved: {}", entity);
 		PraiseBean bean2 = PraiseBean.of(entity);
 		return bean2;
-		
 	}
 	/**
 	 * 通过bean，删除点赞信息

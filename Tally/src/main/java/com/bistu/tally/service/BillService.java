@@ -78,7 +78,20 @@ public class BillService {
 		return billRepository.findByUserId(userId);
 	}
 
+	public ArrayList<Bill> findByUserIdByTimeDesc(Long userid) {
+		return billRepository.findByUserIdByTimeDesc(userid);
+	}
+
+	public ArrayList<Bill> findByUserIdAndCategoryByTimeDesc(Long userid, int category) {
+		return billRepository.findByUserIdAndCategoryByTimeDesc(userid, category);
+	}
+
 	public Bill findByBillId(Long id) {
 		return billRepository.findByBillId(id).get(0);
 	}
+
+	public ArrayList<Bill> findBillFromDayByTime(Long userid, int category, int year, int month, int day) {
+		return billRepository.findCategoryFromDayByTime(userid, category, year, month, day);
+	}
+
 }

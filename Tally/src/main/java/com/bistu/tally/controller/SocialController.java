@@ -6,12 +6,10 @@ import java.util.Objects;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +34,7 @@ public class SocialController {
 	 * @return 获取成功返回动态信息
 	 */
 	@GetMapping({"/socials/v1/{la}&{lo}&{uid}"}) 
-	public ResultInfo getAllSocial(@PathVariable("la") float la, @PathVariable("lo") float lo,
+	public ResultInfo getAllSocial(@PathVariable("la") double la, @PathVariable("lo") double lo,
 			@PathVariable("uid") Long userId) {
 		log.info("get requesting...");
 		ResultInfo resultInfo = ResultInfo.success();
