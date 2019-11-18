@@ -125,11 +125,11 @@ public class BillController {
 	 * @param userid
 	 * @return
 	 */
-	@GetMapping({ "/bill/get/user/{userid}&{category}" })
-	public ResultInfo getBillFromUserId(@PathVariable("userid") Long userid, @PathVariable("category") int category) {
+	@GetMapping({ "/bill/get/user/{userid}" })
+	public ResultInfo getBillFromUserId(@PathVariable("userid") Long userid) {
 		log.info("get requsting...");
 		ResultInfo resultInfo = ResultInfo.success();
-		resultInfo.setData(billService.findByUserIdAndCategoryByTimeDesc(userid, category));
+		resultInfo.setData(billService.findByUserIdByTimeDesc(userid));
 		return resultInfo;
 	}
 
