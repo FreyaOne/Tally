@@ -60,18 +60,21 @@
 							</view>
 						</view>
 					</view>
+					
 					<!-- <button @click="cal()">测试</button> -->
 					<!-- 筛选日期 -->
-					<view class="choseDate">
-						<view class="calendar-tags" @click="open">
-							<view class="calendar-tags-item calendar-button">
-								<image src="/static/img/category/9.png" class="image"/>
-							</view>
+					
+				</view>
+				<view class="choseDate">
+					<view class="calendar-tags" @click="open">
+						<view class="calendar-tags-item calendar-button">
+							<image src="/static/img/category/9.png" class="image"/>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
+		
 		<uni-calendar ref="calendar" :date="date"  @confirm="confirm" @change="change"/>
 		
 		<!-- 底部弹窗 -->
@@ -89,6 +92,7 @@
 				<view class="uni-share-btn" @click="popup_cancel()">取消分享</view>
 			</view>
 		</uni-popup>
+		
 	</view>
 </template>
 
