@@ -2,12 +2,12 @@
 	<view class="page" @touchstart="touchStart" @touchend="touchEnd">
 		<form>
 			<view class="uni-textarea" style="height:180px;">
-				<textarea placeholder="这一刻的想法..." v-model="input_content" maxlength="150"/>
+				<textarea placeholder="这一刻的想法..." v-model="input_content" maxlength="150" style="word-wrap:break-word"/>
 				</view>
 			<view>
 			</view>
 			<view class="footer">
-				<button type="default" class="feedback-submit" @click="publish">提交</button>
+				<button type="default" class="feedback-submit" @click="publish()">提交</button>
 			</view>
 		</form>
 		<!-- <view v-model="userid"></view> -->
@@ -75,6 +75,8 @@
 				// countIndex: 8,
 				longitude: 0,   //经度
 				latitude: 0,   //纬度
+				addressRes:'', //存储地址的对象
+				address:'', //解析后的地址
 				// count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
 				
 				//侧滑返回start
@@ -131,17 +133,22 @@
 				
 				let long = uni.getStorageSync('longitude');
 				let lat = uni.getStorageSync('latitude');
+				this.addressRes = uni.getStorageSync('addressRes');
 				this.longitude = long;
 				this.latitude = lat;
-				console.log("发表的地址是");
 				console.log(long);
 				console.log(lat);
 				
 			},
-			async publish(){
-				// var myDate = new Date();
-				// var time = myDate.Format("yyyy-MM-dd hh:mm:ss");
-				// console.log("格式化时间为" + time);
+			publish(){
+				console.log(uni.getStorageSync('addressRes').address.city);
+				let city = uni.getStorageSync('addressRes').address.city;
+				let district = uni.getStorageSync('addressRes').address.district;
+				let poiName = uni.getStorageSync('addressRes').address.poiName;
+				// console.log("你好");
+				// console.log(city);
+				// console.log(district);
+				// console.log(poiName);
 				if (!this.input_content) {
 					uni.showModal({ content: '内容不能为空', showCancel: false, });
 					return;
@@ -149,8 +156,10 @@
 				var date = new Date();
 				var time = date.pattern("yyyy-MM-dd HH:mm:ss");    //格式化时间
 				this.time = time;
-				// uni.showLoading({title:'发布中'});
-				// var location = await this.getLocation();  //位置信息,可删除,主要想记录一下异步转同步处理
+				let address = city + "-" + district + "-" + poiName;
+				this.address = address;
+				// console.log("发表的地址是");
+				// console.log(address);
 				uni.request({   //请求分享
 					url: 'http://39.107.125.67:8080/socials',
 					dataType:'json',
@@ -159,7 +168,8 @@
 						"userId" : this.userid,
 						"socialContent" : this.input_content,
 						"time": this.time,
-						"location" : { 
+						"address": this.address,
+						"location":{ 
 							"latitude": this.latitude, 
 							"longitude" : this.longitude,
 						}

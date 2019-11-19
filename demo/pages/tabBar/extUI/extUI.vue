@@ -1,9 +1,9 @@
 <template>
 	<view id="moments">
 		<view class="moments__post" v-for="(row, index) in chatList" :key="index">
-			<view class="post_right">
+			<view class="post_right" style="width: 98%;">
 				<text class="post-username" v-model="username">{{row.userName}}</text>
-				<view id="paragraph" class="paragraph" v-model="content">{{row.socialContent}}</view>
+				<view id="paragraph" class="paragraph" v-model="content" stype="width: 100%"><text>{{row.socialContent}}</text></view>
 				<view class="toolbar">
 					<view class="timestamp" v-model="time">{{row.time}}</view>
 					<view id="deleteShare" style="color:#36648b;font-size:10px;margin-left:5px;" v-show="userid == row.userId" @tap="deleteShare(index)">删除</view>
@@ -16,24 +16,23 @@
 					</view>
 				</view>
 				<view class="address">
-					<view style="font-size:11px;margin-top:5px;color:#828282">{{address}}</view>
+					<view style="font-size:11px;margin-top:5px;color:#828282">{{row.address}}</view>
 				</view>
 				<!-- 赞／评论区 -->
-				<view class="post-footer" style="marign-top:5px;">
-					<view class="footer_content" v-for="(row_comment,com_index) in row.comments" :key="com_index" @longpress="deleteReview(index,com_index)">
-						<text class="comment-nickname">{{row_comment.userName}}: <text class="comment-content">{{row_comment.commentContent}}</text></text>
+				<view class="post-footer" style="margin-top:10px;">
+					<view class="footer_content" v-for="(row_comment,com_index) in row.comments" :key="com_index" @longpress="deleteReview(index,com_index)" style="word-wrap:break-all">
+						<text id="comment-nickname" style="word-wrap:break-all;width: 100%;font-size:12px;">{{row_comment.userName}}: <text class="comment-content" style="word-wrap:break-all;width: 200upx;">{{row_comment.commentContent}}</text></text>
 					</view>
 				</view>
 			</view>
-
 			<!-- 结束 post -->
 		</view>
 
 		<view class="foot" v-show="showInput">
-			<chat-input @send-message="send_comment" @blur="blur" :focus="focus" :placeholder="input_placeholder"></chat-input>
+			<chat-input :focus="focus" @blur="blur" :placeholder="input_placeholder"></chat-input>
 			<!-- <chat-input @send-message="send_comment" @blur="blur" :placeholder="input_placeholder"></chat-input> -->
 		</view>
-		<view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
+		<!-- <view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view> -->
 	</view>
 
 </template>
@@ -59,11 +58,12 @@
 				click_id: '',
 				comment_index: '',
 				chatList: [],
-				address: uni.getStorageSync('city') + '-' + uni.getStorageSync('district') + '-' + uni.getStorageSync('poiName'),
+				address:'',   //用户发表动态的地址
+				ob:'',  //存储地址的对象
 				// is_like:'',
-
 				input_placeholder: '评论', //占位内容
 				focus: false, //是否自动聚焦输入框
+				// blur:false,
 				is_reply: false, //回复还是评论
 				showInput: false, //评论输入框
 				screenHeight: '', //屏幕高度(系统)
@@ -87,10 +87,10 @@
 		},
 		onShow() {
 			uni.onWindowResize((res) => { //监听窗口尺寸变化,窗口尺寸不包括底部导航栏
-				if (this.platform === 'ios') {
+				if(this.platform === 'ios'){
 					this.windowHeight = res.size.windowHeight;
 					this.adjust();
-				} else {
+				}else{
 					if (this.screenHeight - res.size.windowHeight > 60 && this.windowHeight <= res.size.windowHeight) {
 						this.windowHeight = res.size.windowHeight;
 						this.adjust();
@@ -121,6 +121,10 @@
 			});
 			this.longitude = uni.getStorageSync('longitude');
 			this.latitude = uni.getStorageSync('latitude');
+			// console.log("输出城市");
+			// this.ob = uni.getStorageSync('addressRes');
+			// this.address = this.ob.address.city;
+			// console.log(this.address);
 			console.log("123213 " + this.userid);
 			var uri = 'http://39.107.125.67:8080/socials/v1/' + this.latitude + '&' + this.longitude + '&' + this.userid;
 			console.log("url是");
@@ -128,13 +132,14 @@
 			uni.request({
 				url: uri,
 				success: (res) => {
-					// console.log("URL是" + uri);
+					console.log("URL是" + uri);
 					// this.text = 'request success';
 					if (res.data.code == 0) {
 						this.chatList = res.data.data;
 						uni.setStorageSync('chatList', this.chatList);
 						// for(let i in this.chatList){
-						// console.log(this.chatList);
+						console.log("新的");
+						console.log(this.chatList);
 						// console.log(this.chatList[i].location.longitude);
 						// }
 					}
@@ -143,7 +148,10 @@
 					console.log(e.data);
 				}
 
-			})
+			});
+			// console.log("输出");
+			// console.log(this.chatList);
+			// this.address = uni.getStorageSync('city') + '-' + uni.getStorageSync('district') + ' ' + uni.getStorageSync('poiName')
 		},
 		// onReachBottom() { //监听上拉触底事件
 		// 	console.log('onReachBottom');
@@ -174,6 +182,15 @@
 
 		},
 		methods: {
+			blur: function() {
+				this.init_input();
+			},
+			init_input() {
+				this.showInput = false;
+				this.focus = false;
+				this.input_placeholder = '评论';
+				this.is_reply = false;
+			},
 			deleteReview(index, com_index) {
 				this.index = index;
 				this.com_index = com_index;
@@ -204,7 +221,6 @@
 									}
 								});
 							} else {
-
 							}
 						}
 					})
@@ -218,8 +234,7 @@
 					confirmText: "确定",
 					success: (res) => {
 						if (res.confirm) {
-							console.log(this.chatList);
-							console.log("什么鬼");
+							// console.log(this.chatList);
 							// console.log(chatList[index].socialId);
 							uni.request({
 								url: 'http://39.107.125.67:8080/socials/' + this.chatList[index].socialId,
@@ -227,7 +242,8 @@
 								success: (res) => {
 									// console.log("laldasda" + res.data.code)
 									if (res.data.code == 0) {
-										console.log("删除")
+										console.log("删除");
+										console.log("什么鬼");
 										// console.log(this.chatList[index]);
 										this.chatList.splice(index, 1);
 										uni.showToast({
@@ -307,39 +323,34 @@
 				this.index = index;
 				uni.setStorageSync('index', this.index);
 			},
-			adjust() { //当弹出软键盘发生评论动作时,调整页面位置pageScrollTo
-				return;
-				uni.createSelectorQuery().selectViewport().scrollOffset(res => {
-					var scrollTop = res.scrollTop;
-					let view = uni.createSelectorQuery().select("#post-" + this.index);
-					view.boundingClientRect(data => {
-						console.log("data:" + JSON.stringify(data));
-						console.log("手机屏幕高度:" + this.screenHeight);
-						console.log("竖直滚动位置" + scrollTop);
-						console.log("节点离页面顶部的距离为" + data.top);
-						console.log("节点高度为" + data.height);
-						console.log("窗口高度为" + this.windowHeight);
+			// adjust() { //当弹出软键盘发生评论动作时,调整页面位置pageScrollTo
+			// 	return;
+			// 	uni.createSelectorQuery().selectViewport().scrollOffset(res => {
+			// 		var scrollTop = res.scrollTop;
+			// 		let view = uni.createSelectorQuery().select("#post-" + this.index);
+			// 		view.boundingClientRect(data => {
+			// 			console.log("data:" + JSON.stringify(data));
+			// 			console.log("手机屏幕高度:" + this.screenHeight);
+			// 			console.log("竖直滚动位置" + scrollTop);
+			// 			console.log("节点离页面顶部的距离为" + data.top);
+			// 			console.log("节点高度为" + data.height);
+			// 			console.log("窗口高度为" + this.windowHeight);
 
-						uni.pageScrollTo({
-							scrollTop: scrollTop - (this.windowHeight - (data.height + data.top + 45)), //一顿乱算
-							// scrollTop: 50, 
-							duration: 300
-						});
-					}).exec();
-				}).exec();
-			},
+			// 			uni.pageScrollTo({
+			// 				scrollTop: scrollTop - (this.windowHeight - (data.height + data.top + 45)), //一顿乱算
+			// 				// scrollTop: 50, 
+			// 				duration: 300
+			// 			});
+			// 		}).exec();
+			// 	}).exec();
+			// },
 		}, //methods
 		navigateTo(url) {
 			uni.navigateTo({
 				url: url
 			});
 		},
-		init_input() {
-			this.showInput = false;
-			this.focus = false;
-			this.input_placeholder = '评论';
-			this.is_reply = false;
-		},
+		
 		onNavigationBarButtonTap(e) {
 			uni.navigateTo({
 				url: '/pages/tabBar/extUI/publish'
@@ -350,4 +361,21 @@
 
 <style scoped>
 	@import url("../../../commonAboutChat/index/index.css");
+	/* .page {
+		width: 92%
+	} */
+	#paragraph{
+		word-wrap:break-word;
+		/* width: 300upx; */
+	}
+	.post-footer {
+		word-wrap:break-word;
+	}
+	
+	/* .comment-nickname{
+		word-wrap:break-word;
+	} */
+	/* #comment-content{
+		word-wrap:break-word;
+	} */
 </style>

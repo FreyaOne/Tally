@@ -79,22 +79,12 @@
 						showCancel: false
 					})
 					return;
-				}
-				// var that = this;
-				// if (that.inputValue.trim() == '') {
-				// 	that.inputValue = '';
-				// } 
-				else {
+				}else {
 					var date = new Date();
 					var time = date.pattern("yyyy-MM-dd HH:mm:ss"); //格式化时间
 					this.time = time;
 					this.index = uni.getStorageSync('index');
 					this.chatList = uni.getStorageSync('chatList');
-					// console.log("index " + this.index);
-					// console.log(this.inputValue);
-					// console.log(this.userid);
-					// console.log(this.time);
-					// console.log(this.chatList);
 					if (this.inputValue.length > 150) {
 						uni.showToast({
 							title: '字数超过150',
@@ -122,8 +112,6 @@
 										title: '评论出现错误',
 										icon: "none",
 									});
-									console.log("urlshi");
-									console.log(url);
 								}
 							},
 							fail: (e) => {
@@ -154,8 +142,7 @@
 			},
 			blur: function() { //失焦触发通知父组件
 				var that = this;
-				this.$emit('blur')
-				// this.$element('textarea').focus({ focus: false })
+				this.$emit('blur');
 			},
 		}
 	}

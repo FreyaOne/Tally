@@ -30,37 +30,26 @@
 				username: '',
 				passwd: '',
 				userid: '',
-				longitude:0,
-				latitude:0
+				longitude: 0,
+				latitude: 0
 				// isShowOauth:false,
 			}
 		},
-		mounted(){
+		mounted() {
 			let pass = uni.getStorageSync('passwd');
 			// console.log("密码是啥" + pass);
 			this.passwd = pass;
 		},
-		onShow(){
-			uni.getLocation({
-			    type: 'wgs84',
-				geocode: true,
-			    success: function (res) {
-					// this.longitude = res.longitude.toString();
-					// this.latitude = res.latitude.toString();
-			        console.log('当前位置的经度：' + res.longitude);
-			        console.log('当前位置的纬度：' + res.latitude);
-					uni.setStorageSync('longitude', res.longitude);
-					uni.setStorageSync('latitude', res.latitude);
-					uni.setStorageSync('city',res.address.city);
-					uni.setStorageSync('district',res.address.district);
-					uni.setStorageSync('poiName',res.address.poiName);
-					// var address = res.address;
-					// console.log("地址");
-					// console.log(res.address.city);
-					// console.log(res.address.district);
-					// console.log(res.address.poiName);
-			    }
-			});
+		onShow() {
+			// uni.request({
+			// 	url: 'http://api.map.baidu.com/reverse_geocoding/v3/?ak=mEGisxA5fZvN1wTsBf8UvjX58BK2OdSC&output=json&coordtype=wgs84ll&location=' +
+			// 		this.latitude + ',' + this.longitude,
+			// 	success: function(res) {
+			// 		console.log("尝试一下");
+			// 		console.log(res.status);
+			// 		console.log(res.business);
+			// 	}
+			// })
 		},
 		onReady() {
 			uni.getStorage({
@@ -74,8 +63,47 @@
 					console.log(e.data);
 				}
 			});
+			uni.getLocation({
+				type: 'wgs84',
+				geocode: true,
+				success: function(res) {
+					// this.longitude = res.longitude.toString();
+					// this.latitude = res.latitude.toString();
+					console.log('当前位置的经度：' + res.longitude);
+					console.log('当前位置的纬度：' + res.latitude);
+					uni.setStorageSync('addressRes',res);
+					// console.log(res.address.city)
+					uni.setStorageSync('longitude', res.longitude);
+					uni.setStorageSync('latitude', res.latitude);
+					// uni.setStorageSync('city', res.address.city);
+					// uni.setStorageSync('district', res.address.district);
+					// uni.setStorageSync('poiName', res.address.poiName);
+					// var address = res.address;
+					// console.log("地址");
+					// console.log(res.address.city);
+					// console.log(res.address.district);
+					// console.log(res.address.poiName);
+				}
+			});
 		},
 		methods: {
+			cors() {
+				// Allow from any origin
+				if (isset($_SERVER['HTTP_ORIGIN'])) {
+					// Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
+					// you want to allow, and if so:
+					header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+					header('Access-Control-Allow-Credentials: true');
+					header('Access-Control-Max-Age: 86400'); // cache for 1 day
+				}
+				// Access-Control headers are received during OPTIONS requests
+				if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+					if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+						header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+					if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+						header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+				}
+			},
 			topage(page) {
 				uni.hideKeyboard()
 				uni.navigateTo({

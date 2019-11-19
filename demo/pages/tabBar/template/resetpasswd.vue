@@ -16,7 +16,7 @@
 			<view class="password">
 				<input placeholder="请输入新密码" v-model="passwd" password=true placeholder-style="color: rgba(255,255,255,0.8);" />
 			</view>
-			<view class="btn" @tap="doReset">重置密码</view>
+			<view class="btn" @tap="doReset()">重置密码</view>
 		</view>
 
 	</view>
@@ -38,7 +38,7 @@
 				var username = this.username;
 				var passwd = this.passwd;
 				uni.hideKeyboard();
-				var uri = ' http://39.107.125.67:8080/forget/' + username + '&' + passwd;
+				var uri = 'http://39.107.125.67:8080/forget/' + username + '&' + passwd;
 				uni.request({
 					url: uri,
 					method:'PUT',
