@@ -300,33 +300,34 @@
 					 method: 'GET',
 					 success: (res) => {
 						 this.budget = res.data.data[0].budget
+						 
+						 uni.request({
+						 	 url : 'http://39.107.125.67:8080/bill/category/sum?userid='+ this.userinfo.userid + '&year=2019&month=' + startDay.month + '&day=0',
+						 	 method: 'GET',
+						 	 success: (res) => {
+						 		 let amount = res.data.data;
+						 		 this.spend = amount.series[0].data // 支出
+						 		 this.surplus = amount.series[1].data - this.spend // 结余 = 收入 - 支出
+						 		 // 如果支出大于收入 或者 预算小于支出
+						 		 if( amount.series[0].data > amount.series[1].data  || this.budget < amount.series[0].data) {
+						 			 this.redInk = true;
+						 			 uni.showToast({
+						 			 	'title': '请您省着点花，超支了。孩子顶不住了。',
+						 				'icon':'none'
+						 			 })
+						 		 }
+						 		 // this.spend = this.budget - amount.series[0].data + amount.series[1].data
+						 	 },
+						 	 fail: (res) => {
+						 	 	
+						 	 }
+						 })
 					 },
 					 fail: (res) => {
 					 	
 					 }
 				})
 				
-				uni.request({
-					 url : 'http://39.107.125.67:8080/bill/category/sum?userid='+ this.userinfo.userid + '&year=2019&month=' + startDay.month + '&day=0',
-					 method: 'GET',
-					 success: (res) => {
-						 let amount = res.data.data;
-						 this.spend = amount.series[0].data // 支出
-						 this.surplus = amount.series[1].data - this.spend // 结余 = 收入 - 支出
-						 // 如果支出大于收入 或者 预算小于支出
-						 if( amount.series[0].data > amount.series[1].data  || this.budget < amount.series[0].data) {
-							 this.redInk = true;
-							 uni.showToast({
-							 	'title': '请您省着点花，超支了。孩子顶不住了。',
-								'icon':'none'
-							 })
-						 }
-						 // this.spend = this.budget - amount.series[0].data + amount.series[1].data
-					 },
-					 fail: (res) => {
-					 	
-					 }
-				})
 			},
 			
 			//折线图切换年份显示
