@@ -23,6 +23,7 @@ public class SocialBean {
 	private boolean praise;
 	private int commentsNum;
 	private Location location;
+	private String address;
 	private List<CommentBean> comments;
 	/**
 	 * entity转bean
@@ -39,7 +40,7 @@ public class SocialBean {
 		bean.setTime(entity.getTime());
 		bean.setCommentsNum(entity.getCommentsNum());
 		bean.setLocation(new Location(entity.getLatitude(), entity.getLongitude()));
-		
+		bean.setAddress(entity.getAddress());
 		log.info("bean is: {}", bean);
 		return bean;
 	}
@@ -58,6 +59,7 @@ public class SocialBean {
 		entity.setCommentsNum(bean.getCommentsNum());
 		entity.setLatitude(bean.getLocation().getLatitude());
 		entity.setLongitude(bean.getLocation().getLongitude());
+		entity.setAddress(bean.getAddress());
 		log.info("entity is: {}", entity);
 		return entity;
 	}

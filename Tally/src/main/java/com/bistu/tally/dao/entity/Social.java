@@ -23,4 +23,7 @@ public class Social extends BaseEntity implements java.io.Serializable{
 	
 	@Column(name = "latitude", nullable = false)
 	private double latitude; 			//经度
+	
+	@Column(name = "address", nullable = false)
+	private String address;				//具体地址
 }

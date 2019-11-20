@@ -62,7 +62,7 @@ public class SocialController {
 	
 	/**
 	 * Url接受参数，通过socialService保存动态信息在数据库中
-	 * @param bean 动态信息，包括发布者id，内容，定位，时间
+	 * @param bean 动态信息，包括发布者id，内容，定位，时间，具体地址
 	 * @return 保存成功返回code 0以及动态信息，不成功返回code 1以及错误信息
 	 */
 	@PostMapping({"/socials"})
@@ -70,7 +70,7 @@ public class SocialController {
 		log.info("coming bean is: {}", bean);
 		if(Objects.isNull(bean) || Objects.isNull(bean.getSocialContent()) ||
 				Objects.isNull(bean.getLocation()) || Objects.isNull(bean.getTime())||
-				Objects.isNull(bean.getUserId())) {
+				Objects.isNull(bean.getUserId()) || Objects.isNull(bean.getAddress())) {
 			ResultInfo resultInfo = ResultInfo.failure();
             resultInfo.setMesg(String.format("Attribute missing,Request Social:%s",
                     ReflectionToStringBuilder.toString(bean, ToStringStyle.MULTI_LINE_STYLE)));
