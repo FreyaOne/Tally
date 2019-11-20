@@ -156,7 +156,7 @@
 				var date = new Date();
 				var time = date.pattern("yyyy-MM-dd HH:mm:ss");    //格式化时间
 				this.time = time;
-				let address = city + "-" + district + "-" + poiName;
+				let address = city + "-" + district;
 				this.address = address;
 				// console.log("发表的地址是");
 				// console.log(address);
