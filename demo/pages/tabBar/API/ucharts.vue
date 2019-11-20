@@ -9,6 +9,7 @@
 			 <view style="width: 60%; text-align: left; flex-direction: column; display: flex;">
 			 	<view class="dailyExpen" v-show="redInk == false">本月支出:<text style="color: #F5B940; margin-left: 10upx;"> {{spend}} 元</text></view>
 				<view class="dailyExpen" v-show="redInk == true">本月支出:<text style="color:#DC7004; margin-left: 10upx;">{{spend}}元</text></view>
+				<view class="dailyExpen">本月结余:<text style="color:#F5B940; margin-left: 10upx;">{{surplus}}元</text></view>
 				<!-- <view class="dailyExpen">预算结余: <text style="color: #F5B940; margin-left: 10upx;">{{surplus}}</text></view> -->
 			 </view>
 		</view>
@@ -27,7 +28,7 @@
 		<view class="chart-card">
 			<view style="display: flex; flex-direction: row;">
 				<view class="qiun-bg-white qiun-title-bar qiun-common-mt" style="width: 70%;">
-					<view class="qiun-title-dot-light">分类对比</view>
+					<view class="qiun-title-dot-light">收支对比</view>
 					<!-- 使用图表拖拽功能时，建议给canvas增加disable-scroll=true属性，在拖拽时禁止屏幕滚动 -->
 				</view>
 				<view class="chage_button" style="width: 30%; display: flex; flex-direction: row; justify-content: center; align-items: center;">
@@ -198,6 +199,7 @@
 			this.LineChartYear(this.Line_data)
 			this.ColumnChart(2019)
 			
+			console.log(this.redInk)
 		},
 		methods: {
 			//修改预算
@@ -268,8 +270,6 @@
 				// console.log(typeof(bud))
 				// console.log(bud)
 				bud = bud - '0'
-				console.log(bud)
-				console.log(typeof(bud))
 				uni.request({
 					url : 'http://39.107.125.67:8080/budget/update/?userid=' + this.userinfo.userid + '&' + 'budget=' + bud,
 					method: 'POST',
@@ -281,6 +281,10 @@
 							'title' : '修改成功'
 						})
 						this.editbudget = true
+						uni.navigateBack();
+						// uni.navigateTo({
+						// 	url: '/pages/tabBar/API/ucharts'
+						// })
 					},
 					fail: (res) => {
 						uni.showToast({
@@ -307,9 +311,15 @@
 					 method: 'GET',
 					 success: (res) => {
 						 let amount = res.data.data;
-						 this.spend = amount.series[0].data - amount.series[1].data
-						 if(this.spend < 0 || this.budget < this.spend) {
+						 this.spend = amount.series[0].data // 支出
+						 this.surplus = amount.series[1].data - this.spend // 结余 = 收入 - 支出
+						 // 如果支出大于收入 或者 预算小于支出
+						 if( amount.series[0].data > amount.series[1].data  || this.budget < amount.series[0].data) {
 							 this.redInk = true;
+							 uni.showToast({
+							 	'title': '请您省着点花，超支了。孩子顶不住了。',
+								'icon':'none'
+							 })
 						 }
 						 // this.spend = this.budget - amount.series[0].data + amount.series[1].data
 					 },
