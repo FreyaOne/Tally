@@ -176,7 +176,7 @@
 					},
 					success: (res) => {
 						this.text = 'request success';
-						console.log("时间是" + date.pattern("yyyy-MM-dd hh:mm:ss"));
+						// console.log("时间是" + date.pattern("yyyy-MM-dd hh:mm:ss"));
 						if (res.data.code == 0) {
 							// console.log("11111" + res.data);
 							uni.reLaunch({

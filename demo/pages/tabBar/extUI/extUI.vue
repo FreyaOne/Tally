@@ -125,7 +125,7 @@
 			// this.ob = uni.getStorageSync('addressRes');
 			// this.address = this.ob.address.city;
 			// console.log(this.address);
-			console.log("123213 " + this.userid);
+			// console.log("123213 " + this.userid);
 			var uri = 'http://39.107.125.67:8080/socials/v1/' + this.latitude + '&' + this.longitude + '&' + this.userid;
 			console.log("url是");
 			console.log(uri);

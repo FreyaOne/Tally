@@ -39,6 +39,7 @@
 				var passwd = this.passwd;
 				uni.hideKeyboard();
 				var uri = 'http://39.107.125.67:8080/forget/' + username + '&' + passwd;
+				console.log("成功");
 				uni.request({
 					url: uri,
 					method:'PUT',

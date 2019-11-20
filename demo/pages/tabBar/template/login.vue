@@ -72,7 +72,7 @@
 					console.log('当前位置的经度：' + res.longitude);
 					console.log('当前位置的纬度：' + res.latitude);
 					uni.setStorageSync('addressRes',res);
-					// console.log(res.address.city)
+					console.log(res.address.city)
 					uni.setStorageSync('longitude', res.longitude);
 					uni.setStorageSync('latitude', res.latitude);
 					// uni.setStorageSync('city', res.address.city);
