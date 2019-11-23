@@ -144,7 +144,7 @@
 				console.log(uni.getStorageSync('addressRes').address.city);
 				let city = uni.getStorageSync('addressRes').address.city;
 				let district = uni.getStorageSync('addressRes').address.district;
-				let poiName = uni.getStorageSync('addressRes').address.poiName;
+				// let poiName = uni.getStorageSync('addressRes').address.poiName;
 				// console.log("你好");
 				// console.log(city);
 				// console.log(district);
