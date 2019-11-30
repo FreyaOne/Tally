@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"image { width: 100%; }\n.",[1],"demo { background: #ffffff; padding: 27px; width: 11px; height: 11px; }\n",],undefined,{path:"./pages/tabBar/extUI/publish.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/tabBar/extUI/publish.wxml') } }));

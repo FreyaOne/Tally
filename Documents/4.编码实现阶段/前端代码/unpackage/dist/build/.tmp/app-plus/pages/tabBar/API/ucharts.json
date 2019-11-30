@@ -1,0 +1,15 @@
+{
+  "navigationBarTitleText": "图 表",
+  "navigationBarBackgroundColor": "#595BBC",
+  "titleNView": {
+    "buttons": [
+      {
+        "text": "",
+        "fontSrc": "/static/uni.ttf",
+        "fontSize": "22px",
+        "color": "#FFFFFF"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

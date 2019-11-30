@@ -1,0 +1,18 @@
+{
+  "navigationBarTitleText": "社 区",
+  "navigationBarBackgroundColor": "#595BBC",
+  "enablePullDownRefresh": true,
+  "titleNView": {
+    "buttons": [
+      {
+        "text": "",
+        "fontSrc": "/static/uni.ttf",
+        "fontSize": "22px",
+        "color": "#FFFFFF"
+      }
+    ]
+  },
+  "usingComponents": {
+    "chat-input": "/components/im-chat/chatinput"
+  }
+}

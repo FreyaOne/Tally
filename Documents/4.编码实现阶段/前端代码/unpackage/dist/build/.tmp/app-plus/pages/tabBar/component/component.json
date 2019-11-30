@@ -1,0 +1,21 @@
+{
+  "navigationBarTitleText": "明 细",
+  "navigationBarBackgroundColor": "#595BBC",
+  "bounce": "vertical",
+  "titleNView": {
+    "buttons": [
+      {
+        "text": "",
+        "fontSrc": "/static/uni.ttf",
+        "fontSize": "22px",
+        "color": "#FFFFFF"
+      }
+    ]
+  },
+  "usingComponents": {
+    "uni-segmented-control": "/components/uni-segmented-control/uni-segmented-control",
+    "uni-calendar": "/components/uni-calendar/uni-calendar",
+    "uni-search-bar": "/components/uni-search-bar/uni-search-bar",
+    "uni-popup": "/components/uni-popup/uni-popup"
+  }
+}
